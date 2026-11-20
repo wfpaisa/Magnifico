@@ -59,6 +59,14 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.2" date="2026-11-20">
+      <description>
+        <ul>
+          <li>Add tray icons for menu actions and update packaging scripts</li>
+          <li>Implement removal updates and improve UI responsiveness in review and uninstaller pages</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.1" date="2026-11-19">
       <description>
         <p>Packaging and appearance fixes.</p>
