@@ -1,0 +1,3334 @@
+# Greek translation for Magnífico
+# See LICENSE for the original copyright notice.
+# This file is distributed under the same license as the magnifico package.
+#
+msgid ""
+msgstr "Project-Id-Version: magnifico 1.0\nReport-Msgid-Bugs-To: https://github.com/wfpaisa/Magnifico/issues\nPOT-Creation-Date: 2026-08-21 12:00+0300\nPO-Revision-Date: 2026-08-21 12:00+0300\nLast-Translator: wfpaisa\nLanguage-Team: Greek\nLanguage: el\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Current application and navigation
+msgid "Magnífico"
+msgstr "Magnífico"
+
+#. Application description
+#: src/application.rs
+msgid "A safe and transparent Linux system cleaner"
+msgstr "Ένα ασφαλές και διαφανές εργαλείο καθαρισμού συστήματος Linux"
+
+#. About dialog
+#: src/application.rs
+msgid "About"
+msgstr "Σχετικά"
+
+#: src/application.rs
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#: src/application.rs
+msgid "Quit"
+msgstr "Έξοδος"
+
+#. Navigation items
+#: src/ui/main_window.rs
+msgid "Overview"
+msgstr "Επισκόπηση"
+
+#: src/ui/main_window.rs
+msgid "Browsers"
+msgstr "Περιηγητές"
+
+#: src/ui/main_window.rs
+msgid "Applications"
+msgstr "Εφαρμογές"
+
+#: src/ui/main_window.rs
+msgid "Custom Directories"
+msgstr "Προσαρμοσμένοι φάκελοι"
+
+#: src/ui/main_window.rs
+msgid "System"
+msgstr "Σύστημα"
+
+#: src/ui/main_window.rs
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: src/ui/main_window.rs
+msgid "Diagnostics"
+msgstr "Διαγνωστικά"
+
+#: src/ui/main_window.rs
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: src/ui/main_window.rs
+msgid "Show sidebar"
+msgstr "Εμφάνιση πλευρικής μπάρας"
+
+#: src/ui/main_window.rs
+msgid "Hide sidebar"
+msgstr "Απόκρυψη πλευρικής μπάρας"
+
+#: src/ui/main_window.rs
+msgid "Main Menu"
+msgstr "Κύριο μενού"
+
+#. Theme selector
+#: src/ui/main_window.rs
+msgid "Light"
+msgstr "Φωτεινό"
+
+#: src/ui/main_window.rs
+msgid "Dark"
+msgstr "Σκοτεινό"
+
+#. Dashboard page
+#: src/ui/dashboard_page.rs
+msgid "Safe and transparent system cleaning"
+msgstr "Ασφαλής και διαφανής καθαρισμός συστήματος"
+
+#: src/ui/dashboard_page.rs
+msgid "Reclaimable Space"
+msgstr "Ανακτήσιμος χώρος"
+
+#: src/ui/dashboard_page.rs
+msgid "Enabled Targets"
+msgstr "Ενεργοποιημένοι στόχοι"
+
+#: src/ui/dashboard_page.rs
+msgid "Last Cleanup"
+msgstr "Τελευταίος καθαρισμός"
+
+#: src/ui/dashboard_page.rs
+msgid "Never"
+msgstr "Ποτέ"
+
+#: src/ui/dashboard_page.rs
+msgid "Start Cleanup"
+msgstr "Έναρξη καθαρισμού"
+
+#: src/ui/dashboard_page.rs
+msgid ""
+"Scan enabled targets or clean them using your configured confirmation "
+"settings."
+msgstr ""
+"Σαρώστε τους ενεργούς στόχους ή καθαρίστε τους χρησιμοποιώντας τις ρυθμίσεις "
+"επιβεβαίωσης που έχετε ορίσει."
+
+#: src/ui/dashboard_page.rs
+msgid "Scan for Files"
+msgstr "Σάρωση αρχείων"
+
+#: src/ui/dashboard_page.rs
+msgid "Clean Now"
+msgstr "Καθαρισμός τώρα"
+
+#: src/ui/dashboard_page.rs
+msgid "Scanning..."
+msgstr "Σάρωση..."
+
+#: src/ui/dashboard_page.rs
+msgid "Click 'Scan' to check"
+msgstr "Κάντε κλικ στο 'Σάρωση' για έλεγχο"
+
+#. Browsers page
+#: src/ui/browsers_page.rs
+msgid "Browser Cleanup"
+msgstr "Καθαρισμός περιηγητή"
+
+#: src/ui/browsers_page.rs
+msgid ""
+"Select which browser data to clean. Cache is safe to delete, but cookies and "
+"history are permanent."
+msgstr ""
+"Επιλέξτε ποια δεδομένα περιηγητή θα καθαρίσετε. Η προσωρινή μνήμη είναι "
+"ασφαλής για διαγραφή, αλλά τα cookies και το ιστορικό είναι μόνιμα."
+
+#: src/ui/browsers_page.rs
+msgid "Installed"
+msgstr "Εγκατεστημένο"
+
+#: src/ui/browsers_page.rs
+msgid "Not detected"
+msgstr "Δεν εντοπίστηκε"
+
+#. Browser data types
+#: src/ui/browsers_page.rs
+msgid "Cache"
+msgstr "Προσωρινή μνήμη"
+
+#: src/ui/browsers_page.rs
+msgid "Cookies"
+msgstr "Cookies"
+
+#: src/ui/browsers_page.rs
+msgid "History"
+msgstr "Ιστορικό"
+
+#: src/ui/browsers_page.rs
+msgid "Sessions"
+msgstr "Συνεδρίες"
+
+#. Applications page
+#: src/ui/applications_page.rs
+msgid "Application Caches"
+msgstr "Προσωρινή μνήμη εφαρμογών"
+
+#: src/ui/applications_page.rs
+msgid ""
+"Clean caches from package managers and applications. These are safe to "
+"delete but may slow down first runs."
+msgstr ""
+"Καθαρισμός προσωρινής μνήμης από διαχειριστές πακέτων και εφαρμογές. Αυτά "
+"είναι ασφαλή για διαγραφή αλλά μπορεί να επιβραδύνουν την πρώτη εκτέλεση."
+
+#. System page
+#: src/ui/main_window.rs src/ui/system_page.rs
+msgid "System Cleanup"
+msgstr "Καθαρισμός συστήματος"
+
+#: src/ui/system_page.rs
+msgid ""
+"Clean system-level temporary files and caches. Some options require "
+"administrator privileges."
+msgstr ""
+"Καθαρισμός προσωρινών αρχείων και προσωρινής μνήμης σε επίπεδο συστήματος. "
+"Ορισμένες επιλογές απαιτούν δικαιώματα διαχειριστή."
+
+#. Settings page
+#: src/ui/settings_page.rs
+msgid "General"
+msgstr "Γενικά"
+
+#: src/ui/settings_page.rs
+msgid "Confirm Before Cleaning"
+msgstr "Επιβεβαίωση πριν τον καθαρισμό"
+
+#: src/ui/settings_page.rs
+msgid "Show a confirmation dialog before deleting files"
+msgstr "Εμφάνιση διαλόγου επιβεβαίωσης πριν τη διαγραφή αρχείων"
+
+#: src/ui/settings_page.rs
+msgid "Show Cleanup Summary"
+msgstr "Εμφάνιση περίληψης καθαρισμού"
+
+#: src/ui/settings_page.rs
+msgid "Display a summary after cleaning completes"
+msgstr "Εμφάνιση περίληψης μετά την ολοκλήρωση του καθαρισμού"
+
+#: src/ui/settings_page.rs
+msgid "Safety"
+msgstr "Ασφάλεια"
+
+#: src/ui/settings_page.rs
+msgid "These settings help prevent accidental data loss"
+msgstr "Αυτές οι ρυθμίσεις βοηθούν στην αποφυγή τυχαίας απώλειας δεδομένων"
+
+#: src/ui/settings_page.rs
+msgid "Maximum Files Per Operation"
+msgstr "Μέγιστα αρχεία ανά λειτουργία"
+
+#: src/ui/settings_page.rs
+msgid "Stop after deleting this many files"
+msgstr "Διακοπή μετά τη διαγραφή τόσων αρχείων"
+
+#: src/ui/settings_page.rs
+msgid "Follow Symlinks"
+msgstr "Ακολούθηση συμβολικών συνδέσμων"
+
+#: src/ui/settings_page.rs
+msgid "Dangerous: May delete files outside target directories"
+msgstr "Επικίνδυνο: Μπορεί να διαγράψει αρχεία εκτός των φακέλων-στόχων"
+
+#: src/ui/settings_page.rs
+msgid "Appearance"
+msgstr "Εμφάνιση"
+
+#: src/ui/settings_page.rs
+msgid "Color Scheme"
+msgstr "Χρωματικό σχήμα"
+
+#: src/ui/help_page.rs:63
+msgid "Learn how to use Magnífico"
+msgstr "Μάθετε πώς να χρησιμοποιείτε το Magnífico"
+
+msgid "About Magnífico"
+msgstr "Σχετικά με το Magnífico"
+
+#: src/ui/help_page.rs
+msgid "Magnífico is a system cleaning utility for Linux that helps you free up disk space by removing temporary files, caches, and other unnecessary data."
+msgstr "Το Magnífico είναι ένα εργαλείο καθαρισμού συστήματος για Linux που σας βοηθά να ελευθερώσετε χώρο στο δίσκο αφαιρώντας προσωρινά αρχεία, προσωρινή μνήμη και άλλα περιττά δεδομένα."
+
+#. Common UI elements
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Yes"
+msgstr "Ναι"
+
+msgid "No"
+msgstr "Όχι"
+
+msgid "Close"
+msgstr "Κλείσιμο"
+
+msgid "Apply"
+msgstr "Εφαρμογή"
+
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgid "Delete"
+msgstr "Διαγραφή"
+
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+msgid "Disable"
+msgstr "Απενεργοποίηση"
+
+msgid "Enabled"
+msgstr "Ενεργοποιημένο"
+
+msgid "Disabled"
+msgstr "Απενεργοποιημένο"
+
+msgid "Error"
+msgstr "Σφάλμα"
+
+msgid "Warning"
+msgstr "Προειδοποίηση"
+
+msgid "Information"
+msgstr "Πληροφορίες"
+
+msgid "Success"
+msgstr "Επιτυχία"
+
+#. File size units
+msgid "bytes"
+msgstr "bytes"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "TB"
+msgstr "TB"
+
+#. Time-related
+msgid "Today"
+msgstr "Σήμερα"
+
+msgid "Yesterday"
+msgstr "Χθες"
+
+msgid "days ago"
+msgstr "ημέρες πριν"
+
+msgid "Open Magnífico"
+msgstr "Άνοιγμα του Magnífico"
+
+msgid "Clean"
+msgstr "Καθαρισμός"
+
+msgid "Version"
+msgstr "Έκδοση"
+
+msgid "Storage Analyzer"
+msgstr "Αναλυτής αποθήκευσης"
+
+msgid "Cleanup Log"
+msgstr "Αρχείο καταγραφής καθαρισμού"
+
+msgid "What's New"
+msgstr "Τι νέο υπάρχει"
+
+msgid "Release history and highlights"
+msgstr "Ιστορικό εκδόσεων και σημαντικές αλλαγές"
+
+msgid "Initial public release"
+msgstr "Αρχική δημόσια έκδοση"
+
+#. Language and appearance settings
+msgid "Automatic"
+msgstr "Αυτόματα"
+
+msgid "Application Language"
+msgstr "Γλώσσα εφαρμογής"
+
+msgid "Choose a language or follow your system automatically"
+msgstr "Επιλέξτε γλώσσα ή ακολουθήστε αυτόματα τη γλώσσα του συστήματος"
+
+msgid "Choose your preferred theme"
+msgstr "Επιλέξτε το θέμα που προτιμάτε"
+
+#. Update check setting
+msgid "Check for Updates"
+msgstr "Έλεγχος για ενημερώσεις"
+
+msgid "Ask GitHub for a newer release when Magnífico starts"
+msgstr "Ερώτηση στο GitHub για νεότερη έκδοση κατά την εκκίνηση του Magnífico"
+
+#. Scheduler and log-cleanup settings
+msgid "Start Magnífico at Login"
+msgstr "Εκκίνηση του Magnífico κατά τη σύνδεση"
+
+msgid ""
+"Start in the background so scheduled cleanup can run while you are signed in"
+msgstr ""
+"Εκκίνηση στο παρασκήνιο ώστε ο προγραμματισμένος καθαρισμός να εκτελείται "
+"όσο είστε συνδεδεμένοι"
+
+msgid "Automatic Cleanup"
+msgstr "Αυτόματος καθαρισμός"
+
+msgid "Runs selected cleanup rules only while Magnífico is open, with the same safety limits."
+msgstr "Εκτελεί τους επιλεγμένους κανόνες καθαρισμού μόνο όσο το Magnífico είναι ανοιχτό, με τα ίδια όρια ασφαλείας."
+
+msgid "Scheduled Automatic Cleanup"
+msgstr "Προγραμματισμένος αυτόματος καθαρισμός"
+
+msgid "Cleanup Days"
+msgstr "Ημέρες καθαρισμού"
+
+msgid "Cleanup Time"
+msgstr "Ώρα καθαρισμού"
+
+msgid "Uses your current local time"
+msgstr "Χρησιμοποιεί την τρέχουσα τοπική ώρα"
+
+msgid "Every day"
+msgstr "Κάθε ημέρα"
+
+msgid "every day"
+msgstr "κάθε ημέρα"
+
+msgid "on"
+msgstr "τις"
+
+msgid "Runs selected rules {days} at {time} while the app is open"
+msgstr ""
+"Εκτελεί τους επιλεγμένους κανόνες {days} στις {time} όσο η εφαρμογή είναι "
+"ανοιχτή"
+
+msgid "Off. Enable to run selected rules at the chosen day and time"
+msgstr ""
+"Ανενεργό. Ενεργοποιήστε το για εκτέλεση των επιλεγμένων κανόνων στις ημέρες "
+"και την ώρα που επιλέξατε"
+
+msgid "Monday"
+msgstr "Δευτέρα"
+
+msgid "Tuesday"
+msgstr "Τρίτη"
+
+msgid "Wednesday"
+msgstr "Τετάρτη"
+
+msgid "Thursday"
+msgstr "Πέμπτη"
+
+msgid "Friday"
+msgstr "Παρασκευή"
+
+msgid "Saturday"
+msgstr "Σάββατο"
+
+msgid "Sunday"
+msgstr "Κυριακή"
+
+msgid "Maximum Data Per Operation"
+msgstr "Μέγιστα δεδομένα ανά λειτουργία"
+
+msgid "Block cleanup when selected data exceeds this many GiB"
+msgstr ""
+"Αποκλεισμός καθαρισμού όταν τα επιλεγμένα δεδομένα υπερβαίνουν αυτό το όριο "
+"GiB"
+
+msgid "Log Cleanup"
+msgstr "Καθαρισμός αρχείων καταγραφής"
+
+msgid ""
+"Optional cleanup of older log data. Both cleanup types are off by default."
+msgstr ""
+"Προαιρετικός καθαρισμός παλαιότερων δεδομένων log. Και οι δύο τύποι είναι "
+"ανενεργοί από προεπιλογή."
+
+msgid "Application Logs"
+msgstr "Αρχεία καταγραφής εφαρμογών"
+
+msgid ""
+"Clean only old .log and rotated .log.* files from your user state and cache "
+"folders"
+msgstr ""
+"Καθαρισμός μόνο παλιών αρχείων .log και εναλλασσόμενων .log.* από τους "
+"φακέλους κατάστασης και cache του χρήστη"
+
+msgid "System Journal"
+msgstr "System Journal"
+
+msgid "Keep Recent Logs"
+msgstr "Διατήρηση πρόσφατων logs"
+
+msgid "Only clean log data older than this retention period"
+msgstr ""
+"Καθαρισμός μόνο δεδομένων log παλαιότερων από αυτή την περίοδο διατήρησης"
+
+msgid "days"
+msgstr "ημέρες"
+
+#. Dashboard and Storage Analyzer
+msgid "Disk Storage"
+msgstr "Αποθήκευση δίσκου"
+
+msgid "Disk information unavailable"
+msgstr "Οι πληροφορίες δίσκου δεν είναι διαθέσιμες"
+
+msgid "used"
+msgstr "σε χρήση"
+
+msgid "Available"
+msgstr "Διαθέσιμος χώρος"
+
+msgid "Scan to estimate"
+msgstr "Σάρωση για εκτίμηση"
+
+msgid "Cleanup potential"
+msgstr "Δυνατότητα καθαρισμού"
+
+msgid "Enabled targets"
+msgstr "Ενεργοί στόχοι"
+
+msgid "Last cleanup"
+msgstr "Τελευταίος καθαρισμός"
+
+msgid "Analyze a Folder"
+msgstr "Ανάλυση φακέλου"
+
+msgid "Choose a local folder to find its largest files and subfolders."
+msgstr ""
+"Επιλέξτε έναν τοπικό φάκελο για να βρείτε τα μεγαλύτερα αρχεία και "
+"υποφακέλους του."
+
+msgid "Choose Folder…"
+msgstr "Επιλογή φακέλου…"
+
+msgid "Scan Again"
+msgstr "Νέα σάρωση"
+
+msgid "Minimum size"
+msgstr "Ελάχιστο μέγεθος"
+
+msgid "Manual analysis · same filesystem only"
+msgstr "Χειροκίνητη ανάλυση · μόνο στο ίδιο σύστημα αρχείων"
+
+msgid "Nothing selected"
+msgstr "Δεν έχει επιλεγεί τίποτα"
+
+msgid "Select files or folders to review before moving them to Trash"
+msgstr ""
+"Επιλέξτε αρχεία ή φακέλους για έλεγχο πριν μετακινηθούν στα Απορρίμματα"
+
+msgid "Move Selected to Trash"
+msgstr "Μετακίνηση επιλεγμένων στα Απορρίμματα"
+
+msgid "Name"
+msgstr "Όνομα"
+
+msgid "Relative size"
+msgstr "Σχετικό μέγεθος"
+
+msgid "Size"
+msgstr "Μέγεθος"
+
+#. Cleanup result log
+msgid "Latest Cleanup"
+msgstr "Τελευταίος καθαρισμός"
+
+msgid "Back to Dashboard"
+msgstr "Επιστροφή στον πίνακα ελέγχου"
+
+msgid "Copy Log"
+msgstr "Αντιγραφή καταγραφής"
+
+msgid "Copy the complete cleanup log"
+msgstr "Αντιγραφή ολόκληρου του αρχείου καταγραφής καθαρισμού"
+
+#. Version 1.0.0 release notes
+msgid ""
+"A modern GNOME interface with unified light and dark surfaces, system accent "
+"colors, high contrast, and reduced motion support."
+msgstr ""
+"Σύγχρονο περιβάλλον GNOME με ενιαίες φωτεινές και σκοτεινές επιφάνειες, "
+"χρώματα έμφασης συστήματος, υψηλή αντίθεση και υποστήριξη μειωμένης κίνησης."
+
+msgid ""
+"A dashboard storage overview for used, available, total, and reclaimable "
+"disk space."
+msgstr ""
+"Επισκόπηση αποθήκευσης στον πίνακα ελέγχου για τον χρησιμοποιημένο, "
+"διαθέσιμο, συνολικό και ανακτήσιμο χώρο δίσκου."
+
+msgid ""
+"Safe browser cleanup with installed-browser detection and unavailable "
+"browsers clearly disabled."
+msgstr ""
+"Ασφαλής καθαρισμός browser με ανίχνευση εγκατεστημένων browser και σαφή "
+"απενεργοποίηση όσων δεν είναι διαθέσιμοι."
+
+msgid ""
+"Application cache, system, custom directory, application log, and system "
+"journal cleanup with configurable retention."
+msgstr ""
+"Καθαρισμός cache εφαρμογών, συστήματος, προσαρμοσμένων φακέλων, logs "
+"εφαρμογών και system journal με ρυθμιζόμενη διατήρηση."
+
+msgid ""
+"Scheduled automatic cleanup with multiple cleanup days, a chosen local time, "
+"and optional start at login."
+msgstr ""
+"Προγραμματισμένος αυτόματος καθαρισμός με πολλαπλές ημέρες, επιλεγμένη "
+"τοπική ώρα και προαιρετική εκκίνηση κατά τη σύνδεση."
+
+msgid ""
+"A lightweight visual Storage Analyzer for finding large files and folders "
+"and moving selected items to Trash."
+msgstr ""
+"Ελαφρύς οπτικός Αναλυτής Αποθήκευσης για εύρεση μεγάλων αρχείων και φακέλων "
+"και μετακίνηση επιλεγμένων στοιχείων στα Απορρίμματα."
+
+msgid ""
+"An in-app cleanup log showing deleted, skipped, and failed items after every "
+"cleanup."
+msgstr ""
+"Ενσωματωμένο αρχείο καταγραφής που εμφανίζει διαγραμμένα, παραλειφθέντα και "
+"αποτυχημένα στοιχεία μετά από κάθε καθαρισμό."
+
+msgid ""
+"System tray integration with an adaptive symbolic icon and quick cleanup "
+"actions."
+msgstr ""
+"Ενσωμάτωση στο system tray με προσαρμοζόμενο συμβολικό εικονίδιο και "
+"γρήγορες ενέργειες καθαρισμού."
+
+msgid ""
+"A startup update check with direct access to the latest verified GitHub "
+"release."
+msgstr ""
+"Έλεγχος ενημερώσεων κατά την εκκίνηση με άμεση πρόσβαση στην τελευταία "
+"επαληθευμένη έκδοση στο GitHub."
+
+msgid ""
+"Safety limits, critical-path protection, symlink traversal prevention, "
+"previews, and running-browser checks."
+msgstr ""
+"Όρια ασφαλείας, προστασία κρίσιμων διαδρομών, έλεγχος συμβολικών συνδέσμων, "
+"προεπισκοπήσεις και έλεγχοι ενεργών browser."
+
+msgid "Consistent Magnífico application, executable, package, desktop, and configuration naming."
+msgstr "Συνεπής ονομασία Magnífico για εφαρμογή, εκτελέσιμο, πακέτο, desktop και ρυθμίσεις."
+
+msgid ""
+"English, Greek, Italian, Spanish, German, and French interface languages "
+"with automatic system-language detection."
+msgstr ""
+"Γλώσσες περιβάλλοντος αγγλικά, ελληνικά, ιταλικά, ισπανικά, γερμανικά και "
+"γαλλικά με αυτόματη ανίχνευση της γλώσσας συστήματος."
+
+#. Destructive cleanup dialogs and dynamic UI templates
+msgid "Confirm Cleanup"
+msgstr "Επιβεβαίωση καθαρισμού"
+
+msgid "Nothing to Clean"
+msgstr "Δεν υπάρχει τίποτα για καθαρισμό"
+
+msgid "Cleanup Complete"
+msgstr "Ο καθαρισμός ολοκληρώθηκε"
+
+msgid "Cleanup Cancelled"
+msgstr "Ο καθαρισμός ακυρώθηκε"
+
+msgid "Cleanup Blocked"
+msgstr "Ο καθαρισμός αποκλείστηκε"
+
+msgid "Operation in Progress"
+msgstr "Εκτελείται λειτουργία"
+
+msgid "{used} used"
+msgstr "{used} σε χρήση"
+
+msgid "of {total} total on {device} (mounted at {mount})"
+msgstr "από {total} συνολικά στη συσκευή {device} (προσαρτημένη στο {mount})"
+
+msgid "{used} used, {available} available"
+msgstr "{used} σε χρήση, {available} διαθέσιμα"
+
+msgid "Home filesystem could not be detected"
+msgstr ""
+"Δεν ήταν δυνατός ο εντοπισμός του συστήματος αρχείων του προσωπικού φακέλου"
+
+msgid ""
+"This will delete {count} files ({size}).{journal}\n"
+"\n"
+"This action cannot be undone."
+msgstr ""
+"Θα διαγραφούν {count} αρχεία ({size}).{journal}\n"
+"\n"
+"Αυτή η ενέργεια δεν μπορεί να αναιρεθεί."
+
+msgid ""
+"\n"
+"The archived system journal older than {days} days will also be vacuumed "
+"with administrator approval."
+msgstr ""
+"\n"
+"Το αρχειοθετημένο system journal παλαιότερο από {days} ημέρες θα καθαριστεί "
+"επίσης με έγκριση διαχειριστή."
+
+msgid ""
+"Deleted {count} files and freed {size}.\n"
+"{failed} items failed.{journal}"
+msgstr ""
+"Διαγράφηκαν {count} αρχεία και ελευθερώθηκαν {size}.\n"
+"Απέτυχαν {failed} στοιχεία.{journal}"
+
+msgid ""
+"\n"
+"System journal: {message}."
+msgstr ""
+"\n"
+"System journal: {message}."
+
+msgid ""
+"\n"
+"System journal failed: {error}"
+msgstr ""
+"\n"
+"Το system journal απέτυχε: {error}"
+
+#: src/ui/storage_analyzer_page.rs:356
+msgid "Choose a Folder to Analyze"
+msgstr "Επιλέξτε φάκελο για ανάλυση"
+
+#: src/ui/storage_analyzer_page.rs:359
+msgid "Analyze"
+msgstr "Ανάλυση"
+
+#: src/ui/storage_analyzer_page.rs:437
+msgid "Cancelling…"
+msgstr "Ακύρωση…"
+
+#: src/ui/storage_analyzer_page.rs:507
+msgid "Analyzing Storage…"
+msgstr "Ανάλυση αποθήκευσης…"
+
+#: src/ui/storage_analyzer_page.rs:509
+#, rust-format
+msgid "Scanning {path} without following symbolic links"
+msgstr "Σάρωση του {path} χωρίς ακολούθηση συμβολικών συνδέσμων"
+
+#: src/ui/storage_analyzer_page.rs:550
+#, rust-format
+msgid "{count} items"
+msgstr "{count} στοιχεία"
+
+#: src/ui/storage_analyzer_page.rs:561
+msgid "Some entries skipped"
+msgstr "Παραλείφθηκαν ορισμένα στοιχεία"
+
+#: src/ui/storage_analyzer_page.rs:565
+msgid "All readable entries were scanned"
+msgstr "Σαρώθηκαν όλα τα αναγνώσιμα στοιχεία"
+
+#: src/ui/storage_analyzer_page.rs:568
+#, rust-format
+msgid "{count} entries could not be read"
+msgstr "Δεν ήταν δυνατή η ανάγνωση {count} στοιχείων"
+
+#: src/ui/storage_analyzer_page.rs:646
+msgid "No individual files or folders meet the selected size threshold"
+msgstr ""
+"Κανένα μεμονωμένο αρχείο ή φάκελος δεν πληροί το επιλεγμένο όριο μεγέθους"
+
+#: src/ui/storage_analyzer_page.rs:740
+msgid "Inspect this folder"
+msgstr "Εξερεύνηση αυτού του φακέλου"
+
+#: src/ui/storage_analyzer_page.rs:769
+msgid "date unavailable"
+msgstr "η ημερομηνία δεν είναι διαθέσιμη"
+
+#: src/ui/storage_analyzer_page.rs:771
+#, rust-format
+msgid "{kind} · Modified {date} · {path}"
+msgstr "{kind} · Τροποποιήθηκε {date} · {path}"
+
+#: src/ui/storage_analyzer_page.rs:815
+msgid "1 item selected"
+msgstr "Επιλέχθηκε 1 στοιχείο"
+
+#: src/ui/storage_analyzer_page.rs:818
+#, rust-format
+msgid "{count} items selected"
+msgstr "Επιλέχθηκαν {count} στοιχεία"
+
+#: src/ui/storage_analyzer_page.rs:831
+#, rust-format
+msgid "{size} will be reviewed before moving"
+msgstr "Θα ελεγχθούν {size} πριν από τη μετακίνηση"
+
+#: src/ui/storage_analyzer_page.rs:1008
+#, rust-format
+msgid ""
+"\n"
+"• and {count} more"
+msgstr ""
+"\n"
+"• και {count} ακόμη"
+
+#: src/ui/storage_analyzer_page.rs:1015
+#, rust-format
+msgid ""
+"Move {count} selected {item_word} ({size}) to Trash?\n"
+"\n"
+"{preview}{more}\n"
+"\n"
+"Folders include all contents, including smaller items grouped as Other. "
+"Items can be restored from Trash."
+msgstr ""
+"Μετακίνηση {count} επιλεγμένων {item_word} ({size}) στα Απορρίμματα;\n"
+"\n"
+"{preview}{more}\n"
+"\n"
+"Οι φάκελοι περιλαμβάνουν όλα τα περιεχόμενα, καθώς και μικρότερα στοιχεία "
+"που ομαδοποιούνται ως Άλλα. Τα στοιχεία μπορούν να επαναφερθούν από τα "
+"Απορρίμματα."
+
+#: src/ui/storage_analyzer_page.rs:1032
+msgid "Move Selected Items to Trash?"
+msgstr "Μετακίνηση επιλεγμένων στοιχείων στα Απορρίμματα;"
+
+#: src/ui/storage_analyzer_page.rs:1103
+#, rust-format
+msgid ""
+"Moved {moved} {item_word} ({size}) to Trash.\n"
+"{failed} items failed.{details}"
+msgstr ""
+"Μετακινήθηκαν {moved} {item_word} ({size}) στα Απορρίμματα.\n"
+"Απέτυχαν {failed} στοιχεία.{details}"
+
+#: src/ui/cleanup_log_page.rs:182
+#, rust-format
+msgid "{mode} cleanup · {time}"
+msgstr "Καθαρισμός {mode} · {time}"
+
+#: src/ui/cleanup_log_page.rs:192
+#, rust-format
+msgid ""
+"{status} · {files} files and {folders} folders removed · {size} freed · "
+"{notices} notices"
+msgstr ""
+"{status} · αφαιρέθηκαν {files} αρχεία και {folders} φάκελοι · ελευθερώθηκαν "
+"{size} · {notices} ειδοποιήσεις"
+
+#: src/ui/cleanup_log_page.rs:205
+msgid "Magnífico — CLEANUP LOG"
+msgstr "Magnífico — ΑΡΧΕΙΟ ΚΑΤΑΓΡΑΦΗΣ ΚΑΘΑΡΙΣΜΟΥ"
+
+#: src/ui/cleanup_log_page.rs:210
+#, rust-format
+msgid "Completed: {time}"
+msgstr "Ολοκληρώθηκε: {time}"
+
+#: src/ui/cleanup_log_page.rs:215
+#, rust-format
+msgid "Mode: {mode}"
+msgstr "Λειτουργία: {mode}"
+
+#: src/ui/cleanup_log_page.rs:220
+#, rust-format
+msgid "Status: {status}"
+msgstr "Κατάσταση: {status}"
+
+#: src/ui/cleanup_log_page.rs:226
+#, rust-format
+msgid "Space freed: {size}"
+msgstr "Χώρος που ελευθερώθηκε: {size}"
+
+#: src/ui/cleanup_log_page.rs:234
+#, rust-format
+msgid "Deleted files: {count}"
+msgstr "Διαγραμμένα αρχεία: {count}"
+
+#: src/ui/cleanup_log_page.rs:242
+#, rust-format
+msgid "Deleted folders: {count}"
+msgstr "Διαγραμμένοι φάκελοι: {count}"
+
+#: src/ui/cleanup_log_page.rs:250
+#, rust-format
+msgid "Failed items: {count}"
+msgstr "Αποτυχημένα στοιχεία: {count}"
+
+#: src/ui/cleanup_log_page.rs:258
+#, rust-format
+msgid "Skipped items: {count}"
+msgstr "Παραλειφθέντα στοιχεία: {count}"
+
+#: src/ui/cleanup_log_page.rs:270
+#, rust-format
+msgid ""
+"\n"
+"BLOCKED\n"
+"  {reason}"
+msgstr ""
+"\n"
+"ΑΠΟΚΛΕΙΣΤΗΚΕ\n"
+"  {reason}"
+
+#: src/ui/cleanup_log_page.rs:324
+msgid ""
+"\n"
+"SYSTEM JOURNAL"
+msgstr ""
+"\n"
+"SYSTEM JOURNAL"
+
+#: src/ui/cleanup_log_page.rs:330
+#, rust-format
+msgid "  [CLEANED] {message}"
+msgstr "  [ΚΑΘΑΡΙΣΤΗΚΕ] {message}"
+
+#: src/ui/cleanup_log_page.rs:337
+#, rust-format
+msgid "  [FAILED] {error}"
+msgstr "  [ΑΠΕΤΥΧΕ] {error}"
+
+#: src/ui/cleanup_log_page.rs:345
+msgid "  [SKIPPED] Scheduled cleanup cannot request administrator approval"
+msgstr ""
+"  [ΠΑΡΑΛΕΙΦΘΗΚΕ] Ο προγραμματισμένος καθαρισμός δεν μπορεί να ζητήσει "
+"έγκριση διαχειριστή"
+
+#: src/ui/cleanup_log_page.rs:353
+msgid "  [SKIPPED] Cleanup was cancelled"
+msgstr "  [ΠΑΡΑΛΕΙΦΘΗΚΕ] Ο καθαρισμός ακυρώθηκε"
+
+#: src/ui/cleanup_log_page.rs:360
+msgid "  [SKIPPED] Cleanup was blocked"
+msgstr "  [ΠΑΡΑΛΕΙΦΘΗΚΕ] Ο καθαρισμός αποκλείστηκε"
+
+#: src/ui/cleanup_log_page.rs:367
+msgid "  [NOT RUN] No journal result was returned"
+msgstr "  [ΔΕΝ ΕΚΤΕΛΕΣΤΗΚΕ] Δεν επιστράφηκε αποτέλεσμα journal"
+
+#: src/ui/cleanup_log_page.rs:374
+msgid "  [DISABLED] System journal cleanup was not enabled"
+msgstr ""
+"  [ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ] Ο καθαρισμός του system journal δεν ήταν ενεργοποιημένος"
+
+#: src/ui/cleanup_log_page.rs:396 src/ui/cleanup_log_page.rs:438
+#: src/ui/cleanup_log_page.rs:481
+#, rust-format
+msgid ""
+"\n"
+"{heading} ({count})"
+msgstr ""
+"\n"
+"{heading} ({count})"
+
+#: src/ui/cleanup_log_page.rs:404 src/ui/cleanup_log_page.rs:446
+#: src/ui/cleanup_log_page.rs:489
+msgid "  None"
+msgstr "  Κανένα"
+
+#: src/ui/cleanup_log_page.rs:411
+#, rust-format
+msgid "  [{status}] {path}\n"
+msgstr "  [{status}] {path}\n"
+
+#: src/ui/cleanup_log_page.rs:453
+#, rust-format
+msgid ""
+"  [{status}] {path}\n"
+"    Reason: {reason}\n"
+msgstr ""
+"  [{status}] {path}\n"
+"    Αιτία: {reason}\n"
+
+#: src/ui/cleanup_log_page.rs:496
+#, rust-format
+msgid "  [{status}] {message}\n"
+msgstr "  [{status}] {message}\n"
+
+#: src/ui/cleanup_log_page.rs:523
+#, rust-format
+msgid "  [TRUNCATED] {omitted} additional entries omitted from the in-app log"
+msgstr ""
+"  [ΠΕΡΙΚΟΠΗ] Παραλείφθηκαν {omitted} επιπλέον καταχωρίσεις από το αρχείο "
+"καταγραφής της εφαρμογής"
+
+#: src/ui/diagnostics_page.rs:79
+msgid "System compatibility and environment information"
+msgstr "Πληροφορίες συμβατότητας συστήματος και περιβάλλοντος"
+
+#: src/ui/diagnostics_page.rs:123 src/ui/diagnostics_page.rs:128
+msgid "Desktop Environment"
+msgstr "Περιβάλλον επιφάνειας εργασίας"
+
+#: src/ui/diagnostics_page.rs:124
+msgid "Information about your desktop environment"
+msgstr "Πληροφορίες για το περιβάλλον επιφάνειας εργασίας σας"
+
+#: src/ui/diagnostics_page.rs:135 src/ui/diagnostics_page.rs:170
+#: src/ui/diagnostics_page.rs:178
+msgid "Not set"
+msgstr "Δεν έχει οριστεί"
+
+#: src/ui/diagnostics_page.rs:143 src/ui/diagnostics_page.rs:209
+#: src/ui/diagnostics_page.rs:236
+msgid "Unknown"
+msgstr "Άγνωστο"
+
+#: src/ui/diagnostics_page.rs:155 src/ui/diagnostics_page.rs:162
+msgid "Display Server"
+msgstr "Διακομιστής προβολής"
+
+#: src/ui/diagnostics_page.rs:156
+msgid "Information about the display server"
+msgstr "Πληροφορίες για τον διακομιστή προβολής"
+
+#: src/ui/diagnostics_page.rs:188
+msgid "Compatibility"
+msgstr "Συμβατότητα"
+
+#: src/ui/diagnostics_page.rs:190
+msgid "Full Wayland support via GTK4"
+msgstr "Πλήρης υποστήριξη Wayland μέσω GTK4"
+
+#: src/ui/diagnostics_page.rs:192
+msgid "X11 mode - all features available"
+msgstr "Λειτουργία X11 — όλες οι δυνατότητες είναι διαθέσιμες"
+
+#: src/ui/diagnostics_page.rs:203
+msgid "Theme"
+msgstr "Θέμα"
+
+#: src/ui/diagnostics_page.rs:204
+msgid "Current theme and color scheme settings"
+msgstr "Ρυθμίσεις τρέχοντος θέματος και χρωματικού συνδυασμού"
+
+#: src/ui/diagnostics_page.rs:211
+msgid "Icon Theme"
+msgstr "Θέμα εικονιδίων"
+
+#: src/ui/diagnostics_page.rs:231
+msgid "Follow System"
+msgstr "Σύμφωνα με το σύστημα"
+
+#: src/ui/diagnostics_page.rs:232
+msgid "Force Light"
+msgstr "Επιβολή φωτεινού"
+
+#: src/ui/diagnostics_page.rs:233
+msgid "Force Dark"
+msgstr "Επιβολή σκοτεινού"
+
+#: src/ui/diagnostics_page.rs:234
+msgid "Prefer Light"
+msgstr "Προτίμηση φωτεινού"
+
+#: src/ui/diagnostics_page.rs:235
+msgid "Prefer Dark"
+msgstr "Προτίμηση σκοτεινού"
+
+#: src/ui/diagnostics_page.rs:239
+msgid "Theme Mode"
+msgstr "Λειτουργία θέματος"
+
+#: src/ui/diagnostics_page.rs:246
+msgid "High Contrast"
+msgstr "Υψηλή αντίθεση"
+
+#: src/ui/diagnostics_page.rs:253
+msgid "Reduced Motion"
+msgstr "Μειωμένη κίνηση"
+
+#: src/ui/diagnostics_page.rs:260
+msgid "Accent Color"
+msgstr "Χρώμα έμφασης"
+
+#: src/ui/diagnostics_page.rs:271
+msgid "Icon Resolution"
+msgstr "Επίλυση εικονιδίων"
+
+#: src/ui/diagnostics_page.rs:272
+msgid "Status of icon loading and fallbacks"
+msgstr "Κατάσταση φόρτωσης εικονιδίων και εναλλακτικών"
+
+#: src/ui/diagnostics_page.rs:299
+msgid "Resolution Rate"
+msgstr "Ποσοστό επίλυσης"
+
+#: src/ui/diagnostics_page.rs:301
+#, rust-format
+msgid "{percent}% icons resolved from theme"
+msgstr "{percent}% των εικονιδίων επιλύθηκαν από το θέμα"
+
+#: src/ui/diagnostics_page.rs:313
+msgid "XDG Portals"
+msgstr "Πύλες XDG"
+
+#: src/ui/diagnostics_page.rs:314
+msgid "Desktop portal availability for sandboxed access"
+msgstr "Διαθεσιμότητα πύλης επιφάνειας εργασίας για πρόσβαση σε sandbox"
+
+#: src/ui/diagnostics_page.rs:332
+msgid "Default"
+msgstr "Προεπιλογή"
+
+#: src/ui/diagnostics_page.rs:334
+msgid "GTK Portal Usage"
+msgstr "Χρήση πύλης GTK"
+
+#: src/ui/diagnostics_page.rs:346
+msgid "Portal Service"
+msgstr "Υπηρεσία πύλης"
+
+#: src/ui/diagnostics_page.rs:361
+msgid "XDG Paths"
+msgstr "Διαδρομές XDG"
+
+#: src/ui/diagnostics_page.rs:362
+msgid "Standard directory locations being used"
+msgstr "Τυπικές τοποθεσίες καταλόγων που χρησιμοποιούνται"
+
+#: src/ui/diagnostics_page.rs:365
+msgid "Config"
+msgstr "Ρυθμίσεις"
+
+#: src/ui/diagnostics_page.rs:367
+msgid "Data"
+msgstr "Δεδομένα"
+
+#: src/ui/diagnostics_page.rs:368
+#: src/ui/storage_analyzer_page.rs
+msgid "Home"
+msgstr "Προσωπικός φάκελος"
+
+#: src/ui/diagnostics_page.rs:375
+msgid "Not available"
+msgstr "Δεν είναι διαθέσιμο"
+
+#: src/ui/diagnostics_page.rs:393
+msgid "App Config"
+msgstr "Ρυθμίσεις εφαρμογής"
+
+#: src/ui/storage_analyzer_page.rs:175
+msgid "Files and folders smaller than this are grouped as Other"
+msgstr "Τα αρχεία και οι φάκελοι μικρότερου μεγέθους ομαδοποιούνται ως Άλλα"
+
+#: src/ui/storage_analyzer_page.rs:225
+msgid "Some entries could not be read"
+msgstr "Δεν ήταν δυνατή η ανάγνωση ορισμένων στοιχείων"
+
+#: src/ui/storage_analyzer_page.rs:234
+msgid "Click a folder block to inspect its contents"
+msgstr "Κάντε κλικ σε ένα μπλοκ φακέλου για να εξετάσετε τα περιεχόμενά του"
+
+#: src/ui/storage_analyzer_page.rs:376
+msgid "Local Folders Only"
+msgstr "Μόνο τοπικοί φάκελοι"
+
+#: src/ui/storage_analyzer_page.rs:377
+msgid "Storage Analyzer currently supports local folders only."
+msgstr "Ο Αναλυτής Αποθήκευσης υποστηρίζει προς το παρόν μόνο τοπικούς φακέλους."
+
+#: src/ui/storage_analyzer_page.rs:403
+msgid ""
+"Wait for the current cleanup operation to finish before analyzing storage."
+msgstr "Περιμένετε να ολοκληρωθεί ο τρέχων καθαρισμός πριν αναλύσετε τον αποθηκευτικό χώρο."
+
+#: src/ui/storage_analyzer_page.rs:411
+msgid "Cancel Scan"
+msgstr "Ακύρωση σάρωσης"
+
+#: src/ui/storage_analyzer_page.rs:467
+msgid "Scan Cancelled"
+msgstr "Η σάρωση ακυρώθηκε"
+
+#: src/ui/storage_analyzer_page.rs:468
+msgid "Choose a folder when you are ready to analyze storage."
+msgstr "Επιλέξτε έναν φάκελο όταν είστε έτοιμοι να αναλύσετε τον αποθηκευτικό χώρο."
+
+#: src/ui/storage_analyzer_page.rs:474
+msgid "Could Not Analyze Folder"
+msgstr "Δεν ήταν δυνατή η ανάλυση του φακέλου"
+
+#: src/ui/storage_analyzer_page.rs:676
+msgid "Select this entire folder and all of its contents"
+msgstr "Επιλογή ολόκληρου του φακέλου και όλων των περιεχομένων του"
+
+#: src/ui/storage_analyzer_page.rs:678
+msgid "Select this file"
+msgstr "Επιλογή αυτού του αρχείου"
+
+#: src/ui/storage_analyzer_page.rs:761
+msgid "Folder"
+msgstr "Φάκελος"
+
+#: src/ui/storage_analyzer_page.rs:763
+msgid "File"
+msgstr "Αρχείο"
+
+#: src/ui/storage_analyzer_page.rs:889
+msgid "Other"
+msgstr "Άλλα"
+
+#: src/ui/storage_analyzer_page.rs:1021 src/ui/storage_analyzer_page.rs:1112
+msgid "item"
+msgstr "στοιχείο"
+
+#: src/ui/storage_analyzer_page.rs:1023 src/ui/storage_analyzer_page.rs:1112
+msgid "items"
+msgstr "στοιχεία"
+
+#: src/ui/storage_analyzer_page.rs:1063
+msgid "Wait for the current cleanup operation before moving storage items."
+msgstr "Περιμένετε να ολοκληρωθεί ο τρέχων καθαρισμός πριν μετακινήσετε στοιχεία αποθήκευσης."
+
+#: src/ui/storage_analyzer_page.rs:1068
+msgid "Moving…"
+msgstr "Μετακίνηση…"
+
+#: src/ui/storage_analyzer_page.rs:1086
+msgid "Trash Operation Failed"
+msgstr "Η λειτουργία Απορριμμάτων απέτυχε"
+
+#: src/ui/storage_analyzer_page.rs:1087
+msgid "The operation did not return a result."
+msgstr "Η λειτουργία δεν επέστρεψε αποτέλεσμα."
+
+#: src/ui/storage_analyzer_page.rs:1130
+msgid "Items Moved to Trash"
+msgstr "Τα στοιχεία μετακινήθηκαν στα Απορρίμματα"
+
+#: src/ui/storage_analyzer_page.rs:1132
+msgid "Nothing Was Moved"
+msgstr "Δεν μετακινήθηκε τίποτα"
+
+#: src/ui/storage_analyzer_page.rs:1166
+msgid "Storage Operation in Progress"
+msgstr "Εκτελείται λειτουργία αποθήκευσης"
+
+#: src/ui/storage_analyzer_page.rs:1167
+msgid "Cancel the current storage scan or wait for the Trash operation to finish before closing Magnífico."
+msgstr "Ακυρώστε την τρέχουσα σάρωση ή περιμένετε να ολοκληρωθεί η λειτουργία Απορριμμάτων πριν κλείσετε το Magnífico."
+
+#: src/ui/cleanup_log_page.rs:162
+msgid "Scheduled"
+msgstr "Προγραμματισμένος"
+
+#: src/ui/cleanup_log_page.rs:164
+msgid "Manual"
+msgstr "Χειροκίνητος"
+
+#: src/ui/cleanup_log_page.rs:175
+msgid "Blocked"
+msgstr "Αποκλεισμένος"
+
+#: src/ui/cleanup_log_page.rs:177
+msgid "Cancelled"
+msgstr "Ακυρωμένος"
+
+#: src/ui/cleanup_log_page.rs:179
+msgid "Completed with notices"
+msgstr "Ολοκληρώθηκε με ειδοποιήσεις"
+
+#: src/ui/cleanup_log_page.rs:181
+msgid "Completed successfully"
+msgstr "Ολοκληρώθηκε επιτυχώς"
+
+#: src/ui/cleanup_log_page.rs:280
+msgid "DELETED FILES"
+msgstr "ΔΙΑΓΡΑΜΜΕΝΑ ΑΡΧΕΙΑ"
+
+#: src/ui/cleanup_log_page.rs:281 src/ui/cleanup_log_page.rs:288
+msgid "DELETED"
+msgstr "ΔΙΑΓΡΑΦΗΚΕ"
+
+#: src/ui/cleanup_log_page.rs:287
+msgid "DELETED EMPTY FOLDERS"
+msgstr "ΔΙΑΓΡΑΜΜΕΝΟΙ ΚΕΝΟΙ ΦΑΚΕΛΟΙ"
+
+#: src/ui/cleanup_log_page.rs:294
+msgid "SKIPPED DURING CLEANUP"
+msgstr "ΠΑΡΑΛΕΙΦΘΗΚΑΝ ΚΑΤΑ ΤΟΝ ΚΑΘΑΡΙΣΜΟ"
+
+#: src/ui/cleanup_log_page.rs:295 src/ui/cleanup_log_page.rs:302
+msgid "SKIPPED"
+msgstr "ΠΑΡΑΛΕΙΦΘΗΚΕ"
+
+#: src/ui/cleanup_log_page.rs:301
+msgid "SKIPPED DURING SCAN"
+msgstr "ΠΑΡΑΛΕΙΦΘΗΚΑΝ ΚΑΤΑ ΤΗ ΣΑΡΩΣΗ"
+
+#: src/ui/cleanup_log_page.rs:308 src/ui/cleanup_log_page.rs:309
+msgid "FAILED"
+msgstr "ΑΠΕΤΥΧΕ"
+
+#: src/ui/cleanup_log_page.rs:315
+msgid "SECURITY NOTICES"
+msgstr "ΕΙΔΟΠΟΙΗΣΕΙΣ ΑΣΦΑΛΕΙΑΣ"
+
+#: src/ui/cleanup_log_page.rs:316
+msgid "NOTICE"
+msgstr "ΕΙΔΟΠΟΙΗΣΗ"
+
+#: src/ui/cleanup_log_page.rs:322
+msgid "SCAN ERRORS"
+msgstr "ΣΦΑΛΜΑΤΑ ΣΑΡΩΣΗΣ"
+
+#: src/ui/cleanup_log_page.rs:323
+msgid "ERROR"
+msgstr "ΣΦΑΛΜΑ"
+
+#: src/ui/settings_page.rs
+msgid "Blur Behind the Sidebar"
+msgstr "Θόλωση πίσω από την πλευρική στήλη"
+
+#: src/ui/settings_page.rs
+msgid "The desktop shows through the sidebar, blurred"
+msgstr "Η επιφάνεια εργασίας φαίνεται θολή μέσα από την πλευρική στήλη"
+
+msgid "No app caches found"
+msgstr "Δεν βρέθηκαν κρυφές μνήμες εφαρμογών"
+
+#: src/models/cleanup_plan.rs
+msgid "No Impact"
+msgstr "Χωρίς επίπτωση"
+
+#: src/models/cleanup_plan.rs
+msgid "Rebuild"
+msgstr "Επαναμεταγλώττιση"
+
+#: src/models/cleanup_plan.rs
+msgid "Download Again"
+msgstr "Λήψη ξανά"
+
+#: src/models/cleanup_plan.rs
+msgid "Comes back on its own"
+msgstr "Δημιουργείται ξανά αυτόματα"
+
+#: src/models/cleanup_plan.rs
+msgid "The next build takes longer"
+msgstr "Η επόμενη μεταγλώττιση θα διαρκέσει περισσότερο"
+
+#: src/models/cleanup_plan.rs
+msgid "Uses your connection to get it back"
+msgstr "Χρησιμοποιεί τη σύνδεσή σας για νέα λήψη"
+
+#: src/models/cleanup_plan.rs
+msgid "Programming Caches"
+msgstr "Κρυφές μνήμες προγραμματισμού"
+
+#: src/models/cleanup_plan.rs
+msgid "Old Logs"
+msgstr "Παλιά αρχεία καταγραφής"
+
+#: src/models/cleanup_plan.rs
+msgid "Your Folders"
+msgstr "Οι φάκελοί σας"
+
+#: src/models/cleanup_plan.rs
+msgid "Rust Builds"
+msgstr "Μεταγλωττίσεις Rust"
+
+#: src/models/cleanup_plan.rs
+msgid "Python and Node"
+msgstr "Python και Node"
+
+#: src/models/cleanup_plan.rs
+msgid "Other Builds"
+msgstr "Άλλες μεταγλωττίσεις"
+
+#: src/models/cleanup_plan.rs src/services/big_items.rs
+msgid "Games"
+msgstr "Παιχνίδια"
+
+#: src/models/cleanup_plan.rs
+msgid "Nothing you use changes. Files in the trash are gone for good."
+msgstr "Τίποτα από όσα χρησιμοποιείτε δεν αλλάζει. Τα αρχεία στα απορρίμματα διαγράφονται οριστικά."
+
+#: src/models/cleanup_plan.rs
+msgid "The system creates new ones as it needs them."
+msgstr "Το σύστημα δημιουργεί νέα όταν τα χρειάζεται."
+
+#: src/models/cleanup_plan.rs
+msgid "Copies apps keep to open faster."
+msgstr "Αντίγραφα που κρατούν οι εφαρμογές για να ανοίγουν πιο γρήγορα."
+
+#: src/models/cleanup_plan.rs
+msgid "The first launch of each app may be a little slower."
+msgstr "Η πρώτη εκκίνηση κάθε εφαρμογής μπορεί να είναι λίγο πιο αργή."
+
+#: src/models/cleanup_plan.rs
+msgid "Each app rebuilds its cache by itself."
+msgstr "Κάθε εφαρμογή δημιουργεί ξανά την κρυφή μνήμη της αυτόματα."
+
+#: src/models/cleanup_plan.rs
+msgid "Packages that cargo, npm, pip and other tools downloaded before."
+msgstr "Πακέτα που έχουν κατεβάσει παλιότερα τα cargo, npm, pip και άλλα εργαλεία."
+
+#: src/models/cleanup_plan.rs
+msgid "Your projects keep working."
+msgstr "Τα έργα σας συνεχίζουν να λειτουργούν."
+
+#: src/models/cleanup_plan.rs
+msgid "Each tool downloads what a project needs on its next build."
+msgstr "Κάθε εργαλείο κατεβάζει ό,τι χρειάζεται το έργο στην επόμενη μεταγλώττιση."
+
+#: src/models/cleanup_plan.rs
+msgid "Old log files past the retention period you set."
+msgstr "Παλιά αρχεία καταγραφής που έχουν ξεπεράσει την περίοδο διατήρησης που ορίσατε."
+
+#: src/models/cleanup_plan.rs
+msgid "You lose old history that apps wrote for debugging."
+msgstr "Χάνετε το παλιό ιστορικό που κατέγραψαν οι εφαρμογές για αποσφαλμάτωση."
+
+#: src/models/cleanup_plan.rs
+msgid "Apps keep writing new logs."
+msgstr "Οι εφαρμογές συνεχίζουν να γράφουν νέες καταγραφές."
+
+#: src/models/cleanup_plan.rs
+msgid "Browser caches, plus the cookies, history or sessions you chose."
+msgstr "Κρυφές μνήμες του περιηγητή, μαζί με τα cookies, το ιστορικό ή τις συνεδρίες που επιλέξατε."
+
+#: src/models/cleanup_plan.rs
+msgid "Pages load slower once. Cookies sign you out of websites."
+msgstr "Οι σελίδες φορτώνουν πιο αργά την πρώτη φορά. Η διαγραφή των cookies σάς αποσυνδέει από ιστοτόπους."
+
+#: src/models/cleanup_plan.rs
+msgid "The browser fills its cache again as you browse."
+msgstr "Ο περιηγητής γεμίζει ξανά την κρυφή μνήμη του καθώς περιηγείστε."
+
+#: src/models/cleanup_plan.rs
+msgid "Folders you added yourself in Custom Directories."
+msgstr "Φάκελοι που προσθέσατε στους προσαρμοσμένους καταλόγους."
+
+#: src/models/cleanup_plan.rs
+msgid "Whatever is inside is removed."
+msgstr "Διαγράφονται όλα τα περιεχόμενά τους."
+
+#: src/models/cleanup_plan.rs
+msgid "Only if the program that made them creates them again."
+msgstr "Μόνο αν το πρόγραμμα που τα δημιούργησε τα δημιουργήσει ξανά."
+
+#: src/models/cleanup_plan.rs
+msgid "The target folders where cargo keeps compiled code."
+msgstr "Οι φάκελοι target όπου το cargo αποθηκεύει τον μεταγλωττισμένο κώδικα."
+
+#: src/models/cleanup_plan.rs
+msgid "Your source code is untouched. The next build compiles everything again."
+msgstr "Ο πηγαίος κώδικάς σας παραμένει ανέπαφος. Η επόμενη μεταγλώττιση μεταγλωττίζει τα πάντα ξανά."
+
+#: src/models/cleanup_plan.rs
+msgid "Run cargo build in the project."
+msgstr "Εκτελέστε cargo build στο έργο."
+
+#: src/models/cleanup_plan.rs
+msgid "Virtual environments and node_modules folders of your projects."
+msgstr "Εικονικά περιβάλλοντα και φάκελοι node_modules των έργων σας."
+
+#: src/models/cleanup_plan.rs
+msgid "The project will not run until its dependencies are installed again."
+msgstr "Το έργο δεν θα εκτελείται μέχρι να εγκατασταθούν ξανά οι εξαρτήσεις του."
+
+#: src/models/cleanup_plan.rs
+msgid "Run npm install, uv sync or pip install in the project."
+msgstr "Εκτελέστε npm install, uv sync ή pip install στο έργο."
+
+#: src/models/cleanup_plan.rs
+msgid "Build output of Gradle, Maven, Flutter, Zig and other tools."
+msgstr "Αρχεία μεταγλώττισης των Gradle, Maven, Flutter, Zig και άλλων εργαλείων."
+
+#: src/models/cleanup_plan.rs
+msgid "The next build starts from scratch."
+msgstr "Η επόμενη μεταγλώττιση ξεκινά από την αρχή."
+
+#: src/models/cleanup_plan.rs
+msgid "Build the project again."
+msgstr "Μεταγλωττίστε ξανά το έργο."
+
+#: src/models/cleanup_plan.rs
+msgid "Installed games and Steam's shader cache. Save games are kept."
+msgstr "Εγκατεστημένα παιχνίδια και κρυφή μνήμη σκιαστών του Steam. Οι αποθηκευμένες παρτίδες διατηρούνται."
+
+#: src/models/cleanup_plan.rs
+msgid "The game disappears from your library until you install it again."
+msgstr "Το παιχνίδι εξαφανίζεται από τη βιβλιοθήκη σας μέχρι να το εγκαταστήσετε ξανά."
+
+#: src/models/cleanup_plan.rs
+msgid "Install it again from Steam or Heroic."
+msgstr "Εγκαταστήστε το ξανά από το Steam ή το Heroic."
+
+#: src/models/cleanup_plan.rs
+msgid "AI models downloaded by Hugging Face, Ollama, LM Studio and similar tools."
+msgstr "Μοντέλα τεχνητής νοημοσύνης που έχουν κατεβάσει τα Hugging Face, Ollama, LM Studio και παρόμοια εργαλεία."
+
+#: src/models/cleanup_plan.rs
+msgid "The next time a program needs the model, it waits for the download."
+msgstr "Την επόμενη φορά που ένα πρόγραμμα θα χρειαστεί το μοντέλο, θα περιμένει να ολοκληρωθεί η λήψη."
+
+#: src/models/cleanup_plan.rs
+msgid "The program downloads it again, or pull it yourself."
+msgstr "Το πρόγραμμα το κατεβάζει ξανά ή το κατεβάζετε εσείς."
+
+msgid "Now"
+msgstr "Τώρα"
+
+msgid "After"
+msgstr "Μετά"
+
+msgid "You Free"
+msgstr "Ελευθερώνετε"
+
+#: src/ui/cleanup_view.rs
+msgid "I want to free"
+msgstr "Θέλω να ελευθερώσω"
+
+#: src/ui/cleanup_view.rs
+msgid "Show Details"
+msgstr "Εμφάνιση λεπτομερειών"
+
+#: src/ui/cleanup_view.rs
+msgid "What Will Be Cleaned"
+msgstr "Τι θα καθαριστεί"
+
+#: src/ui/cleanup_view.rs
+msgid "Looking for what can be cleaned…"
+msgstr "Αναζήτηση στοιχείων για καθαρισμό…"
+
+#: src/ui/cleanup_view.rs
+msgid "Nothing to clean right now"
+msgstr "Δεν υπάρχει κάτι για καθαρισμό τώρα"
+
+msgid "{size} disk"
+msgstr "Δίσκος {size}"
+
+#: src/ui/cleanup_view.rs
+msgid "{size} free after"
+msgstr "{size} ελεύθερα μετά"
+
+#: src/ui/cleanup_view.rs
+msgid "Selected: {selected} of {total}"
+msgstr "Επιλεγμένα: {selected} από {total}"
+
+#: src/ui/cleanup_view.rs
+msgid "Cleaning {size} in {seconds}… tap to cancel"
+msgstr "Καθαρισμός {size} σε {seconds}… πατήστε για ακύρωση"
+
+#: src/ui/cleanup_view.rs
+msgid "Done, clean {size}"
+msgstr "Έτοιμο, καθαρισμός {size}"
+
+#: src/ui/cleanup_view.rs
+msgid "Pick something to clean"
+msgstr "Επιλέξτε κάτι για καθαρισμό"
+
+#: src/ui/cleanup_view.rs
+msgid "{selected} of {total}"
+msgstr "{selected} από {total}"
+
+#: src/ui/cleanup_view.rs
+msgid "A running program is using it"
+msgstr "Χρησιμοποιείται από ένα πρόγραμμα που εκτελείται"
+
+#: src/ui/cleanup_view.rs
+msgid "Changed recently, so it is not picked for you"
+msgstr "Άλλαξε πρόσφατα, οπότε δεν επιλέγεται αυτόματα"
+
+#: src/ui/cleanup_view.rs
+msgid "What it is"
+msgstr "Τι είναι"
+
+#: src/ui/cleanup_view.rs
+msgid "If you delete it"
+msgstr "Αν το διαγράψετε"
+
+#: src/ui/cleanup_view.rs
+msgid "How it comes back"
+msgstr "Πώς επανέρχεται"
+
+#: src/ui/cleanup_view.rs
+msgid "Your files and apps"
+msgstr "Τα αρχεία και οι εφαρμογές σας"
+
+#: src/ui/project_settings.rs
+msgid "1 day"
+msgstr "1 ημέρα"
+
+#: src/ui/project_settings.rs
+msgid "3 days"
+msgstr "3 ημέρες"
+
+#: src/ui/project_settings.rs
+msgid "1 week"
+msgstr "1 εβδομάδα"
+
+#: src/ui/project_settings.rs
+msgid "2 weeks"
+msgstr "2 εβδομάδες"
+
+#: src/ui/project_settings.rs
+msgid "Projects"
+msgstr "Έργα"
+
+#: src/ui/project_settings.rs
+msgid "The cleanup screen lists the build and dependency folders of your projects. They are never removed by scheduled cleanup."
+msgstr "Η οθόνη καθαρισμού εμφανίζει τους φακέλους μεταγλώττισης και εξαρτήσεων των έργων σας. Ο προγραμματισμένος καθαρισμός δεν τους διαγράφει ποτέ."
+
+#: src/ui/project_settings.rs
+msgid "Look for Project Build Folders"
+msgstr "Αναζήτηση φακέλων μεταγλώττισης έργων"
+
+#: src/ui/project_settings.rs
+msgid "Pin Projects Changed In The Last"
+msgstr "Καρφίτσωμα έργων που άλλαξαν τις τελευταίες"
+
+#: src/ui/project_settings.rs
+msgid "Pinned projects are shown but never picked for you"
+msgstr "Τα καρφιτσωμένα έργα εμφανίζονται αλλά δεν επιλέγονται ποτέ αυτόματα"
+
+#: src/services/plan_builder.rs
+msgid "Application logs"
+msgstr "Αρχεία καταγραφής εφαρμογών"
+
+#: src/services/big_items.rs
+msgid "Steam · shader cache"
+msgstr "Steam · κρυφή μνήμη σκιαστών"
+
+#: src/ui/main_window.rs
+msgid "Look again after installing or building something, or after changing your rules."
+msgstr "Κάντε νέα αναζήτηση αφού εγκαταστήσετε ή μεταγλωττίσετε κάτι ή αλλάξετε τους κανόνες σας."
+
+msgid "Bigger Than Your Safety Limit"
+msgstr "Υπερβαίνει το όριο ασφαλείας σας"
+
+msgid "Clean Anyway"
+msgstr "Καθαρισμός ούτως ή άλλως"
+
+#: src/ui/dashboard_page.rs
+msgid "It has {count} files and your safety limit is {limit} per cleanup."
+msgstr "Περιέχει {count} αρχεία και το όριο ασφαλείας σας είναι {limit} ανά καθαρισμό."
+
+#: src/ui/dashboard_page.rs
+msgid "It is {size} and your safety limit is {limit} per cleanup."
+msgstr "Καταλαμβάνει {size} και το όριο ασφαλείας σας είναι {limit} ανά καθαρισμό."
+
+msgid "You picked it yourself, so you can clean it anyway this once."
+msgstr "Το επιλέξατε εσείς, επομένως μπορείτε να το καθαρίσετε ούτως ή άλλως αυτή τη φορά."
+
+#: src/ui/settings_page.rs
+msgid "Open Diagnostics"
+msgstr "Άνοιγμα διαγνωστικών"
+
+#: src/ui/main_window.rs
+msgid "Scan"
+msgstr "Σάρωση"
+
+#: src/ui/main_window.rs src/ui/system_page.rs
+msgid "User System"
+msgstr "Σύστημα χρήστη"
+
+#: src/ui/system_page.rs
+msgid "These operations don't require root access"
+msgstr "Αυτές οι λειτουργίες δεν απαιτούν δικαιώματα διαχειριστή"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Downloads"
+msgstr "Λήψεις"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Caches"
+msgstr "Κρυφές μνήμες"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "App Data"
+msgstr "Δεδομένα εφαρμογών"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Flatpak Apps"
+msgstr "Εφαρμογές Flatpak"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Trash"
+msgstr "Απορρίμματα"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Whole Disk"
+msgstr "Ολόκληρος ο δίσκος"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "System Logs and Packages"
+msgstr "Αρχεία καταγραφής και πακέτα συστήματος"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "App Leftovers"
+msgstr "Υπολείμματα εφαρμογών"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Find data left by uninstalled apps. Installed apps are shown for reference."
+msgstr "Βρείτε δεδομένα που άφησαν απεγκατεστημένες εφαρμογές. Οι εγκατεστημένες εφαρμογές εμφανίζονται για ενημέρωση."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Find Leftovers"
+msgstr "Εύρεση υπολειμμάτων"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Only uninstalled"
+msgstr "Μόνο απεγκατεστημένες"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Start a scan to find app leftovers."
+msgstr "Ξεκινήστε σάρωση για να βρείτε υπολείμματα εφαρμογών."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Finding app leftovers…"
+msgstr "Αναζήτηση υπολειμμάτων εφαρμογών…"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Scan cancelled. Previous results are kept."
+msgstr "Η σάρωση ακυρώθηκε. Τα προηγούμενα αποτελέσματα διατηρούνται."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Could Not Scan App Leftovers"
+msgstr "Αδυναμία σάρωσης υπολειμμάτων εφαρμογών"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "{count} apps · {size} can be freed"
+msgstr "{count} εφαρμογές · μπορούν να ελευθερωθούν {size}"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "In use"
+msgstr "Σε χρήση"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Not installed"
+msgstr "Μη εγκατεστημένη"
+
+#: src/ui/app_leftovers.rs
+msgid "No matching app"
+msgstr "Δεν βρέθηκε αντίστοιχη εφαρμογή"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "High confidence"
+msgstr "Υψηλή βεβαιότητα"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Medium confidence"
+msgstr "Μέτρια βεβαιότητα"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Unused for {months} months"
+msgstr "Δεν χρησιμοποιείται εδώ και {months} μήνες"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Last used {date}"
+msgstr "Τελευταία χρήση: {date}"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Uninstalled on {date}"
+msgstr "Απεγκαταστάθηκε στις {date}"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Incomplete scan; selection disabled"
+msgstr "Ελλιπής σάρωση· η επιλογή απενεργοποιήθηκε"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Move these app folders to Trash?\n\n{folders}\n\nRemoving configuration folders resets the app's settings. Folders include all their contents. You can restore them from Trash."
+msgstr "Να μετακινηθούν αυτοί οι φάκελοι εφαρμογών στα απορρίμματα;\n\n{folders}\n\nΗ αφαίρεση φακέλων ρυθμίσεων επαναφέρει τις ρυθμίσεις της εφαρμογής. Θα μετακινηθούν όλα τα περιεχόμενά τους. Μπορείτε να τους επαναφέρετε από τα απορρίμματα."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Move App Leftovers to Trash?"
+msgstr "Μετακίνηση υπολειμμάτων εφαρμογών στα απορρίμματα;"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Some Folders Could Not Be Moved"
+msgstr "Δεν ήταν δυνατή η μετακίνηση ορισμένων φακέλων"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Protected, installed, or currently in use"
+msgstr "Προστατευμένα δεδομένα, εγκατεστημένη εφαρμογή ή σε χρήση"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "The folder could not be fully checked"
+msgstr "Δεν ήταν δυνατός ο πλήρης έλεγχος του φακέλου"
+
+msgid "Files moved to the Trash"
+msgstr "Αρχεία μετακινήθηκαν στα απορρίμματα"
+
+msgid "{count} items ({size}) are in the Trash. Empty it to free the space completely."
+msgstr "{count} στοιχεία ({size}) βρίσκονται στα απορρίμματα. Αδειάστε τα για να ελευθερώσετε πλήρως τον χώρο."
+
+msgid "Empty Trash"
+msgstr "Άδειασμα απορριμμάτων"
+
+msgid "Rules changed — scan again"
+msgstr "Οι κανόνες άλλαξαν — επαναλάβετε τη σάρωση"
+
+msgid "Scan for Files (Ctrl+Shift+R)"
+msgstr "Αναζήτηση αρχείων (Ctrl+Shift+R)"
+
+msgid "Cleanup Result"
+msgstr "Αποτέλεσμα καθαρισμού"
+
+msgid "The cleanup items could not all be identified in the Trash. Open Files to review them."
+msgstr "Δεν ήταν δυνατή η αναγνώριση όλων των στοιχείων αυτού του καθαρισμού στα απορρίμματα. Ανοίξτε τα Αρχεία για να τα ελέγξετε."
+
+msgid "Removed {count} cleanup items from the Trash. {failed} items could not be deleted."
+msgstr "Αφαιρέθηκαν {count} στοιχεία αυτού του καθαρισμού από τα απορρίμματα. Δεν ήταν δυνατή η διαγραφή {failed} στοιχείων."
+
+msgid "{size} used"
+msgstr "{size} σε χρήση"
+
+msgid "{size} free"
+msgstr "{size} ελεύθερα"
+
+msgid "Selected {size}"
+msgstr "Επιλεγμένα: {size}"
+
+msgid "\n{count} files were too many for the trash and were deleted permanently."
+msgstr "\n{count} αρχεία ήταν πάρα πολλά για τον κάδο απορριμμάτων και διαγράφηκαν οριστικά."
+
+#: src/ui/system_page.rs
+msgid "See what will be cleaned"
+msgstr "Δείτε τι θα καθαριστεί"
+
+#: src/services/system_preview.rs
+msgid "{count} files, {size} in total:"
+msgstr "{count} αρχεία, {size} συνολικά:"
+
+#: src/services/system_preview.rs
+msgid "• {path}: {count} readable files, {size}"
+msgstr "• {path}: {count} αναγνώσιμα αρχεία, {size}"
+
+#: src/services/system_preview.rs
+msgid "The cache is empty."
+msgstr "Η κρυφή μνήμη είναι κενή."
+
+#: src/services/system_preview.rs
+msgid "Everything in these folders, packages and metadata:"
+msgstr "Όλα τα περιεχόμενα αυτών των φακέλων, τα πακέτα και τα μεταδεδομένα:"
+
+#: src/services/system_preview.rs
+msgid "No cached packages of uninstalled versions."
+msgstr "Δεν υπάρχουν πακέτα απεγκατεστημένων εκδόσεων στην κρυφή μνήμη."
+
+#: src/services/system_preview.rs
+msgid "No old package versions to remove."
+msgstr "Δεν υπάρχουν παλιές εκδόσεις πακέτων για αφαίρεση."
+
+#: src/services/system_preview.rs
+msgid "{count} packages:"
+msgstr "{count} πακέτα:"
+
+#: src/services/system_preview.rs
+msgid "{count} runtimes:"
+msgstr "{count} περιβάλλοντα εκτέλεσης:"
+
+#: src/services/system_preview.rs
+msgid "Estimated list. Flatpak decides the final one when it removes them."
+msgstr "Εκτιμώμενη λίστα. Το Flatpak καθορίζει την τελική λίστα κατά την αφαίρεσή τους."
+
+#: src/services/system_preview.rs
+msgid "No unused runtimes found."
+msgstr "Δεν βρέθηκαν αχρησιμοποίητα περιβάλλοντα εκτέλεσης."
+
+#: src/services/system_preview.rs
+msgid "Docker needs administrator rights to list these. The cleanup asks for them."
+msgstr "Το Docker χρειάζεται δικαιώματα διαχειριστή για να τα εμφανίσει. Θα ζητηθούν κατά τον καθαρισμό."
+
+#: src/services/system_preview.rs
+msgid "None"
+msgstr "Κανένα"
+
+#: src/services/system_preview.rs
+msgid "Stopped containers:"
+msgstr "Σταματημένα κοντέινερ:"
+
+#: src/services/system_preview.rs
+msgid "Untagged images:"
+msgstr "Εικόνες χωρίς ετικέτα:"
+
+#: src/services/system_preview.rs
+msgid "Space Docker can reclaim:"
+msgstr "Χώρος που μπορεί να ελευθερώσει το Docker:"
+
+#: src/ui/cleanup_view.rs
+msgid "{size} on {disk}"
+msgstr "{size} στον δίσκο {disk}"
+
+#: src/ui/cleanup_view.rs
+msgid "On another disk. It frees space there, not on the home disk."
+msgstr "Σε άλλον δίσκο. Ελευθερώνει χώρο εκεί, όχι στον δίσκο που περιέχει τον προσωπικό φάκελο."
+
+#: src/ui/cleanup_view.rs
+msgid "Part of it is on another disk. That part frees space there, not on the home disk."
+msgstr "Ένα μέρος βρίσκεται σε άλλον δίσκο. Αυτό το μέρος ελευθερώνει χώρο εκεί, όχι στον δίσκο που περιέχει τον προσωπικό φάκελο."
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 5 MB"
+msgstr "Μεγαλύτερα από 5 MB"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 50 MB"
+msgstr "Μεγαλύτερα από 50 MB"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 100 MB"
+msgstr "Μεγαλύτερα από 100 MB"
+
+msgid "Larger than 200 MB"
+msgstr "Μεγαλύτερα από 200 MB"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 500 MB"
+msgstr "Μεγαλύτερα από 500 MB"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 1 GB"
+msgstr "Μεγαλύτερα από 1 GB"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Any time"
+msgstr "Τελευταία χρήση: Οποτεδήποτε"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over a week ago"
+msgstr "Τελευταία χρήση: Πριν από πάνω από μία εβδομάδα"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over a month ago"
+msgstr "Τελευταία χρήση: Πριν από πάνω από έναν μήνα"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over 3 months ago"
+msgstr "Τελευταία χρήση: Πριν από πάνω από 3 μήνες"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over a year ago"
+msgstr "Τελευταία χρήση: Πριν από πάνω από έναν χρόνο"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used Today"
+msgstr "Τελευταία χρήση σήμερα"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used {days} days ago"
+msgstr "Τελευταία χρήση πριν από {days} ημέρες"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Unknown"
+msgstr "Τελευταία χρήση: Άγνωστη"
+
+#. Purge review pages and Linux cache policies
+msgid "Moved {size} to Trash."
+msgstr "Μετακινήθηκαν {size} στον κάδο."
+
+#. Purge review pages and Linux cache policies
+msgid "No files match these filters."
+msgstr "Κανένα αρχείο δεν αντιστοιχεί σε αυτά τα φίλτρα."
+
+#. Purge review pages and Linux cache policies
+msgid "PDFs"
+msgstr "PDF"
+
+#. Purge review pages and Linux cache policies
+msgid "Scan to find large files."
+msgstr "Σαρώστε για να βρείτε μεγάλα αρχεία."
+
+#. Purge review pages and Linux cache policies
+msgid "Select All"
+msgstr "Επιλογή όλων"
+
+#. Purge review pages and Linux cache policies
+msgid "Selected files will be moved to Trash."
+msgstr "Τα επιλεγμένα αρχεία θα μετακινηθούν στον κάδο."
+
+#. Purge review pages and Linux cache policies
+msgid "{count} files · {size} to review"
+msgstr "{count} αρχεία · {size} προς έλεγχο"
+
+#. Purge review pages and Linux cache policies
+msgid "Administrator approval is required."
+msgstr "Απαιτείται έγκριση διαχειριστή."
+
+#. Purge review pages and Linux cache policies
+msgid "App Uninstaller"
+msgstr "Απεγκατάσταση εφαρμογών"
+
+#. Purge review pages and Linux cache policies
+msgid "Confirm Uninstall"
+msgstr "Επιβεβαίωση απεγκατάστασης"
+
+#. Purge review pages and Linux cache policies
+msgid "Grid view"
+msgstr "Προβολή πλέγματος"
+
+#. Purge review pages and Linux cache policies
+msgid "Installed Apps"
+msgstr "Εγκατεστημένες εφαρμογές"
+
+#. Purge review pages and Linux cache policies
+msgid "Leftovers"
+msgstr "Υπολείμματα"
+
+#. Purge review pages and Linux cache policies
+msgid "List view"
+msgstr "Προβολή λίστας"
+
+#. Purge review pages and Linux cache policies
+msgid "No apps match these filters."
+msgstr "Καμία εφαρμογή δεν αντιστοιχεί σε αυτά τα φίλτρα."
+
+#. Purge review pages and Linux cache policies
+msgid "Requires admin"
+msgstr "Απαιτεί διαχειριστή"
+
+#. Purge review pages and Linux cache policies
+msgid "Rescan"
+msgstr "Νέα σάρωση"
+
+#. Purge review pages and Linux cache policies
+msgid "Review the apps, commands and data below. Listed user files will be moved to Trash. Package removal cannot be undone from Trash."
+msgstr "Ελέγξτε τις εφαρμογές, τις εντολές και τα δεδομένα παρακάτω. Τα αρχεία χρήστη θα μετακινηθούν στον κάδο. Η αφαίρεση πακέτων δεν αναιρείται από τον κάδο."
+
+#. Purge review pages and Linux cache policies
+msgid "Scan to find installed apps."
+msgstr "Σαρώστε για να βρείτε εγκατεστημένες εφαρμογές."
+
+#. Purge review pages and Linux cache policies
+msgid "Search apps"
+msgstr "Αναζήτηση εφαρμογών"
+
+#. Purge review pages and Linux cache policies
+msgid "Smallest"
+msgstr "Μικρότερα"
+
+#. Purge review pages and Linux cache policies
+msgid "Uninstalled {app}"
+msgstr "Απεγκαταστάθηκε το {app}"
+
+#. Purge review pages and Linux cache policies
+msgid "{count} apps · {size}"
+msgstr "{count} εφαρμογές · {size}"
+
+#. Purge review pages and Linux cache policies
+msgid "{label} {count}"
+msgstr "{label} {count}"
+
+#. Purge review pages and Linux cache policies
+msgid "AppImage"
+msgstr "AppImage"
+
+#. Purge review pages and Linux cache policies
+msgid "Flatpak"
+msgstr "Flatpak"
+
+#. Purge review pages and Linux cache policies
+msgid "Snap"
+msgstr "Snap"
+
+#. Purge review pages and Linux cache policies
+msgid "Native package"
+msgstr "Εγγενές πακέτο"
+
+#. Purge review pages and Linux cache policies
+msgid "Removal unavailable"
+msgstr "Η απεγκατάσταση δεν είναι διαθέσιμη"
+
+#. Purge review pages and Linux cache policies
+msgid "User launcher"
+msgstr "Εκκινητής χρήστη"
+
+#. Purge review pages and Linux cache policies
+msgid "{app} Cache"
+msgstr "Κρυφή μνήμη {app}"
+
+#. Purge review pages and Linux cache policies
+msgid "Paru Cache"
+msgstr "Κρυφή μνήμη Paru"
+
+#. Purge review pages and Linux cache policies
+msgid "Yay Cache"
+msgstr "Κρυφή μνήμη Yay"
+
+#. Purge review pages and Linux cache policies
+msgid "AUR sources and build files downloaded by Paru. They are downloaded and rebuilt when needed."
+msgstr "Πηγές AUR και αρχεία μεταγλώττισης του Paru. Θα ληφθούν και θα μεταγλωττιστούν ξανά όταν χρειαστεί."
+
+#. Purge review pages and Linux cache policies
+msgid "AUR sources and build files downloaded by Yay. They are downloaded and rebuilt when needed."
+msgstr "Πηγές AUR και αρχεία μεταγλώττισης του Yay. Θα ληφθούν και θα μεταγλωττιστούν ξανά όταν χρειαστεί."
+
+#. Shared review inventory
+msgid "Flatpak (User)"
+msgstr "Flatpak (Χρήστης)"
+
+#. Shared review inventory
+msgid "Flatpak (System)"
+msgstr "Flatpak (Σύστημα)"
+
+#. Shared review inventory
+msgid "{count} files over {size}"
+msgstr "{count} αρχεία άνω των {size}"
+
+#: Stage 4 removal and settings interface
+msgid "Startup"
+msgstr "Εκκίνηση"
+
+#: Stage 4 removal and settings interface
+msgid "Deleted Apps"
+msgstr "Διαγραμμένες εφαρμογές"
+
+#: Stage 4 removal and settings interface
+msgid "Cleaning"
+msgstr "Καθαρισμός"
+
+#: Stage 4 removal and settings interface
+msgid "Cleaning History"
+msgstr "Ιστορικό καθαρισμών"
+
+#: Stage 4 removal and settings interface
+msgid "Auto"
+msgstr "Αυτόματο"
+
+#: Stage 4 removal and settings interface
+msgid "Choose a light or dark look, or match your system setting."
+msgstr "Επιλέξτε φωτεινό ή σκοτεινό θέμα ή ακολουθήστε το σύστημα."
+
+#: Stage 4 removal and settings interface
+msgid "Freeing {size}"
+msgstr "Απελευθέρωση {size}"
+
+#: Stage 4 removal and settings interface
+msgid "Move {count} to Trash"
+msgstr "Μετακίνηση {count} στον κάδο"
+
+#: Stage 4 removal and settings interface
+msgid "Delete {count}"
+msgstr "Διαγραφή {count}"
+
+#: Stage 4 removal and settings interface
+msgid "Open Trash"
+msgstr "Άνοιγμα κάδου"
+
+#: Stage 4 removal and settings interface
+msgid "Measuring Trash…"
+msgstr "Μέτρηση κάδου…"
+
+#: Stage 4 removal and settings interface
+msgid "Could not read Trash"
+msgstr "Αδυναμία ανάγνωσης του κάδου"
+
+#: Stage 4 removal and settings interface
+msgid "{size} in Trash"
+msgstr "{size} στον κάδο"
+
+#: Stage 4 removal and settings interface
+msgid "Files will be permanently deleted. This cannot be undone."
+msgstr "Τα αρχεία θα διαγραφούν οριστικά. Η ενέργεια δεν αναιρείται."
+
+#: Stage 4 removal and settings interface
+msgid "The trash item changed. Review it again."
+msgstr "Το στοιχείο του κάδου άλλαξε. Ελέγξτε το ξανά."
+
+#: Stage 4 removal and settings interface
+msgid "Folders include all contents. Items can be restored from Trash."
+msgstr "Οι φάκελοι περιλαμβάνουν όλα τα περιεχόμενα. Τα στοιχεία επαναφέρονται από τον κάδο."
+
+#: Stage 4 removal and settings interface
+msgid "Keep Magnífico in the tray"
+msgstr "Διατήρηση του Magnífico στην περιοχή ειδοποιήσεων"
+
+#: Stage 4 removal and settings interface
+msgid "Keep running after closing the window so scheduled cleanup stays available."
+msgstr "Συνέχιση λειτουργίας μετά το κλείσιμο του παραθύρου για προγραμματισμένους καθαρισμούς."
+
+#: Stage 4 removal and settings interface
+msgid "Review leftovers when an app is deleted"
+msgstr "Έλεγχος υπολειμμάτων όταν διαγράφεται μια εφαρμογή"
+
+#: Stage 4 removal and settings interface
+msgid "Watch changes to installed desktop apps while Magnífico is running. Review leftover files before removing them."
+msgstr "Παρακολούθηση αλλαγών στις εγκατεστημένες εφαρμογές όσο λειτουργεί το Magnífico. Ελέγξτε τα υπολείμματα πριν τα αφαιρέσετε."
+
+#: Stage 4 removal and settings interface
+msgid "Review app leftovers"
+msgstr "Έλεγχος υπολειμμάτων εφαρμογών"
+
+#: Stage 4 removal and settings interface
+msgid "Review"
+msgstr "Έλεγχος"
+
+#: Stage 4 removal and settings interface
+msgid "An app was removed. Review the files it left behind."
+msgstr "Μια εφαρμογή αφαιρέθηκε. Ελέγξτε τα αρχεία που άφησε."
+
+#: Stage 4 removal and settings interface
+msgid "Wait for the current cleanup to finish."
+msgstr "Περιμένετε να ολοκληρωθεί ο τρέχων καθαρισμός."
+
+#: Stage 4 removal and settings interface
+msgid "Licenses"
+msgstr "Άδειες"
+
+#: Stage 4 removal and settings interface
+msgid "Website"
+msgstr "Ιστότοπος"
+
+#: Stage 4 removal and settings interface
+msgid "Report an Issue"
+msgstr "Αναφορά προβλήματος"
+
+#: Stage 4 removal and settings interface
+msgid "Version {version}"
+msgstr "Έκδοση {version}"
+
+#: Stage 4 removal and settings interface
+msgid "No cleanups yet"
+msgstr "Δεν έχουν γίνει καθαρισμοί"
+
+#: Stage 4 removal and settings interface
+msgid "Commands remove data directly. Administrator approval may be required."
+msgstr "Οι εντολές αφαιρούν δεδομένα απευθείας. Ίσως απαιτείται έγκριση διαχειριστή."
+
+#: Stage 4 removal and settings interface
+msgid "Regenerable caches are deleted directly. Other files use your removal method."
+msgstr "Οι αναδημιουργήσιμες κρυφές μνήμες διαγράφονται απευθείας. Τα άλλα αρχεία χρησιμοποιούν την επιλεγμένη μέθοδο αφαίρεσης."
+
+#: Stage 4 removal and settings interface
+msgid "Cleaning cancelled."
+msgstr "Ο καθαρισμός ακυρώθηκε."
+
+#: Stage 4 removal and settings interface
+msgid "Completed: {title}"
+msgstr "Ολοκληρώθηκε: {title}"
+
+#: Stage 4 removal and settings interface
+msgid "Freed {size} from selected files."
+msgstr "Απελευθερώθηκαν {size} από τα επιλεγμένα αρχεία."
+
+#: src/models/cleanup_plan.rs src/models/scan_category.rs src/services/clean_sources.rs src/ui/main_window.rs src/ui/overview_page.rs
+msgid "App Caches"
+msgstr "Κρυφές μνήμες εφαρμογών"
+
+#: src/services/clean_sources.rs src/ui/main_window.rs src/ui/overview_page.rs
+msgid "Dev Tools"
+msgstr "Εργαλεία ανάπτυξης"
+
+#: src/ui/large_files_page.rs src/ui/main_window.rs src/ui/overview_page.rs
+msgid "Large Files"
+msgstr "Μεγάλα αρχεία"
+
+#: src/ui/overview_page.rs
+msgid "Installed apps"
+msgstr "Εγκατεστημένες εφαρμογές"
+
+#: src/ui/overview_page.rs
+msgid "Leftovers from deleted apps"
+msgstr "Κατάλοιπα απεγκατεστημένων εφαρμογών"
+
+#: src/ui/overview_page.rs
+msgid "Everything else"
+msgstr "Όλα τα υπόλοιπα"
+
+#: src/ui/overview_page.rs
+msgid "Available for new files"
+msgstr "Διαθέσιμος για νέα αρχεία"
+
+#: src/ui/clean_list_page.rs src/ui/purge_widgets.rs
+msgid "Safe to Clean"
+msgstr "Ασφαλής εκκαθάριση"
+
+#: src/ui/clean_list_page.rs src/ui/purge_widgets.rs
+msgid "Check First"
+msgstr "Έλεγχος πρώτα"
+
+#: src/ui/purge_widgets.rs src/ui/scan_overview.rs src/ui/uninstaller_page.rs
+msgid "Review first"
+msgstr "Έλεγχος πρώτα"
+
+#: src/ui/main_window.rs
+msgid "CLEAN"
+msgstr "ΕΚΚΑΘΑΡΙΣΗ"
+
+#: src/ui/main_window.rs
+msgid "REVIEW"
+msgstr "ΕΛΕΓΧΟΣ"
+
+#: src/ui/main_window.rs
+msgid "Trash…"
+msgstr "Κάδος…"
+
+#: src/ui/clean_list_page.rs src/ui/large_files_page.rs src/ui/overview_page.rs src/ui/uninstaller_page.rs
+msgid "Scanning…"
+msgstr "Σάρωση…"
+
+#: src/ui/overview_page.rs
+msgid "Scanned just now"
+msgstr "Μόλις σαρώθηκε"
+
+#: src/ui/overview_page.rs
+msgid "Scan Everything"
+msgstr "Σάρωση όλων"
+
+#: src/ui/overview_page.rs
+msgid "Clean Safe Items"
+msgstr "Εκκαθάριση ασφαλών στοιχείων"
+
+#: src/ui/uninstaller_page.rs
+msgid "Uninstall"
+msgstr "Απεγκατάσταση"
+
+#: src/ui/clean_list_page.rs src/ui/large_files_page.rs src/ui/uninstaller_page.rs
+msgid "Largest"
+msgstr "Μεγαλύτερα"
+
+#: src/ui/overview_page.rs
+msgid "Disk usage unavailable"
+msgstr "Μη διαθέσιμη χρήση δίσκου"
+
+#: src/ui/overview_page.rs
+msgid "Linux, your documents and photos, and other files"
+msgstr "Linux, τα έγγραφα και οι φωτογραφίες σας και άλλα αρχεία"
+
+#: src/ui/clean_list_page.rs
+msgid "No cleanable items found. Scan again to check for changes."
+msgstr "Δεν βρέθηκαν στοιχεία για εκκαθάριση. Επαναλάβετε τη σάρωση για αλλαγές."
+
+#: src/ui/clean_list_page.rs
+msgid "No items match this filter."
+msgstr "Κανένα στοιχείο δεν ταιριάζει σε αυτό το φίλτρο."
+
+#: src/ui/overview_page.rs
+msgid "Review the cleanup selection before cleaning."
+msgstr "Ελέγξτε την επιλογή πριν από την εκκαθάριση."
+
+#: src/ui/overview_page.rs src/ui/review_scan_store.rs
+msgid "Scan could not finish. Try scanning again."
+msgstr "Η σάρωση δεν ολοκληρώθηκε. Δοκιμάστε ξανά."
+
+#: src/ui/overview_page.rs
+msgid "Regenerable caches measured independently of cleanup selections."
+msgstr "Αναδημιουργήσιμες κρυφές μνήμες, μετρημένες ανεξάρτητα από την επιλογή εκκαθάρισης."
+
+#: src/ui/overview_page.rs
+msgid "Package caches, journal files and unused Flatpak runtimes. Safe amount excludes journal files; review them in System."
+msgstr "Κρυφές μνήμες πακέτων, αρχεία καταγραφής και αχρησιμοποίητα περιβάλλοντα Flatpak. Το ασφαλές μέγεθος εξαιρεί τα αρχεία καταγραφής· ελέγξτε τα στο Σύστημα."
+
+#: src/ui/clean_list_page.rs src/ui/settings_page.rs
+msgid "Files can be restored from the trash. Space is freed only when you empty it"
+msgstr "Τα αρχεία επαναφέρονται από τον κάδο. Ο χώρος ελευθερώνεται μόνο όταν τον αδειάσετε."
+
+#: src/ui/clean_list_page.rs
+msgid "Clean Selected ({size})"
+msgstr "Εκκαθάριση επιλεγμένων ({size})"
+
+#: src/ui/clean_progress.rs src/ui/cleanup_view.rs src/ui/overview_page.rs
+msgid "of {size}"
+msgstr "από {size}"
+
+#: src/ui/overview_page.rs
+msgid "{category} · {size}"
+msgstr "{category} · {size}"
+
+#: src/ui/overview_page.rs
+msgid "{count} apps"
+msgstr "{count} εφαρμογές"
+
+#: src/ui/clean_list_page.rs
+msgid "{count} items · {size} recoverable"
+msgstr "{count} στοιχεία · {size} ανακτήσιμα"
+
+#: src/ui/overview_page.rs
+msgid "{size} safe to clean"
+msgstr "{size} για ασφαλή εκκαθάριση"
+
+#: src/ui/overview_page.rs
+msgid "{size} of the used space is already in the Trash. Empty it in Files to free the space."
+msgstr "{size} του χρησιμοποιούμενου χώρου βρίσκονται ήδη στον κάδο. Αδειάστε τον στα Αρχεία για να ελευθερώσετε χώρο."
+
+#: src/models/app_rule.rs src/models/explanations.rs
+msgid "VS Code Cache"
+msgstr "Κρυφή μνήμη VS Code"
+
+#: src/models/explanations.rs
+msgid "Cursor Cache"
+msgstr "Κρυφή μνήμη Cursor"
+
+#: src/models/explanations.rs
+msgid "JetBrains IDE Cache"
+msgstr "Κρυφή μνήμη JetBrains IDE"
+
+#: src/models/explanations.rs
+msgid "Zed Editor Cache"
+msgstr "Κρυφή μνήμη Zed"
+
+#: src/models/explanations.rs
+msgid "Go Module Cache"
+msgstr "Κρυφή μνήμη Go"
+
+#: src/models/explanations.rs
+msgid "Maven Package Cache"
+msgstr "Κρυφή μνήμη Maven"
+
+#: src/models/app_rule.rs src/models/explanations.rs
+msgid "Composer Cache"
+msgstr "Κρυφή μνήμη Composer"
+
+#: src/models/explanations.rs
+msgid "Rust Package Cache"
+msgstr "Κρυφή μνήμη Rust"
+
+#: src/models/explanations.rs
+msgid "Electron App Cache"
+msgstr "Κρυφή μνήμη Electron"
+
+#: src/models/explanations.rs
+msgid "Bun Package Cache"
+msgstr "Κρυφή μνήμη Bun"
+
+#: src/models/explanations.rs
+msgid "Deno Module Cache"
+msgstr "Κρυφή μνήμη Deno"
+
+#: src/models/explanations.rs
+msgid "uv Package Cache"
+msgstr "Κρυφή μνήμη uv"
+
+#: src/models/explanations.rs
+msgid "Gradle Dependency Cache"
+msgstr "Κρυφή μνήμη Gradle"
+
+#: src/models/explanations.rs
+msgid "Dart Pub Cache"
+msgstr "Κρυφή μνήμη Dart Pub"
+
+#: src/models/explanations.rs
+msgid "Yarn Package Cache"
+msgstr "Κρυφή μνήμη Yarn"
+
+#: src/models/explanations.rs
+msgid "npm Package Cache"
+msgstr "Κρυφή μνήμη npm"
+
+#: src/models/explanations.rs
+msgid "npm npx Cache"
+msgstr "Κρυφή μνήμη npm npx"
+
+#: src/models/explanations.rs
+msgid "Corepack Cache"
+msgstr "Κρυφή μνήμη Corepack"
+
+#: src/models/app_rule.rs src/models/explanations.rs
+msgid "pip Cache"
+msgstr "Κρυφή μνήμη pip"
+
+#: src/models/explanations.rs
+msgid "Keyring Cache"
+msgstr "Κρυφή μνήμη Keyring"
+
+#: src/models/explanations.rs
+msgid "Slack"
+msgstr "Slack"
+
+#: src/models/explanations.rs
+msgid "Discord"
+msgstr "Discord"
+
+#: src/models/explanations.rs
+msgid "Zoom"
+msgstr "Zoom"
+
+#: src/models/explanations.rs
+msgid "Spotify"
+msgstr "Spotify"
+
+#: src/models/explanations.rs
+msgid "Microsoft Teams"
+msgstr "Microsoft Teams"
+
+#: src/models/browser_rule.rs src/models/explanations.rs
+msgid "Google Chrome"
+msgstr "Google Chrome"
+
+#: src/models/explanations.rs
+msgid "Firefox Browser"
+msgstr "Περιηγητής Firefox"
+
+#: src/models/explanations.rs
+msgid "Brave Browser"
+msgstr "Περιηγητής Brave"
+
+#: src/models/explanations.rs
+msgid "pnpm Package Store"
+msgstr "Αποθήκη πακέτων pnpm"
+
+#: src/models/explanations.rs
+msgid "npm Logs"
+msgstr "Αρχεία καταγραφής npm"
+
+#: src/models/explanations.rs
+msgid "Old AI Coding Tool Versions"
+msgstr "Παλαιές εκδόσεις εργαλείων προγραμματισμού ΤΝ"
+
+#: src/models/explanations.rs
+msgid "pre-commit Environments"
+msgstr "Περιβάλλοντα pre-commit"
+
+#: src/models/explanations.rs
+msgid "node-gyp Headers"
+msgstr "Κεφαλίδες node-gyp"
+
+#: src/models/explanations.rs
+msgid "Thumbnails"
+msgstr "Μικρογραφίες"
+
+#: src/models/explanations.rs
+msgid "App Update Downloads"
+msgstr "Λήψεις ενημερώσεων εφαρμογών"
+
+#: src/models/explanations.rs
+msgid "Browser Cache"
+msgstr "Κρυφή μνήμη περιηγητή"
+
+#: src/models/explanations.rs
+msgid "Application Cache"
+msgstr "Κρυφή μνήμη εφαρμογής"
+
+#: src/models/explanations.rs
+msgid "Inactive Rust Build Files"
+msgstr "Αρχεία μεταγλώττισης ανενεργών έργων Rust"
+
+#: src/models/explanations.rs src/models/system_rule.rs
+msgid "Package Manager Cache"
+msgstr "Κρυφή μνήμη διαχειριστή πακέτων"
+
+#: src/models/explanations.rs
+msgid "Unused Flatpak Runtimes"
+msgstr "Αχρησιμοποίητα περιβάλλοντα Flatpak"
+
+#: src/models/explanations.rs src/models/system_rule.rs
+msgid "Old Kernels"
+msgstr "Παλαιοί πυρήνες"
+
+#: src/models/explanations.rs
+msgid "Docker Leftovers"
+msgstr "Κατάλοιπα Docker"
+
+#: src/models/explanations.rs
+msgid "AI Model Cache"
+msgstr "Κρυφή μνήμη μοντέλων ΤΝ"
+
+#: src/models/explanations.rs
+msgid "Session Database Cache"
+msgstr "Κρυφή μνήμη βάσεων δεδομένων συνεδριών"
+
+#: src/models/explanations.rs
+msgid "Orphaned Pacman Packages"
+msgstr "Ορφανά πακέτα Pacman"
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Visual Studio Code. Safe to delete and will be recreated when you open VS Code again."
+msgstr "Προσωρινά αρχεία του Visual Studio Code. Μπορούν να διαγραφούν και θα αναδημιουργηθούν στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by the Cursor code editor. Safe to delete and will be recreated when you open Cursor again."
+msgstr "Προσωρινά αρχεία του Cursor. Μπορούν να διαγραφούν και θα αναδημιουργηθούν στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by the Zed code editor. Safe to delete and will be recreated when you open Zed again."
+msgstr "Προσωρινά αρχεία του Zed. Μπορούν να διαγραφούν και θα αναδημιουργηθούν στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Zoom. Safe to delete and Zoom will recreate them automatically."
+msgstr "Προσωρινά αρχεία του Zoom. Μπορούν να διαγραφούν και θα αναδημιουργηθούν στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Discord. Safe to delete and Discord will rebuild them automatically when you next open it."
+msgstr "Προσωρινά αρχεία του Discord. Μπορούν να διαγραφούν και θα αναδημιουργηθούν στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Microsoft Teams. Safe to delete and Teams will rebuild them when you next open it."
+msgstr "Προσωρινά αρχεία του Microsoft Teams. Μπορούν να διαγραφούν και θα αναδημιουργηθούν στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Cached PHP packages downloaded by Composer. Safe to delete and will be re-downloaded when you run composer install."
+msgstr "Πακέτα που κατέβασε το Composer. Μπορούν να διαγραφούν και θα ληφθούν ξανά με την εντολή composer install."
+
+#: src/models/explanations.rs
+msgid "Cached packages downloaded by Yarn. Safe to delete and will be re-downloaded when you run yarn install."
+msgstr "Πακέτα που κατέβασε το Yarn. Μπορούν να διαγραφούν και θα ληφθούν ξανά με την εντολή yarn install."
+
+#: src/models/explanations.rs
+msgid "Cached packages downloaded by npm. Safe to delete and will be re-downloaded when you run npm install."
+msgstr "Πακέτα που κατέβασε το npm. Μπορούν να διαγραφούν και θα ληφθούν ξανά με την εντολή npm install."
+
+#: src/models/explanations.rs
+msgid "Packages downloaded by Bun, a JavaScript runtime and package manager. Safe to delete; they download again the next time you run bun install."
+msgstr "Πακέτα που κατέβασε το Bun. Μπορούν να διαγραφούν και θα ληφθούν ξανά με την εντολή bun install."
+
+#: src/models/explanations.rs
+msgid "Indexes and caches JetBrains IDEs rebuild on their own. Local History is left alone. Each project re-indexes when you next open it, which takes a few minutes."
+msgstr "Ευρετήρια και κρυφές μνήμες που αναδημιουργούν τα IDE της JetBrains. Το τοπικό ιστορικό διατηρείται. Κάθε έργο επανευρετηριάζεται στο επόμενο άνοιγμα, κάτι που διαρκεί λίγα λεπτά."
+
+#: src/models/explanations.rs
+msgid "Cached Go packages and build outputs. Safe to delete and will be re-downloaded when you build your Go projects again."
+msgstr "Πακέτα Go και αποτελέσματα μεταγλώττισης στην κρυφή μνήμη. Μπορούν να διαγραφούν και θα ληφθούν ξανά κατά τη μεταγλώττιση έργων Go."
+
+#: src/models/explanations.rs
+msgid "Maven's downloaded libraries and your own mvn install builds. Libraries download again on your next build; your own builds come back only if you rebuild them."
+msgstr "Βιβλιοθήκες που κατέβασε το Maven και δικές σας μεταγλωττίσεις mvn install. Οι βιβλιοθήκες θα ληφθούν στην επόμενη μεταγλώττιση· τα δικά σας αποτελέσματα απαιτούν νέα μεταγλώττιση."
+
+#: src/models/explanations.rs
+msgid "Cached Rust packages and compiled dependencies. Safe to delete and will be re-downloaded when you build your Rust projects."
+msgstr "Πακέτα Rust και μεταγλωττισμένες εξαρτήσεις στην κρυφή μνήμη. Μπορούν να διαγραφούν και θα ληφθούν ξανά κατά τη μεταγλώττιση έργων Rust."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by apps built with Electron like Slack, Discord, and Notion. Safe to delete and will be recreated automatically."
+msgstr "Προσωρινά αρχεία εφαρμογών Electron όπως Slack, Discord και Notion. Μπορούν να διαγραφούν και αναδημιουργούνται αυτόματα."
+
+#: src/models/explanations.rs
+msgid "Cached modules downloaded by Deno, a JavaScript and TypeScript runtime. Safe to delete and will be re-downloaded when you next run a Deno project."
+msgstr "Μονάδες που κατέβασε το Deno, περιβάλλον JavaScript και TypeScript. Μπορούν να διαγραφούν και θα ληφθούν στην επόμενη εκτέλεση έργου Deno."
+
+#: src/models/explanations.rs
+msgid "Python packages uv downloaded and built. uv gets them again when needed, but tools running through uvx can stop, and environments in symlink mode break."
+msgstr "Πακέτα Python που κατέβασε και μεταγλώττισε το uv. Τα ανακτά όταν χρειάζονται, αλλά εργαλεία uvx μπορεί να σταματήσουν και περιβάλλοντα με συμβολικούς συνδέσμους να πάψουν να λειτουργούν."
+
+#: src/models/explanations.rs
+msgid "Gradle's downloaded libraries, build cache and wrapper versions. Nothing is lost, but the next build downloads and rebuilds them, which is slow."
+msgstr "Βιβλιοθήκες Gradle, κρυφή μνήμη μεταγλώττισης και εκδόσεις wrapper. Δεν χάνεται τίποτα, αλλά η επόμενη μεταγλώττιση θα τα κατεβάσει και θα τα αναδημιουργήσει, κάτι που αργεί."
+
+#: src/models/explanations.rs
+msgid "Dart and Flutter packages downloaded by pub; they download again on your next flutter pub get. Tools from dart pub global activate are left alone."
+msgstr "Πακέτα Dart και Flutter που κατέβασε το pub· θα ληφθούν ξανά με flutter pub get. Τα εργαλεία του dart pub global activate διατηρούνται."
+
+#: src/models/explanations.rs
+msgid "The central package store used by pnpm to save disk space across projects. Safe to delete and packages will be re-downloaded when you run pnpm install."
+msgstr "Κεντρική αποθήκη πακέτων pnpm για εξοικονόμηση χώρου μεταξύ έργων. Μπορεί να διαγραφεί· τα πακέτα θα ληφθούν ξανά με pnpm install."
+
+#: src/models/explanations.rs
+msgid "Temporary packages downloaded when you run npx. Safe to delete; npx will download them again when needed."
+msgstr "Προσωρινά πακέτα που κατέβασε το npx. Μπορούν να διαγραφούν· το npx θα τα κατεβάσει όταν χρειαστούν."
+
+#: src/models/explanations.rs
+msgid "Log files written by npm commands. Safe to delete with no effect on installed packages."
+msgstr "Αρχεία καταγραφής εντολών npm. Μπορούν να διαγραφούν χωρίς επίδραση στα εγκατεστημένα πακέτα."
+
+#: src/models/explanations.rs
+msgid "Cached Node.js package manager shims managed by Corepack. Safe to delete; Corepack will restore them on the next use."
+msgstr "Προσαρμογείς διαχειριστών πακέτων Node.js στην κρυφή μνήμη Corepack. Μπορούν να διαγραφούν· το Corepack θα τους επαναφέρει στην επόμενη χρήση."
+
+#: src/models/explanations.rs
+msgid "Earlier versions of Claude Code, Cursor Agent or Grok that stayed behind after updates. The version you run and the newest one are kept. Safe to delete."
+msgstr "Παλαιότερες εκδόσεις Claude Code, Cursor Agent ή Grok μετά από ενημερώσεις. Διατηρούνται η τρέχουσα και η νεότερη έκδοση. Οι παλαιές μπορούν να διαγραφούν."
+
+#: src/models/explanations.rs
+msgid "Tool environments that pre-commit sets up to run your git hooks. Safe to delete; they are set up again on your next commit, which makes that commit slow."
+msgstr "Περιβάλλοντα που δημιουργεί το pre-commit για git hooks. Μπορούν να διαγραφούν· αναδημιουργούνται στο επόμενο commit, το οποίο θα αργήσει περισσότερο."
+
+#: src/models/explanations.rs
+msgid "Downloaded Python packages are downloaded again when pip needs them."
+msgstr "Τα ληφθέντα πακέτα Python θα ληφθούν ξανά όταν τα χρειαστεί το pip."
+
+#: src/models/explanations.rs
+msgid "Node.js headers used to build native add-ons are downloaded again on the next native build."
+msgstr "Οι κεφαλίδες Node.js για μεταγλώττιση εγγενών πρόσθετων θα ληφθούν στην επόμενη εγγενή μεταγλώττιση."
+
+#: src/models/explanations.rs
+msgid "Image previews are recreated when you browse your files."
+msgstr "Οι προεπισκοπήσεις εικόνων αναδημιουργούνται κατά την περιήγηση στα αρχεία σας."
+
+#: src/models/explanations.rs
+msgid "Downloaded app update packages are left behind after installation and can be downloaded again."
+msgstr "Πακέτα ενημερώσεων που έμειναν μετά την εγκατάσταση εφαρμογών και μπορούν να ληφθούν ξανά."
+
+#: src/models/explanations.rs
+msgid "Temporary website data is downloaded again; the next visit may load more slowly."
+msgstr "Τα προσωρινά δεδομένα ιστοτόπων θα ληφθούν ξανά· η επόμενη επίσκεψη μπορεί να φορτώνει πιο αργά."
+
+#: src/models/explanations.rs
+msgid "This cache is not classified; check its contents before removing it."
+msgstr "Αυτή η κρυφή μνήμη δεν έχει ταξινομηθεί· ελέγξτε τα περιεχόμενα πριν τη διαγράψετε."
+
+#: src/models/explanations.rs
+msgid "Build outputs from inactive Rust projects are recreated on the next build."
+msgstr "Τα αποτελέσματα μεταγλώττισης ανενεργών έργων Rust αναδημιουργούνται στην επόμενη μεταγλώττιση."
+
+#: src/models/explanations.rs
+msgid "Downloaded packages can be downloaded again; cleaning requires administrator approval."
+msgstr "Τα ληφθέντα πακέτα μπορούν να ληφθούν ξανά· η εκκαθάριση απαιτεί έγκριση διαχειριστή."
+
+#: src/models/explanations.rs
+msgid "Total journal storage, including active logs; administrator approval removes only archived logs older than your retention period."
+msgstr "Συνολικός χώρος καταγραφής, μαζί με τα ενεργά αρχεία· με έγκριση διαχειριστή αφαιρούνται μόνο αρχειοθετημένα αρχεία παλαιότερα από την περίοδο διατήρησης."
+
+#: src/models/explanations.rs
+msgid "Runtimes no installed app needs are removed by Flatpak; system runtimes require administrator approval."
+msgstr "Το Flatpak αφαιρεί περιβάλλοντα που δεν χρειάζεται καμία εγκατεστημένη εφαρμογή· τα περιβάλλοντα συστήματος απαιτούν έγκριση διαχειριστή."
+
+#: src/models/explanations.rs
+msgid "Review obsolete kernel packages before removing them with administrator approval; the running and newest kernels are kept."
+msgstr "Ελέγξτε τα παρωχημένα πακέτα πυρήνα πριν τα αφαιρέσετε με έγκριση διαχειριστή· διατηρούνται ο τρέχων και ο νεότερος πυρήνας."
+
+#: src/models/explanations.rs
+msgid "Remove stopped containers, unused networks, dangling images and build cache; running containers and volumes are kept."
+msgstr "Αφαιρεί σταματημένα κοντέινερ, αχρησιμοποίητα δίκτυα, εικόνες χωρίς αναφορές και κρυφή μνήμη μεταγλώττισης· διατηρούνται τα ενεργά κοντέινερ και οι τόμοι."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Slack including message thumbnails and previews. Safe to delete and Slack will rebuild them automatically."
+msgstr "Προσωρινά αρχεία Slack, όπως μικρογραφίες και προεπισκοπήσεις μηνυμάτων. Μπορούν να διαγραφούν και το Slack θα τα αναδημιουργήσει αυτόματα."
+
+#: src/models/explanations.rs
+msgid "Cached songs and artwork may include offline downloads; check before removing them."
+msgstr "Τα τραγούδια και τα εξώφυλλα στην κρυφή μνήμη μπορεί να περιλαμβάνουν λήψεις εκτός σύνδεσης· ελέγξτε πριν τα αφαιρέσετε."
+
+#: src/models/explanations.rs
+msgid "This is a known cache folder that apps or developer tools recreate automatically."
+msgstr "Αυτός ο γνωστός φάκελος κρυφής μνήμης αναδημιουργείται αυτόματα από εφαρμογές ή εργαλεία ανάπτυξης."
+
+#: src/models/explanations.rs
+msgid "Downloaded AI models can be large and needed offline; check before downloading them again."
+msgstr "Τα ληφθέντα μοντέλα ΤΝ μπορεί να είναι μεγάλα και απαραίτητα εκτός σύνδεσης· ελέγξτε πριν χρειαστεί νέα λήψη."
+
+#: src/models/explanations.rs
+msgid "This folder may contain credentials or personal keyring data; review its contents before cleaning."
+msgstr "Αυτός ο φάκελος μπορεί να περιέχει διαπιστευτήρια ή προσωπικά δεδομένα κλειδοθήκης· ελέγξτε τα περιεχόμενα πριν την εκκαθάριση."
+
+#: src/models/explanations.rs
+msgid "This folder contains session or login databases; cleaning it may sign you out or remove session data."
+msgstr "Αυτός ο φάκελος περιέχει βάσεις δεδομένων συνεδριών ή σύνδεσης· η εκκαθάριση μπορεί να σας αποσυνδέσει ή να αφαιρέσει δεδομένα συνεδρίας."
+
+#: src/models/explanations.rs
+msgid "Dependencies no installed package needs may still be useful to you; review before removing them with administrator approval."
+msgstr "Εξαρτήσεις που δεν χρειάζεται κανένα εγκατεστημένο πακέτο μπορεί να σας είναι χρήσιμες· ελέγξτε πριν τις αφαιρέσετε με έγκριση διαχειριστή."
+
+#: src/models/explanations.rs
+msgid "Google Chrome's temporary browsing data, such as website caches and previews. Websites may load a little slower until Chrome rebuilds it."
+msgstr "Προσωρινά δεδομένα περιήγησης του Google Chrome, όπως κρυφές μνήμες και προεπισκοπήσεις. Μπορούν να διαγραφούν, αλλά οι ιστότοποι ίσως φορτώνουν πιο αργά μέχρι το Google Chrome να αναδημιουργήσει την κρυφή μνήμη."
+
+#: src/models/explanations.rs
+msgid "Temporary browsing data stored by Firefox. Deleting it is safe but websites may load a little slower until Firefox rebuilds the cache."
+msgstr "Προσωρινά δεδομένα περιήγησης του Firefox, όπως κρυφές μνήμες και προεπισκοπήσεις. Μπορούν να διαγραφούν, αλλά οι ιστότοποι ίσως φορτώνουν πιο αργά μέχρι το Firefox να αναδημιουργήσει την κρυφή μνήμη."
+
+#: src/models/explanations.rs
+msgid "Temporary browsing data stored by the Brave browser. Deleting it is safe but websites may load a little slower until Brave rebuilds the cache."
+msgstr "Προσωρινά δεδομένα περιήγησης του Brave, όπως κρυφές μνήμες και προεπισκοπήσεις. Μπορούν να διαγραφούν, αλλά οι ιστότοποι ίσως φορτώνουν πιο αργά μέχρι το Brave να αναδημιουργήσει την κρυφή μνήμη."
+
+#: src/ui/overview_page.rs
+msgid "Free"
+msgstr "Ελεύθερος"
+
+#: src/ui/clean_progress.rs
+msgid "Cleaning…"
+msgstr "Εκκαθάριση…"
+
+#: src/services/clean_sources.rs
+msgid "No orphaned packages"
+msgstr "Δεν υπάρχουν ορφανά πακέτα"
+
+#: src/services/clean_sources.rs
+msgid "Unused Flatpak Runtimes ({scope})"
+msgstr "Αχρησιμοποίητα περιβάλλοντα Flatpak ({scope})"
+
+#: src/services/clean_sources.rs
+msgid "{manager} Package Manager Cache"
+msgstr "Κρυφή μνήμη διαχειριστή πακέτων {manager}"
+
+#: src/services/clean_sources.rs
+msgid "{title} · {path}"
+msgstr "{title} · {path}"
+
+#: src/ui/overview_page.rs
+msgid "{percent}%"
+msgstr "{percent}%"
+
+#: src/ui/main_window.rs src/ui/overview_page.rs
+msgid "…"
+msgstr "…"
+
+#: src/ui/category_detail.rs src/ui/cleanup_view.rs src/ui/file_actions.rs
+msgid " · "
+msgstr " · "
+
+#: src/ui/category_detail.rs
+msgid "Back"
+msgstr "Πίσω"
+
+#: src/ui/category_detail.rs
+msgid "Edit Rules"
+msgstr "Επεξεργασία κανόνων"
+
+#: src/ui/category_detail.rs
+msgid "Clean {category} ({size})"
+msgstr "Εκκαθάριση {category} ({size})"
+
+#: src/ui/category_detail.rs
+msgid "File · {path}"
+msgstr "Αρχείο · {path}"
+
+#: src/ui/category_detail.rs
+msgid "Folder · {count} files · {path}"
+msgstr "Φάκελος · {count} αρχεία · {path}"
+
+#: src/ui/category_detail.rs
+msgid "Files are deleted permanently. This cannot be undone."
+msgstr "Τα αρχεία διαγράφονται οριστικά. Η ενέργεια δεν αναιρείται."
+
+#: src/ui/category_detail.rs
+msgid "Files go to the trash, so you can restore them until you empty it."
+msgstr "Τα αρχεία μεταφέρονται στον κάδο και μπορούν να επαναφερθούν μέχρι να τον αδειάσετε."
+
+#: src/ui/category_detail.rs
+msgid "Secure delete: each file is overwritten before it is deleted. This cannot be undone."
+msgstr "Ασφαλής διαγραφή: κάθε αρχείο αντικαθίσταται πριν διαγραφεί. Η ενέργεια δεν αναιρείται."
+
+#: src/ui/category_detail.rs
+msgid "Select all"
+msgstr "Επιλογή όλων"
+
+#: src/ui/category_detail.rs
+msgid "Tick or untick everything in this folder"
+msgstr "Επιλογή ή αποεπιλογή όλων σε αυτόν τον φάκελο"
+
+#: src/ui/category_detail.rs
+msgid "Untick to keep it"
+msgstr "Αποεπιλέξτε για διατήρηση"
+
+#: src/ui/category_detail.rs
+msgid "and {count} smaller items ({size})"
+msgstr "και {count} μικρότερα στοιχεία ({size})"
+
+#: src/ui/category_detail.rs
+msgid "{count} files selected · {size}"
+msgstr "{count} επιλεγμένα αρχεία · {size}"
+
+#: src/ui/category_detail.rs
+msgid "{count} files · {size} found"
+msgstr "{count} αρχεία · βρέθηκαν {size}"
+
+#: src/ui/category_detail.rs
+msgid "{count} kept"
+msgstr "{count} διατηρήθηκαν"
+
+#: src/ui/cleanup_log_page.rs
+msgid "Moved to trash: {count}"
+msgstr "Μεταφέρθηκαν στον κάδο: {count}"
+
+#: src/ui/cleanup_log_page.rs
+msgid "Overwritten before deletion: {count}"
+msgstr "Αντικαταστάθηκαν πριν τη διαγραφή: {count}"
+
+#: src/ui/cleanup_view.rs src/ui/dashboard_page.rs src/ui/scan_overview.rs
+msgid "Scan to see what can be cleaned"
+msgstr "Σαρώστε για να δείτε τι μπορεί να εκκαθαριστεί"
+
+#: src/ui/dashboard_page.rs
+msgid "Scan cancelled"
+msgstr "Η σάρωση ακυρώθηκε"
+
+#: src/ui/file_actions.rs
+msgid "Modified {date}"
+msgstr "Τροποποιήθηκε {date}"
+
+#: src/ui/file_actions.rs
+msgid "Open"
+msgstr "Άνοιγμα"
+
+#: src/ui/file_actions.rs
+msgid "Preview"
+msgstr "Προεπισκόπηση"
+
+#: src/ui/file_actions.rs
+msgid "Show in Files"
+msgstr "Εμφάνιση στα Αρχεία"
+
+#: src/ui/dashboard_page.rs
+msgid "\n{count} files were moved to the trash. Their space is freed when you empty it."
+msgstr "\n{count} αρχεία μεταφέρθηκαν στον κάδο. Ο χώρος ελευθερώνεται όταν τον αδειάσετε."
+
+#: src/ui/dashboard_page.rs
+msgid "\n{count} files were overwritten before deletion."
+msgstr "\n{count} αρχεία αντικαταστάθηκαν πριν τη διαγραφή."
+
+#: src/ui/project_settings.rs
+msgid "Add"
+msgstr "Προσθήκη"
+
+#: src/ui/project_settings.rs
+msgid "Add a folder with projects"
+msgstr "Προσθήκη φακέλου με έργα"
+
+#: src/ui/project_settings.rs
+msgid "Choose a Folder with Projects"
+msgstr "Επιλογή φακέλου με έργα"
+
+#: src/ui/project_settings.rs
+msgid "Home folder"
+msgstr "Προσωπικός φάκελος"
+
+#: src/ui/project_settings.rs
+msgid "No folders. Add one to look for projects."
+msgstr "Δεν υπάρχουν φάκελοι. Προσθέστε έναν για αναζήτηση έργων."
+
+#: src/ui/project_settings.rs
+msgid "Projects with a program working inside them are always skipped"
+msgstr "Έργα με προγράμματα που εργάζονται μέσα τους παραλείπονται πάντα"
+
+#: src/ui/project_settings.rs
+msgid "Stop searching this folder"
+msgstr "Διακοπή αναζήτησης σε αυτόν τον φάκελο"
+
+#: src/ui/rule_preview.rs src/ui/scan_overview.rs
+msgid "Looking for files…"
+msgstr "Αναζήτηση αρχείων…"
+
+#: src/ui/rule_preview.rs
+msgid "Nothing to clean"
+msgstr "Τίποτα για εκκαθάριση"
+
+#: src/ui/rule_preview.rs
+msgid "Preview only. Nothing is deleted from this window."
+msgstr "Μόνο προεπισκόπηση. Δεν διαγράφεται τίποτα από αυτό το παράθυρο."
+
+#: src/ui/rule_preview.rs
+msgid "View the files this would clean"
+msgstr "Προβολή αρχείων που θα εκκαθαρίζονταν"
+
+#: src/ui/scan_overview.rs
+msgid "Checking each category. This can take a moment."
+msgstr "Έλεγχος κάθε κατηγορίας. Μπορεί να χρειαστεί λίγος χρόνος."
+
+#: src/ui/scan_overview.rs
+msgid "Each category says what it holds and whether it is safe to clean."
+msgstr "Κάθε κατηγορία αναφέρει τι περιέχει και αν είναι ασφαλές να εκκαθαριστεί."
+
+#: src/ui/scan_overview.rs
+msgid "Nothing found"
+msgstr "Δεν βρέθηκε τίποτα"
+
+#: src/ui/scan_overview.rs
+msgid "{safe} is safe to clean. Review the rest before cleaning."
+msgstr "{safe} μπορούν να εκκαθαριστούν με ασφάλεια. Ελέγξτε τα υπόλοιπα πριν την εκκαθάριση."
+
+#: src/ui/scan_overview.rs
+msgid "{size} can be freed"
+msgstr "Μπορούν να ελευθερωθούν {size}"
+
+#: src/ui/settings_page.rs
+msgid "Move to Trash"
+msgstr "Μεταφορά στον κάδο"
+
+#: src/ui/settings_page.rs
+msgid "Secure Delete"
+msgstr "Ασφαλής διαγραφή"
+
+#: src/ui/settings_page.rs
+msgid "Removal Method"
+msgstr "Μέθοδος διαγραφής"
+
+#: src/ui/settings_page.rs
+msgid "Choose how cleanup removes files"
+msgstr "Επιλέξτε πώς αφαιρούνται τα αρχεία"
+
+#: src/ui/settings_page.rs
+msgid "Securely Delete Browser Data"
+msgstr "Ασφαλής διαγραφή δεδομένων περιηγητή"
+
+#: src/ui/settings_page.rs
+msgid "Always overwrite cookies, history and sessions before deleting them"
+msgstr "Πάντα αντικατάσταση cookies, ιστορικού και συνεδριών πριν τη διαγραφή"
+
+#: src/ui/settings_page.rs
+msgid "Fast. Files are gone from the folder, but the data stays on disk until it is reused"
+msgstr "Γρήγορη. Τα αρχεία φεύγουν από τον φάκελο, αλλά τα δεδομένα παραμένουν στον δίσκο μέχρι να επαναχρησιμοποιηθεί ο χώρος"
+
+#: src/ui/settings_page.rs
+msgid "Overwrites each file with random data before deleting it. Slower, cannot be undone"
+msgstr "Αντικαθιστά κάθε αρχείο με τυχαία δεδομένα πριν τη διαγραφή. Πιο αργή, δεν αναιρείται"
+
+#: src/ui/settings_page.rs
+msgid "Your Disk"
+msgstr "Ο δίσκος σας"
+
+#: src/ui/settings_page.rs
+msgid "Encrypted. Deleted data cannot be read without your password."
+msgstr "Κρυπτογραφημένος. Τα διαγραμμένα δεδομένα δεν μπορούν να διαβαστούν χωρίς τον κωδικό σας."
+
+#: src/ui/settings_page.rs
+msgid "Not encrypted, SSD. The drive may keep old copies of overwritten data until it reuses them. Disk encryption (LUKS) is the real protection."
+msgstr "Μη κρυπτογραφημένος SSD. Ο δίσκος μπορεί να κρατά παλιά αντίγραφα αντικατεστημένων δεδομένων μέχρι να επαναχρησιμοποιηθούν. Η κρυπτογράφηση δίσκου (LUKS) παρέχει την πραγματική προστασία."
+
+#: src/ui/settings_page.rs
+msgid "Not encrypted, copy-on-write filesystem. Overwriting writes to new blocks, so old copies may remain. Disk encryption (LUKS) is the real protection."
+msgstr "Μη κρυπτογραφημένο σύστημα αρχείων copy-on-write. Η αντικατάσταση γράφει σε νέα μπλοκ, οπότε παλιά αντίγραφα μπορεί να παραμείνουν. Η κρυπτογράφηση δίσκου (LUKS) παρέχει την πραγματική προστασία."
+
+#: src/ui/settings_page.rs
+msgid "Not encrypted, hard disk. Secure Delete overwrites the data in place."
+msgstr "Μη κρυπτογραφημένος σκληρός δίσκος. Η ασφαλής διαγραφή αντικαθιστά τα δεδομένα στη θέση τους."
+
+#: src/ui/settings_page.rs
+msgid "Off. Magnífico will not start automatically at login"
+msgstr "Ανενεργό. Το Magnífico δεν θα ξεκινά αυτόματα κατά τη σύνδεση"
+
+#: src/ui/settings_page.rs
+msgid "Starts in the background at login; scheduled cleanup can then run"
+msgstr "Ξεκινά στο παρασκήνιο κατά τη σύνδεση ώστε να εκτελείται η προγραμματισμένη εκκαθάριση"
+
+#: src/ui/settings_page.rs
+msgid "Unavailable: system journal cleanup requires pkexec and journalctl"
+msgstr "Μη διαθέσιμο: η εκκαθάριση καταγραφής συστήματος απαιτεί pkexec και journalctl"
+
+#: src/ui/settings_page.rs
+msgid "Vacuum archived systemd journal data during manual cleanup; administrator approval is required"
+msgstr "Εκκαθάριση αρχειοθετημένων καταγραφών systemd κατά τη χειροκίνητη εκκαθάριση· απαιτείται έγκριση διαχειριστή"
+
+#: src/models/cleanup_plan.rs src/services/file_finder.rs src/ui/large_files_page.rs
+msgid "AI Models"
+msgstr "Μοντέλα ΤΝ"
+
+#: src/ui/large_files_page.rs src/ui/storage_analyzer_page.rs
+msgid "Delete Selected"
+msgstr "Διαγραφή επιλεγμένων"
+
+#: src/models/scan_category.rs
+msgid "Browser Data"
+msgstr "Δεδομένα περιηγητή"
+
+#: src/models/scan_category.rs
+msgid "Developer Tools"
+msgstr "Εργαλεία ανάπτυξης"
+
+#: src/models/scan_category.rs
+msgid "Inactive Projects"
+msgstr "Ανενεργά έργα"
+
+#: src/models/scan_category.rs
+msgid "System Junk"
+msgstr "Περιττά αρχεία συστήματος"
+
+#: src/models/cleanup_plan.rs src/models/scan_category.rs
+msgid "Temporary files, thumbnails, crash reports, package caches and the trash."
+msgstr "Προσωρινά αρχεία, μικρογραφίες, αναφορές σφαλμάτων, κρυφές μνήμες πακέτων και κάδος."
+
+#: src/models/scan_category.rs
+msgid "Caches that apps rebuild on their own the next time they need them."
+msgstr "Κρυφές μνήμες που οι εφαρμογές αναδημιουργούν όταν τις χρειάζονται."
+
+#: src/models/scan_category.rs
+msgid "Package and build caches of tools such as cargo, npm, pip and Gradle. They are downloaded again when a project needs them."
+msgstr "Κρυφές μνήμες πακέτων και μεταγλώττισης εργαλείων όπως cargo, npm, pip και Gradle. Λαμβάνονται ξανά όταν τις χρειάζεται ένα έργο."
+
+#: src/models/scan_category.rs
+msgid "Old log files kept past the retention period you set."
+msgstr "Παλαιά αρχεία καταγραφής πέρα από την περίοδο διατήρησης που ορίσατε."
+
+#: src/models/scan_category.rs
+msgid "Browser caches, and the cookies, history or sessions you chose. Cookies sign you out of websites."
+msgstr "Κρυφές μνήμες περιηγητή και cookies, ιστορικό ή συνεδρίες που επιλέξατε. Η διαγραφή cookies σάς αποσυνδέει από ιστοτόπους."
+
+#: src/models/scan_category.rs
+msgid "Folders you added yourself. Check that nothing you need is inside."
+msgstr "Φάκελοι που προσθέσατε. Ελέγξτε ότι δεν περιέχουν κάτι που χρειάζεστε."
+
+#: src/models/scan_category.rs
+msgid "Dependency and build folders (node_modules, target, .venv…) of projects you have not changed in a while. Building the project again brings them back."
+msgstr "Φάκελοι εξαρτήσεων και μεταγλώττισης (node_modules, target, .venv…) έργων χωρίς πρόσφατες αλλαγές. Η νέα μεταγλώττιση τους αναδημιουργεί."
+
+#: src/ui/custom_page.rs
+msgid "Add Custom Rule"
+msgstr "Προσθήκη προσαρμοσμένου κανόνα"
+
+#: src/ui/custom_page.rs
+msgid "Add Disabled Rule"
+msgstr "Προσθήκη ανενεργού κανόνα"
+
+#: src/ui/custom_page.rs
+msgid "Add Rule"
+msgstr "Προσθήκη κανόνα"
+
+#: src/ui/custom_page.rs
+msgid "Add your own directories to clean. Use with caution - these rules can delete important files if misconfigured."
+msgstr "Προσθέστε δικούς σας φακέλους για εκκαθάριση. Προσοχή: λανθασμένοι κανόνες μπορούν να διαγράψουν σημαντικά αρχεία."
+
+#: src/ui/custom_page.rs
+msgid "Advanced setting: verify every custom path before enabling cleanup."
+msgstr "Προηγμένη ρύθμιση: ελέγξτε κάθε προσαρμοσμένη διαδρομή πριν ενεργοποιήσετε την εκκαθάριση."
+
+#: src/ui/custom_page.rs
+msgid "Cache & Temp"
+msgstr "Κρυφή μνήμη και προσωρινά"
+
+#: src/ui/custom_page.rs
+msgid "Choose a Directory"
+msgstr "Επιλογή καταλόγου"
+
+#: src/ui/custom_page.rs
+msgid "Choose a directory"
+msgstr "Επιλογή καταλόγου"
+
+#: src/ui/custom_page.rs
+msgid "Click 'Add Rule' to create one"
+msgstr "Πατήστε «Προσθήκη κανόνα» για δημιουργία"
+
+#: src/ui/custom_page.rs
+msgid "Could not expand home directory in path."
+msgstr "Δεν ήταν δυνατή η επέκταση του προσωπικού φακέλου στη διαδρομή."
+
+#: src/ui/custom_page.rs
+msgid "Custom Rules"
+msgstr "Προσαρμοσμένοι κανόνες"
+
+#: src/ui/custom_page.rs
+msgid "Delete Rule"
+msgstr "Διαγραφή κανόνα"
+
+#: src/ui/custom_page.rs
+msgid "Delete this rule"
+msgstr "Διαγραφή αυτού του κανόνα"
+
+#: src/ui/custom_page.rs
+msgid "Deletion Mode"
+msgstr "Λειτουργία διαγραφής"
+
+#: src/ui/custom_page.rs
+msgid "Directory Path"
+msgstr "Διαδρομή καταλόγου"
+
+#: src/ui/custom_page.rs
+msgid "File Pattern"
+msgstr "Μοτίβο αρχείων"
+
+#: src/ui/custom_page.rs
+msgid "Files and directories"
+msgstr "Αρχεία και κατάλογοι"
+
+#: src/ui/custom_page.rs
+msgid "Files only (keep directory structure)"
+msgstr "Μόνο αρχεία (διατήρηση δομής καταλόγων)"
+
+#: src/ui/custom_page.rs
+msgid "High-Risk Custom Location"
+msgstr "Προσαρμοσμένη τοποθεσία υψηλού κινδύνου"
+
+#: src/ui/custom_page.rs
+msgid "Invalid Folder Pattern"
+msgstr "Μη έγκυρο μοτίβο φακέλων"
+
+#: src/ui/custom_page.rs
+msgid "Invalid Path"
+msgstr "Μη έγκυρη διαδρομή"
+
+#: src/ui/custom_page.rs
+msgid "Minimum Age"
+msgstr "Ελάχιστη ηλικία"
+
+#: src/ui/custom_page.rs
+msgid "No Matches Yet"
+msgstr "Δεν υπάρχουν ακόμα αντιστοιχίες"
+
+#: src/ui/custom_page.rs
+msgid "No custom rules"
+msgstr "Δεν υπάρχουν προσαρμοσμένοι κανόνες"
+
+#: src/ui/custom_page.rs
+msgid "Only Rust (Cargo) build folders"
+msgstr "Μόνο φάκελοι μεταγλώττισης Rust (Cargo)"
+
+#: src/ui/custom_page.rs
+msgid "Only clean matches that Cargo marked as its own build output (CACHEDIR.TAG). Folders that just share the name are left alone."
+msgstr "Εκκαθάριση μόνο φακέλων που το Cargo σημείωσε ως αποτελέσματα μεταγλώττισης (CACHEDIR.TAG). Φάκελοι με απλώς ίδιο όνομα διατηρούνται."
+
+#: src/ui/custom_page.rs
+msgid "Path is not safe for cleanup"
+msgstr "Η διαδρομή δεν είναι ασφαλής για εκκαθάριση"
+
+#: src/ui/custom_page.rs
+msgid "Remove this custom cleanup rule"
+msgstr "Αφαίρεση αυτού του προσαρμοσμένου κανόνα εκκαθάρισης"
+
+#: src/ui/custom_page.rs
+msgid "Rule Name"
+msgstr "Όνομα κανόνα"
+
+#: src/ui/custom_page.rs
+msgid "Rust (Cargo) build folders"
+msgstr "Φάκελοι μεταγλώττισης Rust (Cargo)"
+
+#: src/ui/custom_page.rs
+msgid "Search Subfolders Matching"
+msgstr "Αναζήτηση υποφακέλων που ταιριάζουν"
+
+#: src/ui/custom_page.rs
+msgid "Subfolder Search"
+msgstr "Αναζήτηση υποφακέλων"
+
+#: src/ui/custom_page.rs
+msgid "Your custom cleanup directories"
+msgstr "Οι προσαρμοσμένοι κατάλογοι εκκαθάρισης"
+
+#: src/ui/scan_overview.rs
+msgid "Safe to clean"
+msgstr "Ασφαλής εκκαθάριση"
+
+#: src/ui/scan_overview.rs
+msgid "looking for files"
+msgstr "αναζήτηση αρχείων"
+
+#: src/ui/scan_overview.rs
+msgid "why zero?"
+msgstr "γιατί μηδέν;"
+
+#: src/ui/rule_preview.rs
+msgid "View files"
+msgstr "Προβολή αρχείων"
+
+#: src/ui/dashboard_page.rs
+msgid "A scan or cleanup is already running. Please wait for it to complete."
+msgstr "Εκτελείται ήδη σάρωση ή εκκαθάριση. Περιμένετε να ολοκληρωθεί."
+
+#: src/ui/dashboard_page.rs
+msgid "Cancel Operation"
+msgstr "Ακύρωση ενέργειας"
+
+#: src/ui/dashboard_page.rs
+msgid "Cancel the active scan or wait for the administrator operation to finish before cleaning."
+msgstr "Ακυρώστε την ενεργή σάρωση ή περιμένετε να ολοκληρωθεί η ενέργεια διαχειριστή πριν την εκκαθάριση."
+
+#: src/ui/dashboard_page.rs
+msgid "No files were found to clean with the current settings."
+msgstr "Δεν βρέθηκαν αρχεία για εκκαθάριση με τις τρέχουσες ρυθμίσεις."
+
+#: src/ui/dashboard_page.rs
+msgid "Scheduled cleanup found nothing to delete"
+msgstr "Η προγραμματισμένη εκκαθάριση δεν βρήκε τίποτα για διαγραφή"
+
+#: src/ui/dashboard_page.rs
+msgid "Scheduled cleanup skipped because cleanup rules changed during its scan"
+msgstr "Η προγραμματισμένη εκκαθάριση παραλείφθηκε επειδή οι κανόνες άλλαξαν κατά τη σάρωση"
+
+#: src/ui/dashboard_page.rs
+msgid "The results below are from before the change. Scan again to see what can be freed now."
+msgstr "Τα αποτελέσματα προέρχονται από πριν την αλλαγή. Σαρώστε ξανά για να δείτε τι μπορεί να ελευθερωθεί τώρα."
+
+#: src/ui/dashboard_page.rs
+msgid "Wait for the current scan or cleanup to finish before closing Magnífico."
+msgstr "Περιμένετε να ολοκληρωθεί η σάρωση ή η εκκαθάριση πριν κλείσετε το Magnífico."
+
+#: src/ui/dashboard_page.rs
+msgid "Your cleanup rules changed"
+msgstr "Οι κανόνες εκκαθάρισης άλλαξαν"
+
+#: src/ui/project_settings.rs
+msgid "1 month"
+msgstr "1 μήνας"
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "App caches"
+msgstr "Κρυφή μνήμη apps"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Development"
+msgstr "Ανάπτυξη"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Uninstall apps"
+msgstr "Απεγκατάσταση"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Analyzing your disk…"
+msgstr "Ανάλυση του δίσκου σας…"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Disk usage"
+msgstr "Χρήση δίσκου"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "No safe items to clean."
+msgstr "Δεν υπάρχουν ασφαλή στοιχεία για καθαρισμό."
+
+msgid "{count} items · {size}"
+msgstr "{count} στοιχεία · {size}"
+
+msgid "{count} models"
+msgstr "{count} μοντέλα"
+
+msgid "{count} games"
+msgstr "{count} παιχνίδια"
+
+msgid "Nothing found."
+msgstr "Δεν βρέθηκε τίποτα."
+
+msgid "{count} items · {size} to review"
+msgstr "{count} στοιχεία · {size} για έλεγχο"
+
+msgid "Last used"
+msgstr "Τελευταία χρήση"
+
+msgid "Models are downloaded again the next time an app needs them."
+msgstr "Τα μοντέλα θα ληφθούν ξανά την επόμενη φορά που θα τα χρειαστεί μια εφαρμογή."
+
+msgid "Games can be installed again from their launcher. Saved games in the cloud or in compatdata are kept."
+msgstr "Τα παιχνίδια μπορούν να εγκατασταθούν ξανά από την εφαρμογή εκκίνησής τους. Οι αποθηκεύσεις στο cloud ή στο compatdata διατηρούνται."
+
+msgid "Close Steam before removing Steam games, then try again."
+msgstr "Κλείστε το Steam πριν αφαιρέσετε παιχνίδια Steam και δοκιμάστε ξανά."
+
+msgid "Keep Steam closed while they are removed."
+msgstr "Κρατήστε το Steam κλειστό όσο αφαιρούνται."
+
+msgid "Selected items will be moved to Trash."
+msgstr "Τα επιλεγμένα στοιχεία θα μετακινηθούν στον κάδο."
+
+msgid "Data ({size}): {paths}"
+msgstr "Δεδομένα ({size}): {paths}"
+
+msgid "Also remove app data (caches, settings and saved data) — {size}"
+msgstr "Αφαίρεση και των δεδομένων της εφαρμογής (cache, ρυθμίσεις και αποθηκευμένα δεδομένα) — {size}"
+
+msgid "When closing the window"
+msgstr "Κατά το κλείσιμο του παραθύρου"
+
+msgid "In the system tray, scheduled cleanup stays available."
+msgstr "Στην περιοχή ειδοποιήσεων, ο προγραμματισμένος καθαρισμός παραμένει διαθέσιμος."
+
+msgid "Quit completely"
+msgstr "Πλήρης τερματισμός"
+
+msgid "Keep in the system tray"
+msgstr "Διατήρηση στην περιοχή ειδοποιήσεων"
+
+msgid "Middle-click to show in Files · Right-click to copy the path"
+msgstr "Μεσαίο κλικ: εμφάνιση στα Αρχεία · Δεξί κλικ: αντιγραφή διαδρομής"
+
+msgid "Path copied"
+msgstr "Η διαδρομή αντιγράφηκε"
+
+msgid "Open Settings"
+msgstr "Άνοιγμα ρυθμίσεων"
+
+msgid "Cleanup blocked by safety limit: {count} files found, limit is {limit}."
+msgstr "Ο καθαρισμός αποκλείστηκε από το όριο ασφαλείας: βρέθηκαν {count} αρχεία, το όριο είναι {limit}."
+
+msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
+msgstr "Ο καθαρισμός αποκλείστηκε από το όριο ασφαλείας: επιλέχθηκαν {size}, το όριο είναι {limit} ανά λειτουργία. Αυξήστε το όριο στις Ρυθμίσεις → Ασφάλεια."

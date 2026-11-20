@@ -1,0 +1,46 @@
+# Builds Magnífico from this checkout (including uncommitted changes) and
+# packages it for pacman. From this folder:
+#   makepkg -si
+pkgname=magnifico
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Magnífico: native GNOME app to safely clean browser data, caches and temporary files"
+arch=('x86_64' 'aarch64')
+url="https://github.com/wfpaisa/Magnifico"
+license=('MIT')
+depends=('gtk4' 'libadwaita>=1.5' 'glib2' 'gcc-libs' 'glibc')
+makedepends=('cargo')
+optdepends=(
+    'pacman-contrib: remove old package versions (paccache)'
+    'flatpak: remove unused Flatpak runtimes'
+    'docker: remove Docker leftovers'
+    'polkit: run system cleanup tasks as root'
+)
+options=('!lto' '!debug')
+
+_root="$(realpath "${startdir}/../..")"
+_appid=io.github.wfpaisa.Magnifico
+
+build() {
+    cd "$_root"
+    export CARGO_TARGET_DIR="${srcdir}/target"
+    cargo build --release --locked
+}
+
+check() {
+    cd "$_root"
+    export CARGO_TARGET_DIR="${srcdir}/target"
+    cargo test --release --locked
+}
+
+package() {
+    cd "$_root"
+    install -Dm755 "${srcdir}/target/release/magnifico" "${pkgdir}/usr/bin/magnifico"
+    install -Dm644 "data/${_appid}.desktop" "${pkgdir}/usr/share/applications/${_appid}.desktop"
+    install -Dm644 "data/${_appid}.metainfo.xml" "${pkgdir}/usr/share/metainfo/${_appid}.metainfo.xml"
+    install -Dm644 "data/icons/hicolor/scalable/apps/${_appid}.svg" \
+        "${pkgdir}/usr/share/icons/hicolor/scalable/apps/${_appid}.svg"
+    install -Dm644 "data/icons/hicolor/symbolic/apps/${_appid}-symbolic.svg" \
+        "${pkgdir}/usr/share/icons/hicolor/symbolic/apps/${_appid}-symbolic.svg"
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

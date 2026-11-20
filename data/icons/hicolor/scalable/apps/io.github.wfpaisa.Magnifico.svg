@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="linear-gradient-1" x1="64" y1="6" x2="64" y2="122" gradientUnits="userSpaceOnUse">
+      <stop offset="0.0152" stop-color="#c24881"/>
+      <stop offset="0.5199" stop-color="#8e61c0" data-vc-midpoint="0.5125"/>
+      <stop offset="1" stop-color="#5979ff"/>
+    </linearGradient>
+    <radialGradient id="radial-gradient-1" cx="64" cy="10" r="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="linear-gradient-2" x1="64" y1="6" x2="64" y2="122" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.45"/>
+    </linearGradient>
+    <filter id="filter-1" filterUnits="userSpaceOnUse" x="24.011" y="11.861" width="80.378" height="102.277" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="0" dy="3" result="shadow"/><feFlood flood-color="#003a8c" flood-opacity="0.45"/><feComposite in2="shadow" operator="in" result="paint"/><feMerge><feMergeNode in="paint"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <linearGradient id="linear-gradient-3" x1="166.4" y1="92.2" x2="341.6" y2="413.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.6" stop-color="#eaf5ff"/>
+      <stop offset="1" stop-color="#b9dcff"/>
+    </linearGradient>
+  </defs>
+  <title>io.github.wfpaisa.Magnifico1.svg</title>
+  <g id="Layer_1" data-name="Layer 1">
+    <path d="M36 6 L92 6 C108.569 6 122 19.431 122 36 L122 92 C122 108.569 108.569 122 92 122 L36 122 C19.431 122 6 108.569 6 92 L6 36 C6 19.431 19.431 6 36 6 Z" fill="url(#linear-gradient-1)"/>
+    <path d="M36 6 L92 6 C108.569 6 122 19.431 122 36 L122 92 C122 108.569 108.569 122 92 122 L36 122 C19.431 122 6 108.569 6 92 L6 36 C6 19.431 19.431 6 36 6 Z" fill="url(#radial-gradient-1)"/>
+    <path d="M36 7 L92 7 C108.016 7 121 19.984 121 36 L121 92 C121 108.016 108.016 121 92 121 L36 121 C19.984 121 7 108.016 7 92 L7 36 C7 19.984 19.984 7 36 7 Z" fill="none" stroke="url(#linear-gradient-2)" stroke-width="2"/>
+    <g filter="url(#filter-1)">
+      <path d="M39.474 60.552 L65.018 27.765 C67.015 25.2 70.76 26.797 70.76 30.212 L70.76 55.59 C70.76 57.636 72.228 59.295 74.04 59.295 L86.464 59.295 C89.286 59.295 90.791 63.054 88.926 65.448 L63.382 98.235 C61.385 100.799 57.64 99.204 57.64 95.788 L57.64 70.41 C57.64 68.364 56.172 66.705 54.36 66.705 L41.936 66.705 C39.114 66.705 37.61 62.946 39.474 60.552 Z" fill="url(#linear-gradient-3)" stroke="#ffffff" stroke-width="1.278" stroke-linejoin="round"/>
+    </g>
+    <path d="M70.76 55.59 C70.76 57.636 72.228 59.295 74.04 59.295 L86.464 59.295" fill="none" stroke="#0a6cf0" stroke-opacity="0.35" stroke-width="1.46"/>
+  </g>
+</svg>

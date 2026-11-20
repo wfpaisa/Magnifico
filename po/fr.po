@@ -1,0 +1,3339 @@
+# French translation for Magnífico
+# See LICENSE for the original copyright notice.
+# This file is distributed under the same license as the magnifico package.
+#
+msgid ""
+msgstr "Project-Id-Version: magnifico 1.0\nReport-Msgid-Bugs-To: https://github.com/wfpaisa/Magnifico/issues\nPOT-Creation-Date: 2026-08-21 12:00+0300\nPO-Revision-Date: 2026-08-21 12:00+0300\nLast-Translator: wfpaisa\nLanguage-Team: French\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Current application and navigation
+msgid "Magnífico"
+msgstr "Magnífico"
+
+#. Application description
+#: src/application.rs
+msgid "A safe and transparent Linux system cleaner"
+msgstr "Un nettoyeur de système Linux sûr et transparent"
+
+#. About dialog
+#: src/application.rs
+msgid "About"
+msgstr "À propos"
+
+#: src/application.rs
+msgid "Preferences"
+msgstr "Préférences"
+
+#: src/application.rs
+msgid "Quit"
+msgstr "Quitter"
+
+#. Navigation items
+#: src/ui/main_window.rs
+msgid "Overview"
+msgstr "Vue d’ensemble"
+
+#: src/ui/main_window.rs
+msgid "Browsers"
+msgstr "Navigateurs"
+
+#: src/ui/main_window.rs
+msgid "Applications"
+msgstr "Applications"
+
+#: src/ui/main_window.rs
+msgid "Custom Directories"
+msgstr "Répertoires personnalisés"
+
+#: src/ui/main_window.rs
+msgid "System"
+msgstr "Système"
+
+#: src/ui/main_window.rs
+msgid "Settings"
+msgstr "Paramètres"
+
+#: src/ui/main_window.rs
+msgid "Diagnostics"
+msgstr "Diagnostics"
+
+#: src/ui/main_window.rs
+msgid "Help"
+msgstr "Aide"
+
+#: src/ui/main_window.rs
+msgid "Show sidebar"
+msgstr "Afficher la barre latérale"
+
+#: src/ui/main_window.rs
+msgid "Hide sidebar"
+msgstr "Masquer la barre latérale"
+
+#: src/ui/main_window.rs
+msgid "Main Menu"
+msgstr "Menu principal"
+
+#. Theme selector
+#: src/ui/main_window.rs
+msgid "Light"
+msgstr "Clair"
+
+#: src/ui/main_window.rs
+msgid "Dark"
+msgstr "Sombre"
+
+#. Dashboard page
+#: src/ui/dashboard_page.rs
+msgid "Safe and transparent system cleaning"
+msgstr "Nettoyage système sûr et transparent"
+
+#: src/ui/dashboard_page.rs
+msgid "Reclaimable Space"
+msgstr "Espace récupérable"
+
+#: src/ui/dashboard_page.rs
+msgid "Enabled Targets"
+msgstr "Cibles activées"
+
+#: src/ui/dashboard_page.rs
+msgid "Last Cleanup"
+msgstr "Dernier nettoyage"
+
+#: src/ui/dashboard_page.rs
+msgid "Never"
+msgstr "Jamais"
+
+#: src/ui/dashboard_page.rs
+msgid "Start Cleanup"
+msgstr "Démarrer le nettoyage"
+
+#: src/ui/dashboard_page.rs
+msgid ""
+"Scan enabled targets or clean them using your configured confirmation "
+"settings."
+msgstr ""
+"Analysez les cibles activées ou nettoyez-les avec les paramètres de "
+"confirmation configurés."
+
+#: src/ui/dashboard_page.rs
+msgid "Scan for Files"
+msgstr "Rechercher des fichiers"
+
+#: src/ui/dashboard_page.rs
+msgid "Clean Now"
+msgstr "Nettoyer maintenant"
+
+#: src/ui/dashboard_page.rs
+msgid "Scanning..."
+msgstr "Analyse en cours..."
+
+#: src/ui/dashboard_page.rs
+msgid "Click 'Scan' to check"
+msgstr "Cliquez sur 'Analyser' pour vérifier"
+
+#. Browsers page
+#: src/ui/browsers_page.rs
+msgid "Browser Cleanup"
+msgstr "Nettoyage du navigateur"
+
+#: src/ui/browsers_page.rs
+msgid ""
+"Select which browser data to clean. Cache is safe to delete, but cookies and "
+"history are permanent."
+msgstr ""
+"Sélectionnez les données du navigateur à nettoyer. Le cache peut être "
+"supprimé en toute sécurité, mais les cookies et l'historique sont permanents."
+
+#: src/ui/browsers_page.rs
+msgid "Installed"
+msgstr "Installé"
+
+#: src/ui/browsers_page.rs
+msgid "Not detected"
+msgstr "Non détecté"
+
+#. Browser data types
+#: src/ui/browsers_page.rs
+msgid "Cache"
+msgstr "Cache"
+
+#: src/ui/browsers_page.rs
+msgid "Cookies"
+msgstr "Cookies"
+
+#: src/ui/browsers_page.rs
+msgid "History"
+msgstr "Historique"
+
+#: src/ui/browsers_page.rs
+msgid "Sessions"
+msgstr "Sessions"
+
+#. Applications page
+#: src/ui/applications_page.rs
+msgid "Application Caches"
+msgstr "Caches d'applications"
+
+#: src/ui/applications_page.rs
+msgid ""
+"Clean caches from package managers and applications. These are safe to "
+"delete but may slow down first runs."
+msgstr ""
+"Nettoyer les caches des gestionnaires de paquets et des applications. Ils "
+"peuvent être supprimés en toute sécurité mais peuvent ralentir les premières "
+"exécutions."
+
+#. System page
+#: src/ui/main_window.rs src/ui/system_page.rs
+msgid "System Cleanup"
+msgstr "Nettoyage système"
+
+#: src/ui/system_page.rs
+msgid ""
+"Clean system-level temporary files and caches. Some options require "
+"administrator privileges."
+msgstr ""
+"Nettoyer les fichiers temporaires et les caches au niveau système. Certaines "
+"options nécessitent des privilèges d'administrateur."
+
+#. Settings page
+#: src/ui/settings_page.rs
+msgid "General"
+msgstr "Général"
+
+#: src/ui/settings_page.rs
+msgid "Confirm Before Cleaning"
+msgstr "Confirmer avant le nettoyage"
+
+#: src/ui/settings_page.rs
+msgid "Show a confirmation dialog before deleting files"
+msgstr ""
+"Afficher une boîte de dialogue de confirmation avant de supprimer des "
+"fichiers"
+
+#: src/ui/settings_page.rs
+msgid "Show Cleanup Summary"
+msgstr "Afficher le résumé du nettoyage"
+
+#: src/ui/settings_page.rs
+msgid "Display a summary after cleaning completes"
+msgstr "Afficher un résumé après le nettoyage"
+
+#: src/ui/settings_page.rs
+msgid "Safety"
+msgstr "Sécurité"
+
+#: src/ui/settings_page.rs
+msgid "These settings help prevent accidental data loss"
+msgstr "Ces paramètres aident à prévenir la perte accidentelle de données"
+
+#: src/ui/settings_page.rs
+msgid "Maximum Files Per Operation"
+msgstr "Nombre maximum de fichiers par opération"
+
+#: src/ui/settings_page.rs
+msgid "Stop after deleting this many files"
+msgstr "Arrêter après avoir supprimé ce nombre de fichiers"
+
+#: src/ui/settings_page.rs
+msgid "Follow Symlinks"
+msgstr "Suivre les liens symboliques"
+
+#: src/ui/settings_page.rs
+msgid "Dangerous: May delete files outside target directories"
+msgstr ""
+"Dangereux : Peut supprimer des fichiers en dehors des répertoires cibles"
+
+#: src/ui/settings_page.rs
+msgid "Appearance"
+msgstr "Apparence"
+
+#: src/ui/settings_page.rs
+msgid "Color Scheme"
+msgstr "Schéma de couleurs"
+
+#: src/ui/help_page.rs:63
+msgid "Learn how to use Magnífico"
+msgstr "Découvrez comment utiliser Magnífico"
+
+msgid "About Magnífico"
+msgstr "À propos de Magnífico"
+
+#: src/ui/help_page.rs
+msgid "Magnífico is a system cleaning utility for Linux that helps you free up disk space by removing temporary files, caches, and other unnecessary data."
+msgstr "Magnífico est un utilitaire de nettoyage système pour Linux qui vous aide à libérer de l'espace disque en supprimant les fichiers temporaires, les caches et autres données inutiles."
+
+#. Common UI elements
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Enable"
+msgstr "Activer"
+
+msgid "Disable"
+msgstr "Désactiver"
+
+msgid "Enabled"
+msgstr "Activé"
+
+msgid "Disabled"
+msgstr "Désactivé"
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Warning"
+msgstr "Avertissement"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Success"
+msgstr "Succès"
+
+#. File size units
+msgid "bytes"
+msgstr "octets"
+
+msgid "KB"
+msgstr "Ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
+
+msgid "TB"
+msgstr "To"
+
+#. Time-related
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgid "Yesterday"
+msgstr "Hier"
+
+msgid "days ago"
+msgstr "jours"
+
+msgid "Open Magnífico"
+msgstr "Ouvrir Magnífico"
+
+msgid "Clean"
+msgstr "Nettoyer"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Storage Analyzer"
+msgstr "Analyseur de stockage"
+
+msgid "Cleanup Log"
+msgstr "Journal de nettoyage"
+
+msgid "What's New"
+msgstr "Nouveautés"
+
+msgid "Release history and highlights"
+msgstr "Historique des versions et points forts"
+
+msgid "Initial public release"
+msgstr "Première version publique"
+
+#. Language and appearance settings
+msgid "Automatic"
+msgstr "Automatique"
+
+msgid "Application Language"
+msgstr "Langue de l'application"
+
+msgid "Choose a language or follow your system automatically"
+msgstr "Choisissez une langue ou utilisez automatiquement celle du système"
+
+msgid "Choose your preferred theme"
+msgstr "Choisissez votre thème préféré"
+
+#. Update check setting
+msgid "Check for Updates"
+msgstr "Rechercher des mises à jour"
+
+msgid "Ask GitHub for a newer release when Magnífico starts"
+msgstr "Demander à GitHub s'il existe une version plus récente au démarrage de Magnífico"
+
+#. Scheduler and log-cleanup settings
+msgid "Start Magnífico at Login"
+msgstr "Lancer Magnífico à la connexion"
+
+msgid ""
+"Start in the background so scheduled cleanup can run while you are signed in"
+msgstr ""
+"Lancer en arrière-plan pour exécuter le nettoyage planifié pendant votre "
+"session"
+
+msgid "Automatic Cleanup"
+msgstr "Nettoyage automatique"
+
+msgid "Runs selected cleanup rules only while Magnífico is open, with the same safety limits."
+msgstr "Exécute les règles de nettoyage sélectionnées uniquement lorsque Magnífico est ouvert, avec les mêmes limites de sécurité."
+
+msgid "Scheduled Automatic Cleanup"
+msgstr "Nettoyage automatique planifié"
+
+msgid "Cleanup Days"
+msgstr "Jours de nettoyage"
+
+msgid "Cleanup Time"
+msgstr "Heure du nettoyage"
+
+msgid "Uses your current local time"
+msgstr "Utilise votre heure locale actuelle"
+
+msgid "Every day"
+msgstr "Tous les jours"
+
+msgid "every day"
+msgstr "tous les jours"
+
+msgid "on"
+msgstr "les"
+
+msgid "Runs selected rules {days} at {time} while the app is open"
+msgstr ""
+"Exécute les règles sélectionnées {days} à {time} lorsque l'application est "
+"ouverte"
+
+msgid "Off. Enable to run selected rules at the chosen day and time"
+msgstr ""
+"Désactivé. Activez cette option pour exécuter les règles sélectionnées aux "
+"jours et à l'heure choisis"
+
+msgid "Monday"
+msgstr "Lundi"
+
+msgid "Tuesday"
+msgstr "Mardi"
+
+msgid "Wednesday"
+msgstr "Mercredi"
+
+msgid "Thursday"
+msgstr "Jeudi"
+
+msgid "Friday"
+msgstr "Vendredi"
+
+msgid "Saturday"
+msgstr "Samedi"
+
+msgid "Sunday"
+msgstr "Dimanche"
+
+msgid "Maximum Data Per Operation"
+msgstr "Données maximales par opération"
+
+msgid "Block cleanup when selected data exceeds this many GiB"
+msgstr ""
+"Bloque le nettoyage lorsque les données sélectionnées dépassent cette limite "
+"en Gio"
+
+msgid "Log Cleanup"
+msgstr "Nettoyage des journaux"
+
+msgid ""
+"Optional cleanup of older log data. Both cleanup types are off by default."
+msgstr ""
+"Nettoyage facultatif des anciennes données de journal. Les deux types sont "
+"désactivés par défaut."
+
+msgid "Application Logs"
+msgstr "Journaux des applications"
+
+msgid ""
+"Clean only old .log and rotated .log.* files from your user state and cache "
+"folders"
+msgstr ""
+"Nettoie uniquement les anciens fichiers .log et les .log.* archivés des "
+"dossiers d'état et de cache utilisateur"
+
+msgid "System Journal"
+msgstr "Journal système"
+
+msgid "Keep Recent Logs"
+msgstr "Conserver les journaux récents"
+
+msgid "Only clean log data older than this retention period"
+msgstr ""
+"Nettoie uniquement les données de journal antérieures à cette durée de "
+"conservation"
+
+msgid "days"
+msgstr "jours"
+
+#. Dashboard and Storage Analyzer
+msgid "Disk Storage"
+msgstr "Stockage sur disque"
+
+msgid "Disk information unavailable"
+msgstr "Informations sur le disque indisponibles"
+
+msgid "used"
+msgstr "utilisé"
+
+msgid "Available"
+msgstr "Disponible"
+
+msgid "Scan to estimate"
+msgstr "Analyser pour estimer"
+
+msgid "Cleanup potential"
+msgstr "Espace récupérable"
+
+msgid "Enabled targets"
+msgstr "Cibles activées"
+
+msgid "Last cleanup"
+msgstr "Dernier nettoyage"
+
+msgid "Analyze a Folder"
+msgstr "Analyser un dossier"
+
+msgid "Choose a local folder to find its largest files and subfolders."
+msgstr ""
+"Choisissez un dossier local pour trouver ses fichiers et sous-dossiers les "
+"plus volumineux."
+
+msgid "Choose Folder…"
+msgstr "Choisir un dossier…"
+
+msgid "Scan Again"
+msgstr "Analyser à nouveau"
+
+msgid "Minimum size"
+msgstr "Taille minimale"
+
+msgid "Manual analysis · same filesystem only"
+msgstr "Analyse manuelle · même système de fichiers uniquement"
+
+msgid "Nothing selected"
+msgstr "Aucune sélection"
+
+msgid "Select files or folders to review before moving them to Trash"
+msgstr ""
+"Sélectionnez les fichiers ou dossiers à vérifier avant de les déplacer vers "
+"la Corbeille"
+
+msgid "Move Selected to Trash"
+msgstr "Déplacer la sélection vers la Corbeille"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Relative size"
+msgstr "Taille relative"
+
+msgid "Size"
+msgstr "Taille"
+
+#. Cleanup result log
+msgid "Latest Cleanup"
+msgstr "Dernier nettoyage"
+
+msgid "Back to Dashboard"
+msgstr "Retour au tableau de bord"
+
+msgid "Copy Log"
+msgstr "Copier le journal"
+
+msgid "Copy the complete cleanup log"
+msgstr "Copier le journal de nettoyage complet"
+
+#. Version 1.0.0 release notes
+msgid ""
+"A modern GNOME interface with unified light and dark surfaces, system accent "
+"colors, high contrast, and reduced motion support."
+msgstr ""
+"Une interface GNOME moderne avec des surfaces claires et sombres unifiées, "
+"les couleurs d'accentuation du système, un contraste élevé et une réduction "
+"des animations."
+
+msgid ""
+"A dashboard storage overview for used, available, total, and reclaimable "
+"disk space."
+msgstr ""
+"Un aperçu du stockage affichant l'espace disque utilisé, disponible, total "
+"et récupérable."
+
+msgid ""
+"Safe browser cleanup with installed-browser detection and unavailable "
+"browsers clearly disabled."
+msgstr ""
+"Nettoyage sûr des navigateurs avec détection de ceux installés et "
+"désactivation claire de ceux indisponibles."
+
+msgid ""
+"Application cache, system, custom directory, application log, and system "
+"journal cleanup with configurable retention."
+msgstr ""
+"Nettoyage des caches d'applications, du système, des dossiers personnalisés, "
+"des journaux d'applications et du journal système avec conservation "
+"configurable."
+
+msgid ""
+"Scheduled automatic cleanup with multiple cleanup days, a chosen local time, "
+"and optional start at login."
+msgstr ""
+"Nettoyage automatique planifié sur plusieurs jours, à une heure locale "
+"choisie, avec lancement facultatif à la connexion."
+
+msgid ""
+"A lightweight visual Storage Analyzer for finding large files and folders "
+"and moving selected items to Trash."
+msgstr ""
+"Un analyseur de stockage visuel et léger pour trouver les fichiers et "
+"dossiers volumineux et déplacer la sélection vers la Corbeille."
+
+msgid ""
+"An in-app cleanup log showing deleted, skipped, and failed items after every "
+"cleanup."
+msgstr ""
+"Un journal intégré affichant les éléments supprimés, ignorés et en échec "
+"après chaque nettoyage."
+
+msgid ""
+"System tray integration with an adaptive symbolic icon and quick cleanup "
+"actions."
+msgstr ""
+"Intégration à la zone de notification avec une icône symbolique adaptative "
+"et des actions de nettoyage rapides."
+
+msgid ""
+"A startup update check with direct access to the latest verified GitHub "
+"release."
+msgstr ""
+"Vérification des mises à jour au démarrage avec accès direct à la dernière "
+"version GitHub vérifiée."
+
+msgid ""
+"Safety limits, critical-path protection, symlink traversal prevention, "
+"previews, and running-browser checks."
+msgstr ""
+"Limites de sécurité, protection des chemins critiques, contrôle des liens "
+"symboliques, aperçus et vérification des navigateurs actifs."
+
+msgid "Consistent Magnífico application, executable, package, desktop, and configuration naming."
+msgstr "Nom Magnífico cohérent pour l'application, l'exécutable, le paquet, le bureau et la configuration."
+
+msgid ""
+"English, Greek, Italian, Spanish, German, and French interface languages "
+"with automatic system-language detection."
+msgstr ""
+"Interface en anglais, grec, italien, espagnol, allemand et français avec "
+"détection automatique de la langue du système."
+
+#. Destructive cleanup dialogs and dynamic UI templates
+msgid "Confirm Cleanup"
+msgstr "Confirmer le nettoyage"
+
+msgid "Nothing to Clean"
+msgstr "Rien à nettoyer"
+
+msgid "Cleanup Complete"
+msgstr "Nettoyage terminé"
+
+msgid "Cleanup Cancelled"
+msgstr "Nettoyage annulé"
+
+msgid "Cleanup Blocked"
+msgstr "Nettoyage bloqué"
+
+msgid "Operation in Progress"
+msgstr "Opération en cours"
+
+msgid "{used} used"
+msgstr "{used} utilisés"
+
+msgid "of {total} total on {device} (mounted at {mount})"
+msgstr "sur {total} au total sur {device} (monté sur {mount})"
+
+msgid "{used} used, {available} available"
+msgstr "{used} utilisés, {available} disponibles"
+
+msgid "Home filesystem could not be detected"
+msgstr "Le système de fichiers du dossier personnel n'a pas pu être détecté"
+
+msgid ""
+"This will delete {count} files ({size}).{journal}\n"
+"\n"
+"This action cannot be undone."
+msgstr ""
+"Cela supprimera {count} fichiers ({size}).{journal}\n"
+"\n"
+"Cette action est irréversible."
+
+msgid ""
+"\n"
+"The archived system journal older than {days} days will also be vacuumed "
+"with administrator approval."
+msgstr ""
+"\n"
+"Le journal système archivé de plus de {days} jours sera également nettoyé "
+"avec l'autorisation de l'administrateur."
+
+msgid ""
+"Deleted {count} files and freed {size}.\n"
+"{failed} items failed.{journal}"
+msgstr ""
+"{count} fichiers supprimés et {size} libérés.\n"
+"Échec pour {failed} éléments.{journal}"
+
+msgid ""
+"\n"
+"System journal: {message}."
+msgstr ""
+"\n"
+"Journal système : {message}."
+
+msgid ""
+"\n"
+"System journal failed: {error}"
+msgstr ""
+"\n"
+"Échec du journal système : {error}"
+
+#: src/ui/storage_analyzer_page.rs:356
+msgid "Choose a Folder to Analyze"
+msgstr "Choisir un dossier à analyser"
+
+#: src/ui/storage_analyzer_page.rs:359
+msgid "Analyze"
+msgstr "Analyser"
+
+#: src/ui/storage_analyzer_page.rs:437
+msgid "Cancelling…"
+msgstr "Annulation…"
+
+#: src/ui/storage_analyzer_page.rs:507
+msgid "Analyzing Storage…"
+msgstr "Analyse du stockage…"
+
+#: src/ui/storage_analyzer_page.rs:509
+#, rust-format
+msgid "Scanning {path} without following symbolic links"
+msgstr "Analyse de {path} sans suivre les liens symboliques"
+
+#: src/ui/storage_analyzer_page.rs:550
+#, rust-format
+msgid "{count} items"
+msgstr "{count} éléments"
+
+#: src/ui/storage_analyzer_page.rs:561
+msgid "Some entries skipped"
+msgstr "Certaines entrées ont été ignorées"
+
+#: src/ui/storage_analyzer_page.rs:565
+msgid "All readable entries were scanned"
+msgstr "Toutes les entrées lisibles ont été analysées"
+
+#: src/ui/storage_analyzer_page.rs:568
+#, rust-format
+msgid "{count} entries could not be read"
+msgstr "{count} entrées n'ont pas pu être lues"
+
+#: src/ui/storage_analyzer_page.rs:646
+msgid "No individual files or folders meet the selected size threshold"
+msgstr "Aucun fichier ou dossier ne correspond au seuil de taille sélectionné"
+
+#: src/ui/storage_analyzer_page.rs:740
+msgid "Inspect this folder"
+msgstr "Explorer ce dossier"
+
+#: src/ui/storage_analyzer_page.rs:769
+msgid "date unavailable"
+msgstr "date indisponible"
+
+#: src/ui/storage_analyzer_page.rs:771
+#, rust-format
+msgid "{kind} · Modified {date} · {path}"
+msgstr "{kind} · Modifié le {date} · {path}"
+
+#: src/ui/storage_analyzer_page.rs:815
+msgid "1 item selected"
+msgstr "1 élément sélectionné"
+
+#: src/ui/storage_analyzer_page.rs:818
+#, rust-format
+msgid "{count} items selected"
+msgstr "{count} éléments sélectionnés"
+
+#: src/ui/storage_analyzer_page.rs:831
+#, rust-format
+msgid "{size} will be reviewed before moving"
+msgstr "{size} seront vérifiés avant le déplacement"
+
+#: src/ui/storage_analyzer_page.rs:1008
+#, rust-format
+msgid ""
+"\n"
+"• and {count} more"
+msgstr ""
+"\n"
+"• et {count} autres"
+
+#: src/ui/storage_analyzer_page.rs:1015
+#, rust-format
+msgid ""
+"Move {count} selected {item_word} ({size}) to Trash?\n"
+"\n"
+"{preview}{more}\n"
+"\n"
+"Folders include all contents, including smaller items grouped as Other. "
+"Items can be restored from Trash."
+msgstr ""
+"Déplacer {count} {item_word} sélectionnés ({size}) vers la Corbeille ?\n"
+"\n"
+"{preview}{more}\n"
+"\n"
+"Les dossiers incluent tout leur contenu, y compris les petits éléments "
+"regroupés sous Autres. Les éléments peuvent être restaurés depuis la "
+"Corbeille."
+
+#: src/ui/storage_analyzer_page.rs:1032
+msgid "Move Selected Items to Trash?"
+msgstr "Déplacer les éléments sélectionnés vers la Corbeille ?"
+
+#: src/ui/storage_analyzer_page.rs:1103
+#, rust-format
+msgid ""
+"Moved {moved} {item_word} ({size}) to Trash.\n"
+"{failed} items failed.{details}"
+msgstr ""
+"{moved} {item_word} ({size}) déplacés vers la Corbeille.\n"
+"Échec pour {failed} éléments.{details}"
+
+#: src/ui/cleanup_log_page.rs:182
+#, rust-format
+msgid "{mode} cleanup · {time}"
+msgstr "Nettoyage {mode} · {time}"
+
+#: src/ui/cleanup_log_page.rs:192
+#, rust-format
+msgid ""
+"{status} · {files} files and {folders} folders removed · {size} freed · "
+"{notices} notices"
+msgstr ""
+"{status} · {files} fichiers et {folders} dossiers supprimés · {size} libérés "
+"· {notices} notifications"
+
+#: src/ui/cleanup_log_page.rs:205
+msgid "Magnífico — CLEANUP LOG"
+msgstr "Magnífico — JOURNAL DE NETTOYAGE"
+
+#: src/ui/cleanup_log_page.rs:210
+#, rust-format
+msgid "Completed: {time}"
+msgstr "Terminé : {time}"
+
+#: src/ui/cleanup_log_page.rs:215
+#, rust-format
+msgid "Mode: {mode}"
+msgstr "Mode : {mode}"
+
+#: src/ui/cleanup_log_page.rs:220
+#, rust-format
+msgid "Status: {status}"
+msgstr "État : {status}"
+
+#: src/ui/cleanup_log_page.rs:226
+#, rust-format
+msgid "Space freed: {size}"
+msgstr "Espace libéré : {size}"
+
+#: src/ui/cleanup_log_page.rs:234
+#, rust-format
+msgid "Deleted files: {count}"
+msgstr "Fichiers supprimés : {count}"
+
+#: src/ui/cleanup_log_page.rs:242
+#, rust-format
+msgid "Deleted folders: {count}"
+msgstr "Dossiers supprimés : {count}"
+
+#: src/ui/cleanup_log_page.rs:250
+#, rust-format
+msgid "Failed items: {count}"
+msgstr "Éléments en échec : {count}"
+
+#: src/ui/cleanup_log_page.rs:258
+#, rust-format
+msgid "Skipped items: {count}"
+msgstr "Éléments ignorés : {count}"
+
+#: src/ui/cleanup_log_page.rs:270
+#, rust-format
+msgid ""
+"\n"
+"BLOCKED\n"
+"  {reason}"
+msgstr ""
+"\n"
+"BLOQUÉ\n"
+"  {reason}"
+
+#: src/ui/cleanup_log_page.rs:324
+msgid ""
+"\n"
+"SYSTEM JOURNAL"
+msgstr ""
+"\n"
+"JOURNAL SYSTÈME"
+
+#: src/ui/cleanup_log_page.rs:330
+#, rust-format
+msgid "  [CLEANED] {message}"
+msgstr "  [NETTOYÉ] {message}"
+
+#: src/ui/cleanup_log_page.rs:337
+#, rust-format
+msgid "  [FAILED] {error}"
+msgstr "  [ÉCHEC] {error}"
+
+#: src/ui/cleanup_log_page.rs:345
+msgid "  [SKIPPED] Scheduled cleanup cannot request administrator approval"
+msgstr ""
+"  [IGNORÉ] Le nettoyage planifié ne peut pas demander l'autorisation de "
+"l'administrateur"
+
+#: src/ui/cleanup_log_page.rs:353
+msgid "  [SKIPPED] Cleanup was cancelled"
+msgstr "  [IGNORÉ] Le nettoyage a été annulé"
+
+#: src/ui/cleanup_log_page.rs:360
+msgid "  [SKIPPED] Cleanup was blocked"
+msgstr "  [IGNORÉ] Le nettoyage a été bloqué"
+
+#: src/ui/cleanup_log_page.rs:367
+msgid "  [NOT RUN] No journal result was returned"
+msgstr "  [NON EXÉCUTÉ] Aucun résultat du journal n'a été renvoyé"
+
+#: src/ui/cleanup_log_page.rs:374
+msgid "  [DISABLED] System journal cleanup was not enabled"
+msgstr "  [DÉSACTIVÉ] Le nettoyage du journal système n'était pas activé"
+
+#: src/ui/cleanup_log_page.rs:396 src/ui/cleanup_log_page.rs:438
+#: src/ui/cleanup_log_page.rs:481
+#, rust-format
+msgid ""
+"\n"
+"{heading} ({count})"
+msgstr ""
+"\n"
+"{heading} ({count})"
+
+#: src/ui/cleanup_log_page.rs:404 src/ui/cleanup_log_page.rs:446
+#: src/ui/cleanup_log_page.rs:489
+msgid "  None"
+msgstr "  Aucun"
+
+#: src/ui/cleanup_log_page.rs:411
+#, rust-format
+msgid "  [{status}] {path}\n"
+msgstr "  [{status}] {path}\n"
+
+#: src/ui/cleanup_log_page.rs:453
+#, rust-format
+msgid ""
+"  [{status}] {path}\n"
+"    Reason: {reason}\n"
+msgstr ""
+"  [{status}] {path}\n"
+"    Motif : {reason}\n"
+
+#: src/ui/cleanup_log_page.rs:496
+#, rust-format
+msgid "  [{status}] {message}\n"
+msgstr "  [{status}] {message}\n"
+
+#: src/ui/cleanup_log_page.rs:523
+#, rust-format
+msgid "  [TRUNCATED] {omitted} additional entries omitted from the in-app log"
+msgstr ""
+"  [TRONQUÉ] {omitted} entrées supplémentaires omises du journal de "
+"l'application"
+
+#: src/ui/diagnostics_page.rs:79
+msgid "System compatibility and environment information"
+msgstr "Informations sur la compatibilité du système et l'environnement"
+
+#: src/ui/diagnostics_page.rs:123 src/ui/diagnostics_page.rs:128
+msgid "Desktop Environment"
+msgstr "Environnement de bureau"
+
+#: src/ui/diagnostics_page.rs:124
+msgid "Information about your desktop environment"
+msgstr "Informations sur votre environnement de bureau"
+
+#: src/ui/diagnostics_page.rs:135 src/ui/diagnostics_page.rs:170
+#: src/ui/diagnostics_page.rs:178
+msgid "Not set"
+msgstr "Non défini"
+
+#: src/ui/diagnostics_page.rs:143 src/ui/diagnostics_page.rs:209
+#: src/ui/diagnostics_page.rs:236
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: src/ui/diagnostics_page.rs:155 src/ui/diagnostics_page.rs:162
+msgid "Display Server"
+msgstr "Serveur d'affichage"
+
+#: src/ui/diagnostics_page.rs:156
+msgid "Information about the display server"
+msgstr "Informations sur le serveur d'affichage"
+
+#: src/ui/diagnostics_page.rs:188
+msgid "Compatibility"
+msgstr "Compatibilité"
+
+#: src/ui/diagnostics_page.rs:190
+msgid "Full Wayland support via GTK4"
+msgstr "Prise en charge complète de Wayland via GTK4"
+
+#: src/ui/diagnostics_page.rs:192
+msgid "X11 mode - all features available"
+msgstr "Mode X11 — toutes les fonctionnalités sont disponibles"
+
+#: src/ui/diagnostics_page.rs:203
+msgid "Theme"
+msgstr "Thème"
+
+#: src/ui/diagnostics_page.rs:204
+msgid "Current theme and color scheme settings"
+msgstr "Paramètres actuels du thème et du jeu de couleurs"
+
+#: src/ui/diagnostics_page.rs:211
+msgid "Icon Theme"
+msgstr "Thème d'icônes"
+
+#: src/ui/diagnostics_page.rs:231
+msgid "Follow System"
+msgstr "Suivre le système"
+
+#: src/ui/diagnostics_page.rs:232
+msgid "Force Light"
+msgstr "Forcer le mode clair"
+
+#: src/ui/diagnostics_page.rs:233
+msgid "Force Dark"
+msgstr "Forcer le mode sombre"
+
+#: src/ui/diagnostics_page.rs:234
+msgid "Prefer Light"
+msgstr "Préférer le mode clair"
+
+#: src/ui/diagnostics_page.rs:235
+msgid "Prefer Dark"
+msgstr "Préférer le mode sombre"
+
+#: src/ui/diagnostics_page.rs:239
+msgid "Theme Mode"
+msgstr "Mode du thème"
+
+#: src/ui/diagnostics_page.rs:246
+msgid "High Contrast"
+msgstr "Contraste élevé"
+
+#: src/ui/diagnostics_page.rs:253
+msgid "Reduced Motion"
+msgstr "Animations réduites"
+
+#: src/ui/diagnostics_page.rs:260
+msgid "Accent Color"
+msgstr "Couleur d'accentuation"
+
+#: src/ui/diagnostics_page.rs:271
+msgid "Icon Resolution"
+msgstr "Résolution des icônes"
+
+#: src/ui/diagnostics_page.rs:272
+msgid "Status of icon loading and fallbacks"
+msgstr "État du chargement des icônes et des solutions de repli"
+
+#: src/ui/diagnostics_page.rs:299
+msgid "Resolution Rate"
+msgstr "Taux de résolution"
+
+#: src/ui/diagnostics_page.rs:301
+#, rust-format
+msgid "{percent}% icons resolved from theme"
+msgstr "{percent} % des icônes résolues depuis le thème"
+
+#: src/ui/diagnostics_page.rs:313
+msgid "XDG Portals"
+msgstr "Portails XDG"
+
+#: src/ui/diagnostics_page.rs:314
+msgid "Desktop portal availability for sandboxed access"
+msgstr "Disponibilité du portail de bureau pour l'accès en bac à sable"
+
+#: src/ui/diagnostics_page.rs:332
+msgid "Default"
+msgstr "Par défaut"
+
+#: src/ui/diagnostics_page.rs:334
+msgid "GTK Portal Usage"
+msgstr "Utilisation du portail GTK"
+
+#: src/ui/diagnostics_page.rs:346
+msgid "Portal Service"
+msgstr "Service de portail"
+
+#: src/ui/diagnostics_page.rs:361
+msgid "XDG Paths"
+msgstr "Chemins XDG"
+
+#: src/ui/diagnostics_page.rs:362
+msgid "Standard directory locations being used"
+msgstr "Emplacements de dossiers standard utilisés"
+
+#: src/ui/diagnostics_page.rs:365
+msgid "Config"
+msgstr "Configuration"
+
+#: src/ui/diagnostics_page.rs:367
+msgid "Data"
+msgstr "Données"
+
+#: src/ui/diagnostics_page.rs:368
+#: src/ui/storage_analyzer_page.rs
+msgid "Home"
+msgstr "Dossier personnel"
+
+#: src/ui/diagnostics_page.rs:375
+msgid "Not available"
+msgstr "Indisponible"
+
+#: src/ui/diagnostics_page.rs:393
+msgid "App Config"
+msgstr "Configuration de l'application"
+
+#: src/ui/storage_analyzer_page.rs:175
+msgid "Files and folders smaller than this are grouped as Other"
+msgstr "Les fichiers et dossiers plus petits sont regroupés sous Autres"
+
+#: src/ui/storage_analyzer_page.rs:225
+msgid "Some entries could not be read"
+msgstr "Certaines entrées n'ont pas pu être lues"
+
+#: src/ui/storage_analyzer_page.rs:234
+msgid "Click a folder block to inspect its contents"
+msgstr "Cliquez sur le bloc d'un dossier pour explorer son contenu"
+
+#: src/ui/storage_analyzer_page.rs:376
+msgid "Local Folders Only"
+msgstr "Dossiers locaux uniquement"
+
+#: src/ui/storage_analyzer_page.rs:377
+msgid "Storage Analyzer currently supports local folders only."
+msgstr "L'Analyseur de stockage ne prend actuellement en charge que les dossiers locaux."
+
+#: src/ui/storage_analyzer_page.rs:403
+msgid ""
+"Wait for the current cleanup operation to finish before analyzing storage."
+msgstr "Attendez la fin du nettoyage en cours avant d'analyser le stockage."
+
+#: src/ui/storage_analyzer_page.rs:411
+msgid "Cancel Scan"
+msgstr "Annuler l'analyse"
+
+#: src/ui/storage_analyzer_page.rs:467
+msgid "Scan Cancelled"
+msgstr "Analyse annulée"
+
+#: src/ui/storage_analyzer_page.rs:468
+msgid "Choose a folder when you are ready to analyze storage."
+msgstr "Choisissez un dossier lorsque vous êtes prêt à analyser le stockage."
+
+#: src/ui/storage_analyzer_page.rs:474
+msgid "Could Not Analyze Folder"
+msgstr "Impossible d'analyser le dossier"
+
+#: src/ui/storage_analyzer_page.rs:676
+msgid "Select this entire folder and all of its contents"
+msgstr "Sélectionner ce dossier entier et tout son contenu"
+
+#: src/ui/storage_analyzer_page.rs:678
+msgid "Select this file"
+msgstr "Sélectionner ce fichier"
+
+#: src/ui/storage_analyzer_page.rs:761
+msgid "Folder"
+msgstr "Dossier"
+
+#: src/ui/storage_analyzer_page.rs:763
+msgid "File"
+msgstr "Fichier"
+
+#: src/ui/storage_analyzer_page.rs:889
+msgid "Other"
+msgstr "Autres"
+
+#: src/ui/storage_analyzer_page.rs:1021 src/ui/storage_analyzer_page.rs:1112
+msgid "item"
+msgstr "élément"
+
+#: src/ui/storage_analyzer_page.rs:1023 src/ui/storage_analyzer_page.rs:1112
+msgid "items"
+msgstr "éléments"
+
+#: src/ui/storage_analyzer_page.rs:1063
+msgid "Wait for the current cleanup operation before moving storage items."
+msgstr "Attendez la fin du nettoyage en cours avant de déplacer des éléments."
+
+#: src/ui/storage_analyzer_page.rs:1068
+msgid "Moving…"
+msgstr "Déplacement…"
+
+#: src/ui/storage_analyzer_page.rs:1086
+msgid "Trash Operation Failed"
+msgstr "Échec de l'opération de la Corbeille"
+
+#: src/ui/storage_analyzer_page.rs:1087
+msgid "The operation did not return a result."
+msgstr "L'opération n'a renvoyé aucun résultat."
+
+#: src/ui/storage_analyzer_page.rs:1130
+msgid "Items Moved to Trash"
+msgstr "Éléments déplacés vers la Corbeille"
+
+#: src/ui/storage_analyzer_page.rs:1132
+msgid "Nothing Was Moved"
+msgstr "Aucun élément déplacé"
+
+#: src/ui/storage_analyzer_page.rs:1166
+msgid "Storage Operation in Progress"
+msgstr "Opération de stockage en cours"
+
+#: src/ui/storage_analyzer_page.rs:1167
+msgid "Cancel the current storage scan or wait for the Trash operation to finish before closing Magnífico."
+msgstr "Annulez l'analyse du stockage en cours ou attendez la fin de l'opération de la Corbeille avant de fermer Magnífico."
+
+#: src/ui/cleanup_log_page.rs:162
+msgid "Scheduled"
+msgstr "Planifié"
+
+#: src/ui/cleanup_log_page.rs:164
+msgid "Manual"
+msgstr "Manuel"
+
+#: src/ui/cleanup_log_page.rs:175
+msgid "Blocked"
+msgstr "Bloqué"
+
+#: src/ui/cleanup_log_page.rs:177
+msgid "Cancelled"
+msgstr "Annulé"
+
+#: src/ui/cleanup_log_page.rs:179
+msgid "Completed with notices"
+msgstr "Terminé avec des notifications"
+
+#: src/ui/cleanup_log_page.rs:181
+msgid "Completed successfully"
+msgstr "Terminé avec succès"
+
+#: src/ui/cleanup_log_page.rs:280
+msgid "DELETED FILES"
+msgstr "FICHIERS SUPPRIMÉS"
+
+#: src/ui/cleanup_log_page.rs:281 src/ui/cleanup_log_page.rs:288
+msgid "DELETED"
+msgstr "SUPPRIMÉ"
+
+#: src/ui/cleanup_log_page.rs:287
+msgid "DELETED EMPTY FOLDERS"
+msgstr "DOSSIERS VIDES SUPPRIMÉS"
+
+#: src/ui/cleanup_log_page.rs:294
+msgid "SKIPPED DURING CLEANUP"
+msgstr "IGNORÉS PENDANT LE NETTOYAGE"
+
+#: src/ui/cleanup_log_page.rs:295 src/ui/cleanup_log_page.rs:302
+msgid "SKIPPED"
+msgstr "IGNORÉ"
+
+#: src/ui/cleanup_log_page.rs:301
+msgid "SKIPPED DURING SCAN"
+msgstr "IGNORÉS PENDANT L'ANALYSE"
+
+#: src/ui/cleanup_log_page.rs:308 src/ui/cleanup_log_page.rs:309
+msgid "FAILED"
+msgstr "ÉCHEC"
+
+#: src/ui/cleanup_log_page.rs:315
+msgid "SECURITY NOTICES"
+msgstr "NOTIFICATIONS DE SÉCURITÉ"
+
+#: src/ui/cleanup_log_page.rs:316
+msgid "NOTICE"
+msgstr "NOTIFICATION"
+
+#: src/ui/cleanup_log_page.rs:322
+msgid "SCAN ERRORS"
+msgstr "ERREURS D'ANALYSE"
+
+#: src/ui/cleanup_log_page.rs:323
+msgid "ERROR"
+msgstr "ERREUR"
+
+#: src/ui/settings_page.rs
+msgid "Blur Behind the Sidebar"
+msgstr "Flouter l’arrière-plan de la barre latérale"
+
+#: src/ui/settings_page.rs
+msgid "The desktop shows through the sidebar, blurred"
+msgstr "Le bureau apparaît flouté à travers la barre latérale"
+
+msgid "No app caches found"
+msgstr "Aucun cache d’application trouvé"
+
+#: src/models/cleanup_plan.rs
+msgid "No Impact"
+msgstr "Sans impact"
+
+#: src/models/cleanup_plan.rs
+msgid "Rebuild"
+msgstr "Recompiler"
+
+#: src/models/cleanup_plan.rs
+msgid "Download Again"
+msgstr "Télécharger à nouveau"
+
+#: src/models/cleanup_plan.rs
+msgid "Comes back on its own"
+msgstr "Se recrée automatiquement"
+
+#: src/models/cleanup_plan.rs
+msgid "The next build takes longer"
+msgstr "La prochaine compilation prendra plus de temps"
+
+#: src/models/cleanup_plan.rs
+msgid "Uses your connection to get it back"
+msgstr "Utilise votre connexion pour le télécharger à nouveau"
+
+#: src/models/cleanup_plan.rs
+msgid "Programming Caches"
+msgstr "Caches de programmation"
+
+#: src/models/cleanup_plan.rs
+msgid "Old Logs"
+msgstr "Anciens journaux"
+
+#: src/models/cleanup_plan.rs
+msgid "Your Folders"
+msgstr "Vos dossiers"
+
+#: src/models/cleanup_plan.rs
+msgid "Rust Builds"
+msgstr "Compilations Rust"
+
+#: src/models/cleanup_plan.rs
+msgid "Python and Node"
+msgstr "Python et Node"
+
+#: src/models/cleanup_plan.rs
+msgid "Other Builds"
+msgstr "Autres compilations"
+
+#: src/models/cleanup_plan.rs src/services/big_items.rs
+msgid "Games"
+msgstr "Jeux"
+
+#: src/models/cleanup_plan.rs
+msgid "Nothing you use changes. Files in the trash are gone for good."
+msgstr "Rien de ce que vous utilisez ne change. Les fichiers de la corbeille sont supprimés définitivement."
+
+#: src/models/cleanup_plan.rs
+msgid "The system creates new ones as it needs them."
+msgstr "Le système en crée de nouveaux au besoin."
+
+#: src/models/cleanup_plan.rs
+msgid "Copies apps keep to open faster."
+msgstr "Copies conservées par les applications pour s’ouvrir plus vite."
+
+#: src/models/cleanup_plan.rs
+msgid "The first launch of each app may be a little slower."
+msgstr "Le premier lancement de chaque application peut être un peu plus lent."
+
+#: src/models/cleanup_plan.rs
+msgid "Each app rebuilds its cache by itself."
+msgstr "Chaque application recrée son cache automatiquement."
+
+#: src/models/cleanup_plan.rs
+msgid "Packages that cargo, npm, pip and other tools downloaded before."
+msgstr "Paquets déjà téléchargés par cargo, npm, pip et d’autres outils."
+
+#: src/models/cleanup_plan.rs
+msgid "Your projects keep working."
+msgstr "Vos projets continuent de fonctionner."
+
+#: src/models/cleanup_plan.rs
+msgid "Each tool downloads what a project needs on its next build."
+msgstr "Chaque outil télécharge ce dont le projet a besoin lors de la prochaine compilation."
+
+#: src/models/cleanup_plan.rs
+msgid "Old log files past the retention period you set."
+msgstr "Anciens fichiers journaux dont la durée de conservation définie est dépassée."
+
+#: src/models/cleanup_plan.rs
+msgid "You lose old history that apps wrote for debugging."
+msgstr "Vous perdez l’ancien historique enregistré par les applications pour le débogage."
+
+#: src/models/cleanup_plan.rs
+msgid "Apps keep writing new logs."
+msgstr "Les applications continuent d’écrire de nouveaux journaux."
+
+#: src/models/cleanup_plan.rs
+msgid "Browser caches, plus the cookies, history or sessions you chose."
+msgstr "Caches du navigateur, ainsi que les cookies, l’historique ou les sessions choisis."
+
+#: src/models/cleanup_plan.rs
+msgid "Pages load slower once. Cookies sign you out of websites."
+msgstr "Les pages se chargent plus lentement la première fois. Supprimer les cookies vous déconnecte des sites web."
+
+#: src/models/cleanup_plan.rs
+msgid "The browser fills its cache again as you browse."
+msgstr "Le navigateur remplit à nouveau son cache au fil de votre navigation."
+
+#: src/models/cleanup_plan.rs
+msgid "Folders you added yourself in Custom Directories."
+msgstr "Dossiers que vous avez ajoutés dans Dossiers personnalisés."
+
+#: src/models/cleanup_plan.rs
+msgid "Whatever is inside is removed."
+msgstr "Tout leur contenu est supprimé."
+
+#: src/models/cleanup_plan.rs
+msgid "Only if the program that made them creates them again."
+msgstr "Uniquement si le programme qui les a créés les crée à nouveau."
+
+#: src/models/cleanup_plan.rs
+msgid "The target folders where cargo keeps compiled code."
+msgstr "Les dossiers target où cargo conserve le code compilé."
+
+#: src/models/cleanup_plan.rs
+msgid "Your source code is untouched. The next build compiles everything again."
+msgstr "Votre code source reste intact. La prochaine compilation recompile tout."
+
+#: src/models/cleanup_plan.rs
+msgid "Run cargo build in the project."
+msgstr "Exécutez cargo build dans le projet."
+
+#: src/models/cleanup_plan.rs
+msgid "Virtual environments and node_modules folders of your projects."
+msgstr "Environnements virtuels et dossiers node_modules de vos projets."
+
+#: src/models/cleanup_plan.rs
+msgid "The project will not run until its dependencies are installed again."
+msgstr "Le projet ne fonctionnera pas tant que ses dépendances ne seront pas réinstallées."
+
+#: src/models/cleanup_plan.rs
+msgid "Run npm install, uv sync or pip install in the project."
+msgstr "Exécutez npm install, uv sync ou pip install dans le projet."
+
+#: src/models/cleanup_plan.rs
+msgid "Build output of Gradle, Maven, Flutter, Zig and other tools."
+msgstr "Fichiers générés par la compilation avec Gradle, Maven, Flutter, Zig et d’autres outils."
+
+#: src/models/cleanup_plan.rs
+msgid "The next build starts from scratch."
+msgstr "La prochaine compilation repart de zéro."
+
+#: src/models/cleanup_plan.rs
+msgid "Build the project again."
+msgstr "Compilez à nouveau le projet."
+
+#: src/models/cleanup_plan.rs
+msgid "Installed games and Steam's shader cache. Save games are kept."
+msgstr "Jeux installés et cache des shaders de Steam. Les sauvegardes sont conservées."
+
+#: src/models/cleanup_plan.rs
+msgid "The game disappears from your library until you install it again."
+msgstr "Le jeu disparaît de votre bibliothèque jusqu’à sa réinstallation."
+
+#: src/models/cleanup_plan.rs
+msgid "Install it again from Steam or Heroic."
+msgstr "Réinstallez-le depuis Steam ou Heroic."
+
+#: src/models/cleanup_plan.rs
+msgid "AI models downloaded by Hugging Face, Ollama, LM Studio and similar tools."
+msgstr "Modèles d’IA téléchargés par Hugging Face, Ollama, LM Studio et des outils similaires."
+
+#: src/models/cleanup_plan.rs
+msgid "The next time a program needs the model, it waits for the download."
+msgstr "La prochaine fois qu’un programme aura besoin du modèle, il devra attendre son téléchargement."
+
+#: src/models/cleanup_plan.rs
+msgid "The program downloads it again, or pull it yourself."
+msgstr "Le programme le télécharge à nouveau, ou vous pouvez le télécharger vous-même."
+
+msgid "Now"
+msgstr "Maintenant"
+
+msgid "After"
+msgstr "Après"
+
+msgid "You Free"
+msgstr "Vous libérez"
+
+#: src/ui/cleanup_view.rs
+msgid "I want to free"
+msgstr "Je veux libérer"
+
+#: src/ui/cleanup_view.rs
+msgid "Show Details"
+msgstr "Afficher les détails"
+
+#: src/ui/cleanup_view.rs
+msgid "What Will Be Cleaned"
+msgstr "Ce qui sera nettoyé"
+
+#: src/ui/cleanup_view.rs
+msgid "Looking for what can be cleaned…"
+msgstr "Recherche des éléments à nettoyer…"
+
+#: src/ui/cleanup_view.rs
+msgid "Nothing to clean right now"
+msgstr "Rien à nettoyer pour le moment"
+
+msgid "{size} disk"
+msgstr "Disque de {size}"
+
+#: src/ui/cleanup_view.rs
+msgid "{size} free after"
+msgstr "{size} libres après"
+
+#: src/ui/cleanup_view.rs
+msgid "Selected: {selected} of {total}"
+msgstr "Sélectionnés : {selected} sur {total}"
+
+#: src/ui/cleanup_view.rs
+msgid "Cleaning {size} in {seconds}… tap to cancel"
+msgstr "Nettoyage de {size} dans {seconds}… touchez pour annuler"
+
+#: src/ui/cleanup_view.rs
+msgid "Done, clean {size}"
+msgstr "Prêt, nettoyer {size}"
+
+#: src/ui/cleanup_view.rs
+msgid "Pick something to clean"
+msgstr "Choisissez un élément à nettoyer"
+
+#: src/ui/cleanup_view.rs
+msgid "{selected} of {total}"
+msgstr "{selected} sur {total}"
+
+#: src/ui/cleanup_view.rs
+msgid "A running program is using it"
+msgstr "Un programme en cours d’exécution l’utilise"
+
+#: src/ui/cleanup_view.rs
+msgid "Changed recently, so it is not picked for you"
+msgstr "Modifié récemment, donc non sélectionné automatiquement"
+
+#: src/ui/cleanup_view.rs
+msgid "What it is"
+msgstr "De quoi il s’agit"
+
+#: src/ui/cleanup_view.rs
+msgid "If you delete it"
+msgstr "Si vous le supprimez"
+
+#: src/ui/cleanup_view.rs
+msgid "How it comes back"
+msgstr "Comment le récupérer"
+
+#: src/ui/cleanup_view.rs
+msgid "Your files and apps"
+msgstr "Vos fichiers et applications"
+
+#: src/ui/project_settings.rs
+msgid "1 day"
+msgstr "1 jour"
+
+#: src/ui/project_settings.rs
+msgid "3 days"
+msgstr "3 jours"
+
+#: src/ui/project_settings.rs
+msgid "1 week"
+msgstr "1 semaine"
+
+#: src/ui/project_settings.rs
+msgid "2 weeks"
+msgstr "2 semaines"
+
+#: src/ui/project_settings.rs
+msgid "Projects"
+msgstr "Projets"
+
+#: src/ui/project_settings.rs
+msgid "The cleanup screen lists the build and dependency folders of your projects. They are never removed by scheduled cleanup."
+msgstr "L’écran de nettoyage affiche les dossiers de compilation et de dépendances de vos projets. Le nettoyage planifié ne les supprime jamais."
+
+#: src/ui/project_settings.rs
+msgid "Look for Project Build Folders"
+msgstr "Rechercher les dossiers de compilation des projets"
+
+#: src/ui/project_settings.rs
+msgid "Pin Projects Changed In The Last"
+msgstr "Épingler les projets modifiés au cours des derniers"
+
+#: src/ui/project_settings.rs
+msgid "Pinned projects are shown but never picked for you"
+msgstr "Les projets épinglés sont affichés mais jamais sélectionnés automatiquement"
+
+#: src/services/plan_builder.rs
+msgid "Application logs"
+msgstr "Journaux des applications"
+
+#: src/services/big_items.rs
+msgid "Steam · shader cache"
+msgstr "Steam · cache des shaders"
+
+#: src/ui/main_window.rs
+msgid "Look again after installing or building something, or after changing your rules."
+msgstr "Relancez la recherche après une installation, une compilation ou une modification de vos règles."
+
+msgid "Bigger Than Your Safety Limit"
+msgstr "Dépasse votre limite de sécurité"
+
+msgid "Clean Anyway"
+msgstr "Nettoyer quand même"
+
+#: src/ui/dashboard_page.rs
+msgid "It has {count} files and your safety limit is {limit} per cleanup."
+msgstr "Cet élément contient {count} fichiers et votre limite de sécurité est de {limit} par nettoyage."
+
+#: src/ui/dashboard_page.rs
+msgid "It is {size} and your safety limit is {limit} per cleanup."
+msgstr "Cet élément occupe {size} et votre limite de sécurité est de {limit} par nettoyage."
+
+msgid "You picked it yourself, so you can clean it anyway this once."
+msgstr "Vous avez vous-même sélectionné cet élément, vous pouvez donc le nettoyer quand même pour cette fois."
+
+#: src/ui/settings_page.rs
+msgid "Open Diagnostics"
+msgstr "Ouvrir les diagnostics"
+
+#: src/ui/main_window.rs
+msgid "Scan"
+msgstr "Analyse"
+
+#: src/ui/main_window.rs src/ui/system_page.rs
+msgid "User System"
+msgstr "Système utilisateur"
+
+#: src/ui/system_page.rs
+msgid "These operations don't require root access"
+msgstr "Ces opérations ne nécessitent pas les droits root"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Caches"
+msgstr "Caches"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "App Data"
+msgstr "Données des applis"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Flatpak Apps"
+msgstr "Applis Flatpak"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Trash"
+msgstr "Corbeille"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "Whole Disk"
+msgstr "Disque entier"
+
+#: src/ui/storage_analyzer_page.rs
+msgid "System Logs and Packages"
+msgstr "Journaux système et paquets"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "App Leftovers"
+msgstr "Restes d’applications"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Find data left by uninstalled apps. Installed apps are shown for reference."
+msgstr "Recherchez les données laissées par les applications désinstallées. Les applications installées sont affichées à titre indicatif."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Find Leftovers"
+msgstr "Rechercher les restes"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Only uninstalled"
+msgstr "Uniquement désinstallées"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Start a scan to find app leftovers."
+msgstr "Lancez une analyse pour rechercher les restes d’applications."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Finding app leftovers…"
+msgstr "Recherche des restes d’applications…"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Scan cancelled. Previous results are kept."
+msgstr "Analyse annulée. Les résultats précédents sont conservés."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Could Not Scan App Leftovers"
+msgstr "Impossible de rechercher les restes d’applications"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "{count} apps · {size} can be freed"
+msgstr "{count} applications · {size} peuvent être libérés"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "In use"
+msgstr "En cours d’utilisation"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Not installed"
+msgstr "Non installée"
+
+#: src/ui/app_leftovers.rs
+msgid "No matching app"
+msgstr "Aucune application correspondante"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "High confidence"
+msgstr "Confiance élevée"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Medium confidence"
+msgstr "Confiance moyenne"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Unused for {months} months"
+msgstr "Inutilisée depuis {months} mois"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Last used {date}"
+msgstr "Dernière utilisation : {date}"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Uninstalled on {date}"
+msgstr "Désinstallée le {date}"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Incomplete scan; selection disabled"
+msgstr "Analyse incomplète ; sélection désactivée"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Move these app folders to Trash?\n\n{folders}\n\nRemoving configuration folders resets the app's settings. Folders include all their contents. You can restore them from Trash."
+msgstr "Déplacer ces dossiers d’applications vers la corbeille ?\n\n{folders}\n\nLa suppression des dossiers de configuration réinitialise les paramètres de l’application. Tout leur contenu sera déplacé. Vous pourrez les restaurer depuis la corbeille."
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Move App Leftovers to Trash?"
+msgstr "Déplacer les restes d’applications vers la corbeille ?"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Some Folders Could Not Be Moved"
+msgstr "Certains dossiers n’ont pas pu être déplacés"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "Protected, installed, or currently in use"
+msgstr "Données protégées, application installée ou en cours d’utilisation"
+
+#: src/ui/app_leftovers.rs src/services/app_leftovers.rs
+msgid "The folder could not be fully checked"
+msgstr "Le dossier n’a pas pu être entièrement vérifié"
+
+msgid "Files moved to the Trash"
+msgstr "Fichiers déplacés dans la corbeille"
+
+msgid "{count} items ({size}) are in the Trash. Empty it to free the space completely."
+msgstr "{count} éléments ({size}) sont dans la corbeille. Videz-la pour libérer complètement cet espace."
+
+msgid "Empty Trash"
+msgstr "Vider la corbeille"
+
+msgid "Rules changed — scan again"
+msgstr "Les règles ont changé — relancez l’analyse"
+
+msgid "Scan for Files (Ctrl+Shift+R)"
+msgstr "Rechercher des fichiers (Ctrl+Maj+R)"
+
+msgid "Cleanup Result"
+msgstr "Résultat du nettoyage"
+
+msgid "The cleanup items could not all be identified in the Trash. Open Files to review them."
+msgstr "Tous les éléments de ce nettoyage n’ont pas pu être identifiés dans la corbeille. Ouvrez Fichiers pour les vérifier."
+
+msgid "Removed {count} cleanup items from the Trash. {failed} items could not be deleted."
+msgstr "{count} éléments de ce nettoyage ont été supprimés de la corbeille. {failed} éléments n’ont pas pu être supprimés."
+
+msgid "{size} used"
+msgstr "{size} utilisés"
+
+msgid "{size} free"
+msgstr "{size} libres"
+
+msgid "Selected {size}"
+msgstr "{size} sélectionnés"
+
+msgid "\n{count} files were too many for the trash and were deleted permanently."
+msgstr "\n{count} fichiers étaient trop nombreux pour la corbeille et ont été supprimés définitivement."
+
+#: src/ui/system_page.rs
+msgid "See what will be cleaned"
+msgstr "Voir ce qui sera nettoyé"
+
+#: src/services/system_preview.rs
+msgid "{count} files, {size} in total:"
+msgstr "{count} fichiers, {size} au total :"
+
+#: src/services/system_preview.rs
+msgid "• {path}: {count} readable files, {size}"
+msgstr "• {path}: {count} fichiers lisibles, {size}"
+
+#: src/services/system_preview.rs
+msgid "The cache is empty."
+msgstr "Le cache est vide."
+
+#: src/services/system_preview.rs
+msgid "Everything in these folders, packages and metadata:"
+msgstr "Tout le contenu de ces dossiers, les paquets et les métadonnées :"
+
+#: src/services/system_preview.rs
+msgid "No cached packages of uninstalled versions."
+msgstr "Aucun paquet en cache de versions désinstallées."
+
+#: src/services/system_preview.rs
+msgid "No old package versions to remove."
+msgstr "Aucune ancienne version de paquet à supprimer."
+
+#: src/services/system_preview.rs
+msgid "{count} packages:"
+msgstr "{count} paquets :"
+
+#: src/services/system_preview.rs
+msgid "{count} runtimes:"
+msgstr "{count} environnements d’exécution :"
+
+#: src/services/system_preview.rs
+msgid "Estimated list. Flatpak decides the final one when it removes them."
+msgstr "Liste estimée. Flatpak détermine la liste définitive lors de leur suppression."
+
+#: src/services/system_preview.rs
+msgid "No unused runtimes found."
+msgstr "Aucun environnement d’exécution inutilisé trouvé."
+
+#: src/services/system_preview.rs
+msgid "Docker needs administrator rights to list these. The cleanup asks for them."
+msgstr "Docker a besoin des droits d’administrateur pour les lister. Ils seront demandés lors du nettoyage."
+
+#: src/services/system_preview.rs
+msgid "None"
+msgstr "Aucun"
+
+#: src/services/system_preview.rs
+msgid "Stopped containers:"
+msgstr "Conteneurs arrêtés :"
+
+#: src/services/system_preview.rs
+msgid "Untagged images:"
+msgstr "Images sans étiquette :"
+
+#: src/services/system_preview.rs
+msgid "Space Docker can reclaim:"
+msgstr "Espace que Docker peut libérer :"
+
+#: src/ui/cleanup_view.rs
+msgid "{size} on {disk}"
+msgstr "{size} sur {disk}"
+
+#: src/ui/cleanup_view.rs
+msgid "On another disk. It frees space there, not on the home disk."
+msgstr "Sur un autre disque. Cela libère de l'espace sur ce disque, pas sur celui qui contient le dossier personnel."
+
+#: src/ui/cleanup_view.rs
+msgid "Part of it is on another disk. That part frees space there, not on the home disk."
+msgstr "Une partie se trouve sur un autre disque. Cette partie libère de l'espace sur ce disque, pas sur celui qui contient le dossier personnel."
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 5 MB"
+msgstr "Plus de 5 Mo"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 50 MB"
+msgstr "Plus de 50 Mo"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 100 MB"
+msgstr "Plus de 100 Mo"
+
+msgid "Larger than 200 MB"
+msgstr "Plus de 200 Mo"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 500 MB"
+msgstr "Plus de 500 Mo"
+
+#. Purge review pages and Linux cache policies
+msgid "Larger than 1 GB"
+msgstr "Plus de 1 Go"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Any time"
+msgstr "Dernière utilisation : Toute date"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over a week ago"
+msgstr "Dernière utilisation : Il y a plus d’une semaine"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over a month ago"
+msgstr "Dernière utilisation : Il y a plus d’un mois"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over 3 months ago"
+msgstr "Dernière utilisation : Il y a plus de 3 mois"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Over a year ago"
+msgstr "Dernière utilisation : Il y a plus d’un an"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used Today"
+msgstr "Dernière utilisation aujourd’hui"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used {days} days ago"
+msgstr "Dernière utilisation il y a {days} jours"
+
+#. Purge review pages and Linux cache policies
+msgid "Last used: Unknown"
+msgstr "Dernière utilisation : Inconnue"
+
+#. Purge review pages and Linux cache policies
+msgid "Moved {size} to Trash."
+msgstr "{size} déplacés dans la corbeille."
+
+#. Purge review pages and Linux cache policies
+msgid "No files match these filters."
+msgstr "Aucun fichier ne correspond à ces filtres."
+
+#. Purge review pages and Linux cache policies
+msgid "PDFs"
+msgstr "PDF"
+
+#. Purge review pages and Linux cache policies
+msgid "Scan to find large files."
+msgstr "Analysez pour trouver les fichiers volumineux."
+
+#. Purge review pages and Linux cache policies
+msgid "Select All"
+msgstr "Tout sélectionner"
+
+#. Purge review pages and Linux cache policies
+msgid "Selected files will be moved to Trash."
+msgstr "Les fichiers sélectionnés seront déplacés dans la corbeille."
+
+#. Purge review pages and Linux cache policies
+msgid "{count} files · {size} to review"
+msgstr "{count} fichiers · {size} à vérifier"
+
+#. Purge review pages and Linux cache policies
+msgid "Administrator approval is required."
+msgstr "Une autorisation administrateur est nécessaire."
+
+#. Purge review pages and Linux cache policies
+msgid "App Uninstaller"
+msgstr "Désinstallation d’applications"
+
+#. Purge review pages and Linux cache policies
+msgid "Confirm Uninstall"
+msgstr "Confirmer la désinstallation"
+
+#. Purge review pages and Linux cache policies
+msgid "Grid view"
+msgstr "Vue en grille"
+
+#. Purge review pages and Linux cache policies
+msgid "Installed Apps"
+msgstr "Applications installées"
+
+#. Purge review pages and Linux cache policies
+msgid "Leftovers"
+msgstr "Résidus"
+
+#. Purge review pages and Linux cache policies
+msgid "List view"
+msgstr "Vue en liste"
+
+#. Purge review pages and Linux cache policies
+msgid "No apps match these filters."
+msgstr "Aucune application ne correspond à ces filtres."
+
+#. Purge review pages and Linux cache policies
+msgid "Requires admin"
+msgstr "Droits administrateur requis"
+
+#. Purge review pages and Linux cache policies
+msgid "Rescan"
+msgstr "Analyser à nouveau"
+
+#. Purge review pages and Linux cache policies
+msgid "Review the apps, commands and data below. Listed user files will be moved to Trash. Package removal cannot be undone from Trash."
+msgstr "Vérifiez les applications, commandes et données ci-dessous. Les fichiers utilisateur indiqués seront déplacés dans la corbeille. La suppression des paquets ne peut pas être annulée depuis la corbeille."
+
+#. Purge review pages and Linux cache policies
+msgid "Scan to find installed apps."
+msgstr "Analysez pour trouver les applications installées."
+
+#. Purge review pages and Linux cache policies
+msgid "Search apps"
+msgstr "Rechercher des applications"
+
+#. Purge review pages and Linux cache policies
+msgid "Smallest"
+msgstr "Les plus petits"
+
+#. Purge review pages and Linux cache policies
+msgid "Uninstalled {app}"
+msgstr "{app} désinstallée"
+
+#. Purge review pages and Linux cache policies
+msgid "{count} apps · {size}"
+msgstr "{count} applications · {size}"
+
+#. Purge review pages and Linux cache policies
+msgid "{label} {count}"
+msgstr "{label} {count}"
+
+#. Purge review pages and Linux cache policies
+msgid "AppImage"
+msgstr "AppImage"
+
+#. Purge review pages and Linux cache policies
+msgid "Flatpak"
+msgstr "Flatpak"
+
+#. Purge review pages and Linux cache policies
+msgid "Snap"
+msgstr "Snap"
+
+#. Purge review pages and Linux cache policies
+msgid "Native package"
+msgstr "Paquet natif"
+
+#. Purge review pages and Linux cache policies
+msgid "Removal unavailable"
+msgstr "Désinstallation indisponible"
+
+#. Purge review pages and Linux cache policies
+msgid "User launcher"
+msgstr "Lanceur utilisateur"
+
+#. Purge review pages and Linux cache policies
+msgid "{app} Cache"
+msgstr "Cache de {app}"
+
+#. Purge review pages and Linux cache policies
+msgid "Paru Cache"
+msgstr "Cache de Paru"
+
+#. Purge review pages and Linux cache policies
+msgid "Yay Cache"
+msgstr "Cache de Yay"
+
+#. Purge review pages and Linux cache policies
+msgid "AUR sources and build files downloaded by Paru. They are downloaded and rebuilt when needed."
+msgstr "Sources AUR et fichiers de compilation téléchargés par Paru. Ils seront téléchargés et recompilés au besoin."
+
+#. Purge review pages and Linux cache policies
+msgid "AUR sources and build files downloaded by Yay. They are downloaded and rebuilt when needed."
+msgstr "Sources AUR et fichiers de compilation téléchargés par Yay. Ils seront téléchargés et recompilés au besoin."
+
+#. Shared review inventory
+msgid "Flatpak (User)"
+msgstr "Flatpak (Utilisateur)"
+
+#. Shared review inventory
+msgid "Flatpak (System)"
+msgstr "Flatpak (Système)"
+
+#. Shared review inventory
+msgid "{count} files over {size}"
+msgstr "{count} fichiers de plus de {size}"
+
+#: Stage 4 removal and settings interface
+msgid "Startup"
+msgstr "Démarrage"
+
+#: Stage 4 removal and settings interface
+msgid "Deleted Apps"
+msgstr "Applications supprimées"
+
+#: Stage 4 removal and settings interface
+msgid "Cleaning"
+msgstr "Nettoyage"
+
+#: Stage 4 removal and settings interface
+msgid "Cleaning History"
+msgstr "Historique des nettoyages"
+
+#: Stage 4 removal and settings interface
+msgid "Auto"
+msgstr "Auto"
+
+#: Stage 4 removal and settings interface
+msgid "Choose a light or dark look, or match your system setting."
+msgstr "Choisissez un thème clair ou sombre, ou suivez le système."
+
+#: Stage 4 removal and settings interface
+msgid "Freeing {size}"
+msgstr "Libération de {size}"
+
+#: Stage 4 removal and settings interface
+msgid "Move {count} to Trash"
+msgstr "Mettre {count} à la corbeille"
+
+#: Stage 4 removal and settings interface
+msgid "Delete {count}"
+msgstr "Supprimer {count}"
+
+#: Stage 4 removal and settings interface
+msgid "Open Trash"
+msgstr "Ouvrir la corbeille"
+
+#: Stage 4 removal and settings interface
+msgid "Measuring Trash…"
+msgstr "Calcul de la taille de la corbeille…"
+
+#: Stage 4 removal and settings interface
+msgid "Could not read Trash"
+msgstr "Impossible de lire la corbeille"
+
+#: Stage 4 removal and settings interface
+msgid "{size} in Trash"
+msgstr "{size} dans la corbeille"
+
+#: Stage 4 removal and settings interface
+msgid "Files will be permanently deleted. This cannot be undone."
+msgstr "Les fichiers seront supprimés définitivement. Cette action est irréversible."
+
+#: Stage 4 removal and settings interface
+msgid "The trash item changed. Review it again."
+msgstr "L’élément de la corbeille a changé. Vérifiez-le à nouveau."
+
+#: Stage 4 removal and settings interface
+msgid "Folders include all contents. Items can be restored from Trash."
+msgstr "Les dossiers incluent tout leur contenu. Les éléments peuvent être restaurés depuis la corbeille."
+
+#: Stage 4 removal and settings interface
+msgid "Keep Magnífico in the tray"
+msgstr "Garder Magnífico dans la zone de notification"
+
+#: Stage 4 removal and settings interface
+msgid "Keep running after closing the window so scheduled cleanup stays available."
+msgstr "Continuer à fonctionner après la fermeture de la fenêtre pour permettre les nettoyages planifiés."
+
+#: Stage 4 removal and settings interface
+msgid "Review leftovers when an app is deleted"
+msgstr "Examiner les résidus lors de la suppression d’une application"
+
+#: Stage 4 removal and settings interface
+msgid "Watch changes to installed desktop apps while Magnífico is running. Review leftover files before removing them."
+msgstr "Surveiller les applications de bureau installées pendant le fonctionnement de Magnífico. Examiner les fichiers restants avant de les supprimer."
+
+#: Stage 4 removal and settings interface
+msgid "Review app leftovers"
+msgstr "Examiner les résidus des applications"
+
+#: Stage 4 removal and settings interface
+msgid "Review"
+msgstr "Examiner"
+
+#: Stage 4 removal and settings interface
+msgid "An app was removed. Review the files it left behind."
+msgstr "Une application a été supprimée. Examinez les fichiers restants."
+
+#: Stage 4 removal and settings interface
+msgid "Wait for the current cleanup to finish."
+msgstr "Attendez la fin du nettoyage en cours."
+
+#: Stage 4 removal and settings interface
+msgid "Licenses"
+msgstr "Licences"
+
+#: Stage 4 removal and settings interface
+msgid "Website"
+msgstr "Site web"
+
+#: Stage 4 removal and settings interface
+msgid "Report an Issue"
+msgstr "Signaler un problème"
+
+#: Stage 4 removal and settings interface
+msgid "Version {version}"
+msgstr "Version {version}"
+
+#: Stage 4 removal and settings interface
+msgid "No cleanups yet"
+msgstr "Aucun nettoyage pour le moment"
+
+#: Stage 4 removal and settings interface
+msgid "Commands remove data directly. Administrator approval may be required."
+msgstr "Les commandes suppriment directement les données. Une autorisation administrateur peut être nécessaire."
+
+#: Stage 4 removal and settings interface
+msgid "Regenerable caches are deleted directly. Other files use your removal method."
+msgstr "Les caches régénérables sont supprimés directement. Les autres fichiers suivent la méthode de suppression choisie."
+
+#: Stage 4 removal and settings interface
+msgid "Cleaning cancelled."
+msgstr "Nettoyage annulé."
+
+#: Stage 4 removal and settings interface
+msgid "Completed: {title}"
+msgstr "Terminé : {title}"
+
+#: Stage 4 removal and settings interface
+msgid "Freed {size} from selected files."
+msgstr "{size} libérés parmi les fichiers sélectionnés."
+
+#: src/models/cleanup_plan.rs src/models/scan_category.rs src/services/clean_sources.rs src/ui/main_window.rs src/ui/overview_page.rs
+msgid "App Caches"
+msgstr "Caches des applications"
+
+#: src/services/clean_sources.rs src/ui/main_window.rs src/ui/overview_page.rs
+msgid "Dev Tools"
+msgstr "Outils de développement"
+
+#: src/ui/large_files_page.rs src/ui/main_window.rs src/ui/overview_page.rs
+msgid "Large Files"
+msgstr "Fichiers volumineux"
+
+#: src/ui/overview_page.rs
+msgid "Installed apps"
+msgstr "Applications installées"
+
+#: src/ui/overview_page.rs
+msgid "Leftovers from deleted apps"
+msgstr "Résidus des applications désinstallées"
+
+#: src/ui/overview_page.rs
+msgid "Everything else"
+msgstr "Tout le reste"
+
+#: src/ui/overview_page.rs
+msgid "Available for new files"
+msgstr "Disponible pour de nouveaux fichiers"
+
+#: src/ui/clean_list_page.rs src/ui/purge_widgets.rs
+msgid "Safe to Clean"
+msgstr "Nettoyage sûr"
+
+#: src/ui/clean_list_page.rs src/ui/purge_widgets.rs
+msgid "Check First"
+msgstr "Vérifier d’abord"
+
+#: src/ui/purge_widgets.rs src/ui/scan_overview.rs src/ui/uninstaller_page.rs
+msgid "Review first"
+msgstr "Vérifier d’abord"
+
+#: src/ui/main_window.rs
+msgid "CLEAN"
+msgstr "NETTOYER"
+
+#: src/ui/main_window.rs
+msgid "REVIEW"
+msgstr "VÉRIFIER"
+
+#: src/ui/main_window.rs
+msgid "Trash…"
+msgstr "Corbeille…"
+
+#: src/ui/clean_list_page.rs src/ui/large_files_page.rs src/ui/overview_page.rs src/ui/uninstaller_page.rs
+msgid "Scanning…"
+msgstr "Analyse en cours…"
+
+#: src/ui/overview_page.rs
+msgid "Scanned just now"
+msgstr "Analyse à l’instant"
+
+#: src/ui/overview_page.rs
+msgid "Scan Everything"
+msgstr "Tout analyser"
+
+#: src/ui/overview_page.rs
+msgid "Clean Safe Items"
+msgstr "Nettoyer les éléments sûrs"
+
+#: src/ui/uninstaller_page.rs
+msgid "Uninstall"
+msgstr "Désinstaller"
+
+#: src/ui/clean_list_page.rs src/ui/large_files_page.rs src/ui/uninstaller_page.rs
+msgid "Largest"
+msgstr "Les plus volumineux"
+
+#: src/ui/overview_page.rs
+msgid "Disk usage unavailable"
+msgstr "Utilisation du disque indisponible"
+
+#: src/ui/overview_page.rs
+msgid "Linux, your documents and photos, and other files"
+msgstr "Linux, vos documents et photos, et autres fichiers"
+
+#: src/ui/clean_list_page.rs
+msgid "No cleanable items found. Scan again to check for changes."
+msgstr "Aucun élément à nettoyer. Relancez l’analyse pour vérifier les changements."
+
+#: src/ui/clean_list_page.rs
+msgid "No items match this filter."
+msgstr "Aucun élément ne correspond à ce filtre."
+
+#: src/ui/overview_page.rs
+msgid "Review the cleanup selection before cleaning."
+msgstr "Vérifiez la sélection avant le nettoyage."
+
+#: src/ui/overview_page.rs src/ui/review_scan_store.rs
+msgid "Scan could not finish. Try scanning again."
+msgstr "L’analyse n’a pas pu aboutir. Réessayez."
+
+#: src/ui/overview_page.rs
+msgid "Regenerable caches measured independently of cleanup selections."
+msgstr "Caches régénérables mesurés indépendamment de la sélection de nettoyage."
+
+#: src/ui/overview_page.rs
+msgid "Package caches, journal files and unused Flatpak runtimes. Safe amount excludes journal files; review them in System."
+msgstr "Caches de paquets, journaux système et environnements Flatpak inutilisés. Le volume sûr exclut les journaux ; vérifiez-les dans Système."
+
+#: src/ui/clean_list_page.rs src/ui/settings_page.rs
+msgid "Files can be restored from the trash. Space is freed only when you empty it"
+msgstr "Les fichiers peuvent être restaurés depuis la corbeille. L’espace est libéré uniquement lorsque vous la videz."
+
+#: src/ui/clean_list_page.rs
+msgid "Clean Selected ({size})"
+msgstr "Nettoyer la sélection ({size})"
+
+#: src/ui/clean_progress.rs src/ui/cleanup_view.rs src/ui/overview_page.rs
+msgid "of {size}"
+msgstr "sur {size}"
+
+#: src/ui/overview_page.rs
+msgid "{category} · {size}"
+msgstr "{category} · {size}"
+
+#: src/ui/overview_page.rs
+msgid "{count} apps"
+msgstr "{count} applications"
+
+#: src/ui/clean_list_page.rs
+msgid "{count} items · {size} recoverable"
+msgstr "{count} éléments · {size} récupérables"
+
+#: src/ui/overview_page.rs
+msgid "{size} safe to clean"
+msgstr "{size} à nettoyer sans risque"
+
+#: src/ui/overview_page.rs
+msgid "{size} of the used space is already in the Trash. Empty it in Files to free the space."
+msgstr "{size} de l’espace utilisé se trouvent déjà dans la corbeille. Videz-la dans Fichiers pour libérer cet espace."
+
+#: src/models/app_rule.rs src/models/explanations.rs
+msgid "VS Code Cache"
+msgstr "Cache VS Code"
+
+#: src/models/explanations.rs
+msgid "Cursor Cache"
+msgstr "Cache Cursor"
+
+#: src/models/explanations.rs
+msgid "JetBrains IDE Cache"
+msgstr "Cache JetBrains IDE"
+
+#: src/models/explanations.rs
+msgid "Zed Editor Cache"
+msgstr "Cache Zed"
+
+#: src/models/explanations.rs
+msgid "Go Module Cache"
+msgstr "Cache Go"
+
+#: src/models/explanations.rs
+msgid "Maven Package Cache"
+msgstr "Cache Maven"
+
+#: src/models/app_rule.rs src/models/explanations.rs
+msgid "Composer Cache"
+msgstr "Cache Composer"
+
+#: src/models/explanations.rs
+msgid "Rust Package Cache"
+msgstr "Cache Rust"
+
+#: src/models/explanations.rs
+msgid "Electron App Cache"
+msgstr "Cache Electron"
+
+#: src/models/explanations.rs
+msgid "Bun Package Cache"
+msgstr "Cache Bun"
+
+#: src/models/explanations.rs
+msgid "Deno Module Cache"
+msgstr "Cache Deno"
+
+#: src/models/explanations.rs
+msgid "uv Package Cache"
+msgstr "Cache uv"
+
+#: src/models/explanations.rs
+msgid "Gradle Dependency Cache"
+msgstr "Cache Gradle"
+
+#: src/models/explanations.rs
+msgid "Dart Pub Cache"
+msgstr "Cache Dart Pub"
+
+#: src/models/explanations.rs
+msgid "Yarn Package Cache"
+msgstr "Cache Yarn"
+
+#: src/models/explanations.rs
+msgid "npm Package Cache"
+msgstr "Cache npm"
+
+#: src/models/explanations.rs
+msgid "npm npx Cache"
+msgstr "Cache npm npx"
+
+#: src/models/explanations.rs
+msgid "Corepack Cache"
+msgstr "Cache Corepack"
+
+#: src/models/app_rule.rs src/models/explanations.rs
+msgid "pip Cache"
+msgstr "Cache pip"
+
+#: src/models/explanations.rs
+msgid "Keyring Cache"
+msgstr "Cache Keyring"
+
+#: src/models/explanations.rs
+msgid "Slack"
+msgstr "Slack"
+
+#: src/models/explanations.rs
+msgid "Discord"
+msgstr "Discord"
+
+#: src/models/explanations.rs
+msgid "Zoom"
+msgstr "Zoom"
+
+#: src/models/explanations.rs
+msgid "Spotify"
+msgstr "Spotify"
+
+#: src/models/explanations.rs
+msgid "Microsoft Teams"
+msgstr "Microsoft Teams"
+
+#: src/models/browser_rule.rs src/models/explanations.rs
+msgid "Google Chrome"
+msgstr "Google Chrome"
+
+#: src/models/explanations.rs
+msgid "Firefox Browser"
+msgstr "Navigateur Firefox"
+
+#: src/models/explanations.rs
+msgid "Brave Browser"
+msgstr "Navigateur Brave"
+
+#: src/models/explanations.rs
+msgid "pnpm Package Store"
+msgstr "Dépôt de paquets pnpm"
+
+#: src/models/explanations.rs
+msgid "npm Logs"
+msgstr "Journaux npm"
+
+#: src/models/explanations.rs
+msgid "Old AI Coding Tool Versions"
+msgstr "Anciennes versions des outils de programmation IA"
+
+#: src/models/explanations.rs
+msgid "pre-commit Environments"
+msgstr "Environnements pre-commit"
+
+#: src/models/explanations.rs
+msgid "node-gyp Headers"
+msgstr "En-têtes node-gyp"
+
+#: src/models/explanations.rs
+msgid "Thumbnails"
+msgstr "Miniatures"
+
+#: src/models/explanations.rs
+msgid "App Update Downloads"
+msgstr "Téléchargements de mises à jour des applications"
+
+#: src/models/explanations.rs
+msgid "Browser Cache"
+msgstr "Cache du navigateur"
+
+#: src/models/explanations.rs
+msgid "Application Cache"
+msgstr "Cache d’application"
+
+#: src/models/explanations.rs
+msgid "Inactive Rust Build Files"
+msgstr "Fichiers de compilation Rust inactifs"
+
+#: src/models/explanations.rs src/models/system_rule.rs
+msgid "Package Manager Cache"
+msgstr "Cache du gestionnaire de paquets"
+
+#: src/models/explanations.rs
+msgid "Unused Flatpak Runtimes"
+msgstr "Environnements Flatpak inutilisés"
+
+#: src/models/explanations.rs src/models/system_rule.rs
+msgid "Old Kernels"
+msgstr "Anciens noyaux"
+
+#: src/models/explanations.rs
+msgid "Docker Leftovers"
+msgstr "Résidus Docker"
+
+#: src/models/explanations.rs
+msgid "AI Model Cache"
+msgstr "Cache des modèles IA"
+
+#: src/models/explanations.rs
+msgid "Session Database Cache"
+msgstr "Cache des bases de données de session"
+
+#: src/models/explanations.rs
+msgid "Orphaned Pacman Packages"
+msgstr "Paquets Pacman orphelins"
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Visual Studio Code. Safe to delete and will be recreated when you open VS Code again."
+msgstr "Fichiers temporaires de Visual Studio Code. Ils peuvent être supprimés et seront recréés lors de la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by the Cursor code editor. Safe to delete and will be recreated when you open Cursor again."
+msgstr "Fichiers temporaires de Cursor. Ils peuvent être supprimés et seront recréés lors de la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by the Zed code editor. Safe to delete and will be recreated when you open Zed again."
+msgstr "Fichiers temporaires de Zed. Ils peuvent être supprimés et seront recréés lors de la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Zoom. Safe to delete and Zoom will recreate them automatically."
+msgstr "Fichiers temporaires de Zoom. Ils peuvent être supprimés et seront recréés lors de la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Discord. Safe to delete and Discord will rebuild them automatically when you next open it."
+msgstr "Fichiers temporaires de Discord. Ils peuvent être supprimés et seront recréés lors de la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Microsoft Teams. Safe to delete and Teams will rebuild them when you next open it."
+msgstr "Fichiers temporaires de Microsoft Teams. Ils peuvent être supprimés et seront recréés lors de la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Cached PHP packages downloaded by Composer. Safe to delete and will be re-downloaded when you run composer install."
+msgstr "Paquets téléchargés par Composer. Ils peuvent être supprimés et seront téléchargés à nouveau avec composer install."
+
+#: src/models/explanations.rs
+msgid "Cached packages downloaded by Yarn. Safe to delete and will be re-downloaded when you run yarn install."
+msgstr "Paquets téléchargés par Yarn. Ils peuvent être supprimés et seront téléchargés à nouveau avec yarn install."
+
+#: src/models/explanations.rs
+msgid "Cached packages downloaded by npm. Safe to delete and will be re-downloaded when you run npm install."
+msgstr "Paquets téléchargés par npm. Ils peuvent être supprimés et seront téléchargés à nouveau avec npm install."
+
+#: src/models/explanations.rs
+msgid "Packages downloaded by Bun, a JavaScript runtime and package manager. Safe to delete; they download again the next time you run bun install."
+msgstr "Paquets téléchargés par Bun. Ils peuvent être supprimés et seront téléchargés à nouveau avec bun install."
+
+#: src/models/explanations.rs
+msgid "Indexes and caches JetBrains IDEs rebuild on their own. Local History is left alone. Each project re-indexes when you next open it, which takes a few minutes."
+msgstr "Index et caches recréés par les IDE JetBrains. L’historique local est conservé. Chaque projet est réindexé à sa prochaine ouverture, ce qui prend quelques minutes."
+
+#: src/models/explanations.rs
+msgid "Cached Go packages and build outputs. Safe to delete and will be re-downloaded when you build your Go projects again."
+msgstr "Paquets Go et résultats de compilation en cache. Ils peuvent être supprimés et seront téléchargés à nouveau lors de la compilation de vos projets Go."
+
+#: src/models/explanations.rs
+msgid "Maven's downloaded libraries and your own mvn install builds. Libraries download again on your next build; your own builds come back only if you rebuild them."
+msgstr "Bibliothèques téléchargées par Maven et vos compilations mvn install. Les bibliothèques seront téléchargées à la prochaine compilation ; vos propres compilations doivent être reconstruites."
+
+#: src/models/explanations.rs
+msgid "Cached Rust packages and compiled dependencies. Safe to delete and will be re-downloaded when you build your Rust projects."
+msgstr "Paquets Rust et dépendances compilées en cache. Ils peuvent être supprimés et seront téléchargés à nouveau lors de la compilation de vos projets Rust."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by apps built with Electron like Slack, Discord, and Notion. Safe to delete and will be recreated automatically."
+msgstr "Fichiers temporaires des applications Electron comme Slack, Discord et Notion. Ils peuvent être supprimés et seront recréés automatiquement."
+
+#: src/models/explanations.rs
+msgid "Cached modules downloaded by Deno, a JavaScript and TypeScript runtime. Safe to delete and will be re-downloaded when you next run a Deno project."
+msgstr "Modules téléchargés par Deno, un environnement JavaScript et TypeScript. Ils peuvent être supprimés et seront téléchargés au prochain lancement d’un projet Deno."
+
+#: src/models/explanations.rs
+msgid "Python packages uv downloaded and built. uv gets them again when needed, but tools running through uvx can stop, and environments in symlink mode break."
+msgstr "Paquets Python téléchargés et compilés par uv. uv les récupère au besoin, mais les outils uvx peuvent s’arrêter et les environnements avec liens symboliques ne fonctionneront plus."
+
+#: src/models/explanations.rs
+msgid "Gradle's downloaded libraries, build cache and wrapper versions. Nothing is lost, but the next build downloads and rebuilds them, which is slow."
+msgstr "Bibliothèques Gradle, cache de compilation et versions du wrapper. Rien n’est perdu, mais la prochaine compilation devra tout télécharger et reconstruire, ce qui est lent."
+
+#: src/models/explanations.rs
+msgid "Dart and Flutter packages downloaded by pub; they download again on your next flutter pub get. Tools from dart pub global activate are left alone."
+msgstr "Paquets Dart et Flutter téléchargés par pub ; ils seront téléchargés au prochain flutter pub get. Les outils de dart pub global activate sont conservés."
+
+#: src/models/explanations.rs
+msgid "The central package store used by pnpm to save disk space across projects. Safe to delete and packages will be re-downloaded when you run pnpm install."
+msgstr "Dépôt central de paquets pnpm pour économiser de l’espace entre projets. Il peut être supprimé ; les paquets seront téléchargés avec pnpm install."
+
+#: src/models/explanations.rs
+msgid "Temporary packages downloaded when you run npx. Safe to delete; npx will download them again when needed."
+msgstr "Paquets temporaires téléchargés avec npx. Ils peuvent être supprimés ; npx les téléchargera au besoin."
+
+#: src/models/explanations.rs
+msgid "Log files written by npm commands. Safe to delete with no effect on installed packages."
+msgstr "Journaux des commandes npm. Ils peuvent être supprimés sans effet sur les paquets installés."
+
+#: src/models/explanations.rs
+msgid "Cached Node.js package manager shims managed by Corepack. Safe to delete; Corepack will restore them on the next use."
+msgstr "Adaptateurs de gestionnaires de paquets Node.js mis en cache par Corepack. Ils peuvent être supprimés ; Corepack les restaurera à la prochaine utilisation."
+
+#: src/models/explanations.rs
+msgid "Earlier versions of Claude Code, Cursor Agent or Grok that stayed behind after updates. The version you run and the newest one are kept. Safe to delete."
+msgstr "Anciennes versions de Claude Code, Cursor Agent ou Grok laissées après les mises à jour. La version utilisée et la plus récente sont conservées. Ces anciennes versions peuvent être supprimées."
+
+#: src/models/explanations.rs
+msgid "Tool environments that pre-commit sets up to run your git hooks. Safe to delete; they are set up again on your next commit, which makes that commit slow."
+msgstr "Environnements créés par pre-commit pour les hooks git. Ils peuvent être supprimés ; ils seront recréés au prochain commit, qui sera plus lent."
+
+#: src/models/explanations.rs
+msgid "Downloaded Python packages are downloaded again when pip needs them."
+msgstr "Les paquets Python téléchargés seront téléchargés à nouveau lorsque pip en aura besoin."
+
+#: src/models/explanations.rs
+msgid "Node.js headers used to build native add-ons are downloaded again on the next native build."
+msgstr "Les en-têtes Node.js utilisés pour compiler les extensions natives seront téléchargés à la prochaine compilation native."
+
+#: src/models/explanations.rs
+msgid "Image previews are recreated when you browse your files."
+msgstr "Les aperçus des images sont recréés lorsque vous parcourez vos fichiers."
+
+#: src/models/explanations.rs
+msgid "Downloaded app update packages are left behind after installation and can be downloaded again."
+msgstr "Paquets de mise à jour laissés après l’installation des applications et pouvant être téléchargés à nouveau."
+
+#: src/models/explanations.rs
+msgid "Temporary website data is downloaded again; the next visit may load more slowly."
+msgstr "Les données temporaires des sites seront téléchargées à nouveau ; la prochaine visite peut être plus lente."
+
+#: src/models/explanations.rs
+msgid "This cache is not classified; check its contents before removing it."
+msgstr "Ce cache n’est pas classé ; vérifiez son contenu avant de le supprimer."
+
+#: src/models/explanations.rs
+msgid "Build outputs from inactive Rust projects are recreated on the next build."
+msgstr "Les résultats de compilation des projets Rust inactifs seront recréés à la prochaine compilation."
+
+#: src/models/explanations.rs
+msgid "Downloaded packages can be downloaded again; cleaning requires administrator approval."
+msgstr "Les paquets téléchargés peuvent être téléchargés à nouveau ; le nettoyage nécessite une autorisation administrateur."
+
+#: src/models/explanations.rs
+msgid "Total journal storage, including active logs; administrator approval removes only archived logs older than your retention period."
+msgstr "Espace total du journal, y compris les journaux actifs ; l’autorisation administrateur supprime uniquement les journaux archivés plus anciens que la durée de conservation."
+
+#: src/models/explanations.rs
+msgid "Runtimes no installed app needs are removed by Flatpak; system runtimes require administrator approval."
+msgstr "Flatpak supprime les environnements dont aucune application installée n’a besoin ; les environnements système nécessitent une autorisation administrateur."
+
+#: src/models/explanations.rs
+msgid "Review obsolete kernel packages before removing them with administrator approval; the running and newest kernels are kept."
+msgstr "Vérifiez les anciens paquets de noyaux avant de les supprimer avec une autorisation administrateur ; le noyau utilisé et le plus récent sont conservés."
+
+#: src/models/explanations.rs
+msgid "Remove stopped containers, unused networks, dangling images and build cache; running containers and volumes are kept."
+msgstr "Supprime les conteneurs arrêtés, réseaux inutilisés, images sans référence et le cache de compilation ; les conteneurs actifs et les volumes sont conservés."
+
+#: src/models/explanations.rs
+msgid "Temporary files stored by Slack including message thumbnails and previews. Safe to delete and Slack will rebuild them automatically."
+msgstr "Fichiers temporaires de Slack, dont les miniatures et aperçus des messages. Ils peuvent être supprimés et Slack les recréera automatiquement."
+
+#: src/models/explanations.rs
+msgid "Cached songs and artwork may include offline downloads; check before removing them."
+msgstr "Les titres et pochettes en cache peuvent inclure des téléchargements hors ligne ; vérifiez-les avant suppression."
+
+#: src/models/explanations.rs
+msgid "This is a known cache folder that apps or developer tools recreate automatically."
+msgstr "Ce dossier de cache connu contient des données recréées automatiquement par les applications ou les outils de développement."
+
+#: src/models/explanations.rs
+msgid "Downloaded AI models can be large and needed offline; check before downloading them again."
+msgstr "Les modèles IA téléchargés peuvent être volumineux et nécessaires hors ligne ; vérifiez-les avant de devoir les télécharger à nouveau."
+
+#: src/models/explanations.rs
+msgid "This folder may contain credentials or personal keyring data; review its contents before cleaning."
+msgstr "Ce dossier peut contenir des identifiants ou des données personnelles du trousseau ; vérifiez son contenu avant nettoyage."
+
+#: src/models/explanations.rs
+msgid "This folder contains session or login databases; cleaning it may sign you out or remove session data."
+msgstr "Ce dossier contient des bases de données de session ou de connexion ; son nettoyage peut vous déconnecter ou supprimer des données de session."
+
+#: src/models/explanations.rs
+msgid "Dependencies no installed package needs may still be useful to you; review before removing them with administrator approval."
+msgstr "Les dépendances dont aucun paquet installé n’a besoin peuvent encore vous être utiles ; vérifiez-les avant suppression avec une autorisation administrateur."
+
+#: src/models/explanations.rs
+msgid "Google Chrome's temporary browsing data, such as website caches and previews. Websites may load a little slower until Chrome rebuilds it."
+msgstr "Données de navigation temporaires de Google Chrome, comme les caches et aperçus. Elles peuvent être supprimées, mais les sites peuvent être plus lents jusqu’à ce que Google Chrome recrée le cache."
+
+#: src/models/explanations.rs
+msgid "Temporary browsing data stored by Firefox. Deleting it is safe but websites may load a little slower until Firefox rebuilds the cache."
+msgstr "Données de navigation temporaires de Firefox, comme les caches et aperçus. Elles peuvent être supprimées, mais les sites peuvent être plus lents jusqu’à ce que Firefox recrée le cache."
+
+#: src/models/explanations.rs
+msgid "Temporary browsing data stored by the Brave browser. Deleting it is safe but websites may load a little slower until Brave rebuilds the cache."
+msgstr "Données de navigation temporaires de Brave, comme les caches et aperçus. Elles peuvent être supprimées, mais les sites peuvent être plus lents jusqu’à ce que Brave recrée le cache."
+
+#: src/ui/overview_page.rs
+msgid "Free"
+msgstr "Libre"
+
+#: src/ui/clean_progress.rs
+msgid "Cleaning…"
+msgstr "Nettoyage en cours…"
+
+#: src/services/clean_sources.rs
+msgid "No orphaned packages"
+msgstr "Aucun paquet orphelin"
+
+#: src/services/clean_sources.rs
+msgid "Unused Flatpak Runtimes ({scope})"
+msgstr "Environnements Flatpak inutilisés ({scope})"
+
+#: src/services/clean_sources.rs
+msgid "{manager} Package Manager Cache"
+msgstr "Cache du gestionnaire de paquets {manager}"
+
+#: src/services/clean_sources.rs
+msgid "{title} · {path}"
+msgstr "{title} · {path}"
+
+#: src/ui/overview_page.rs
+msgid "{percent}%"
+msgstr "{percent}%"
+
+#: src/ui/main_window.rs src/ui/overview_page.rs
+msgid "…"
+msgstr "…"
+
+#: src/ui/category_detail.rs src/ui/cleanup_view.rs src/ui/file_actions.rs
+msgid " · "
+msgstr " · "
+
+#: src/ui/category_detail.rs
+msgid "Back"
+msgstr "Retour"
+
+#: src/ui/category_detail.rs
+msgid "Edit Rules"
+msgstr "Modifier les règles"
+
+#: src/ui/category_detail.rs
+msgid "Clean {category} ({size})"
+msgstr "Nettoyer {category} ({size})"
+
+#: src/ui/category_detail.rs
+msgid "File · {path}"
+msgstr "Fichier · {path}"
+
+#: src/ui/category_detail.rs
+msgid "Folder · {count} files · {path}"
+msgstr "Dossier · {count} fichiers · {path}"
+
+#: src/ui/category_detail.rs
+msgid "Files are deleted permanently. This cannot be undone."
+msgstr "Les fichiers sont supprimés définitivement. Cette action est irréversible."
+
+#: src/ui/category_detail.rs
+msgid "Files go to the trash, so you can restore them until you empty it."
+msgstr "Les fichiers vont à la corbeille et peuvent être restaurés tant qu’elle n’est pas vidée."
+
+#: src/ui/category_detail.rs
+msgid "Secure delete: each file is overwritten before it is deleted. This cannot be undone."
+msgstr "Suppression sécurisée : chaque fichier est écrasé avant suppression. Cette action est irréversible."
+
+#: src/ui/category_detail.rs
+msgid "Select all"
+msgstr "Tout sélectionner"
+
+#: src/ui/category_detail.rs
+msgid "Tick or untick everything in this folder"
+msgstr "Sélectionner ou désélectionner tout dans ce dossier"
+
+#: src/ui/category_detail.rs
+msgid "Untick to keep it"
+msgstr "Désélectionner pour conserver"
+
+#: src/ui/category_detail.rs
+msgid "and {count} smaller items ({size})"
+msgstr "et {count} éléments plus petits ({size})"
+
+#: src/ui/category_detail.rs
+msgid "{count} files selected · {size}"
+msgstr "{count} fichiers sélectionnés · {size}"
+
+#: src/ui/category_detail.rs
+msgid "{count} files · {size} found"
+msgstr "{count} fichiers · {size} trouvés"
+
+#: src/ui/category_detail.rs
+msgid "{count} kept"
+msgstr "{count} conservés"
+
+#: src/ui/cleanup_log_page.rs
+msgid "Moved to trash: {count}"
+msgstr "Déplacés dans la corbeille : {count}"
+
+#: src/ui/cleanup_log_page.rs
+msgid "Overwritten before deletion: {count}"
+msgstr "Écrasés avant suppression : {count}"
+
+#: src/ui/cleanup_view.rs src/ui/dashboard_page.rs src/ui/scan_overview.rs
+msgid "Scan to see what can be cleaned"
+msgstr "Lancez l’analyse pour trouver les éléments à nettoyer"
+
+#: src/ui/dashboard_page.rs
+msgid "Scan cancelled"
+msgstr "Analyse annulée"
+
+#: src/ui/file_actions.rs
+msgid "Modified {date}"
+msgstr "Modifié le {date}"
+
+#: src/ui/file_actions.rs
+msgid "Open"
+msgstr "Ouvrir"
+
+#: src/ui/file_actions.rs
+msgid "Preview"
+msgstr "Aperçu"
+
+#: src/ui/file_actions.rs
+msgid "Show in Files"
+msgstr "Afficher dans Fichiers"
+
+#: src/ui/dashboard_page.rs
+msgid "\n{count} files were moved to the trash. Their space is freed when you empty it."
+msgstr "\n{count} fichiers ont été déplacés dans la corbeille. L’espace sera libéré en la vidant."
+
+#: src/ui/dashboard_page.rs
+msgid "\n{count} files were overwritten before deletion."
+msgstr "\n{count} fichiers ont été écrasés avant suppression."
+
+#: src/ui/project_settings.rs
+msgid "Add"
+msgstr "Ajouter"
+
+#: src/ui/project_settings.rs
+msgid "Add a folder with projects"
+msgstr "Ajouter un dossier de projets"
+
+#: src/ui/project_settings.rs
+msgid "Choose a Folder with Projects"
+msgstr "Choisir un dossier de projets"
+
+#: src/ui/project_settings.rs
+msgid "Home folder"
+msgstr "Dossier personnel"
+
+#: src/ui/project_settings.rs
+msgid "No folders. Add one to look for projects."
+msgstr "Aucun dossier. Ajoutez-en un pour rechercher des projets."
+
+#: src/ui/project_settings.rs
+msgid "Projects with a program working inside them are always skipped"
+msgstr "Les projets dans lesquels un programme travaille sont toujours ignorés"
+
+#: src/ui/project_settings.rs
+msgid "Stop searching this folder"
+msgstr "Ne plus rechercher dans ce dossier"
+
+#: src/ui/rule_preview.rs src/ui/scan_overview.rs
+msgid "Looking for files…"
+msgstr "Recherche de fichiers…"
+
+#: src/ui/rule_preview.rs
+msgid "Nothing to clean"
+msgstr "Rien à nettoyer"
+
+#: src/ui/rule_preview.rs
+msgid "Preview only. Nothing is deleted from this window."
+msgstr "Aperçu uniquement. Rien n’est supprimé depuis cette fenêtre."
+
+#: src/ui/rule_preview.rs
+msgid "View the files this would clean"
+msgstr "Voir les fichiers qui seraient nettoyés"
+
+#: src/ui/scan_overview.rs
+msgid "Checking each category. This can take a moment."
+msgstr "Vérification de chaque catégorie. Cela peut prendre un moment."
+
+#: src/ui/scan_overview.rs
+msgid "Each category says what it holds and whether it is safe to clean."
+msgstr "Chaque catégorie indique son contenu et si son nettoyage est sûr."
+
+#: src/ui/scan_overview.rs
+msgid "Nothing found"
+msgstr "Aucun résultat"
+
+#: src/ui/scan_overview.rs
+msgid "{safe} is safe to clean. Review the rest before cleaning."
+msgstr "{safe} peuvent être nettoyés sans risque. Vérifiez le reste avant nettoyage."
+
+#: src/ui/scan_overview.rs
+msgid "{size} can be freed"
+msgstr "{size} peuvent être libérés"
+
+#: src/ui/settings_page.rs
+msgid "Move to Trash"
+msgstr "Déplacer dans la corbeille"
+
+#: src/ui/settings_page.rs
+msgid "Secure Delete"
+msgstr "Suppression sécurisée"
+
+#: src/ui/settings_page.rs
+msgid "Removal Method"
+msgstr "Méthode de suppression"
+
+#: src/ui/settings_page.rs
+msgid "Choose how cleanup removes files"
+msgstr "Choisissez comment supprimer les fichiers"
+
+#: src/ui/settings_page.rs
+msgid "Securely Delete Browser Data"
+msgstr "Supprimer les données du navigateur de façon sécurisée"
+
+#: src/ui/settings_page.rs
+msgid "Always overwrite cookies, history and sessions before deleting them"
+msgstr "Toujours écraser les cookies, l’historique et les sessions avant suppression"
+
+#: src/ui/settings_page.rs
+msgid "Fast. Files are gone from the folder, but the data stays on disk until it is reused"
+msgstr "Rapide. Les fichiers disparaissent du dossier, mais les données restent sur le disque jusqu’à la réutilisation de leur espace"
+
+#: src/ui/settings_page.rs
+msgid "Overwrites each file with random data before deleting it. Slower, cannot be undone"
+msgstr "Écrase chaque fichier avec des données aléatoires avant suppression. Plus lent, irréversible"
+
+#: src/ui/settings_page.rs
+msgid "Your Disk"
+msgstr "Votre disque"
+
+#: src/ui/settings_page.rs
+msgid "Encrypted. Deleted data cannot be read without your password."
+msgstr "Chiffré. Les données supprimées ne peuvent pas être lues sans votre mot de passe."
+
+#: src/ui/settings_page.rs
+msgid "Not encrypted, SSD. The drive may keep old copies of overwritten data until it reuses them. Disk encryption (LUKS) is the real protection."
+msgstr "SSD non chiffré. Le disque peut conserver d’anciennes copies des données écrasées jusqu’à leur réutilisation. Le chiffrement du disque (LUKS) offre la vraie protection."
+
+#: src/ui/settings_page.rs
+msgid "Not encrypted, copy-on-write filesystem. Overwriting writes to new blocks, so old copies may remain. Disk encryption (LUKS) is the real protection."
+msgstr "Système de fichiers copy-on-write non chiffré. L’écrasement écrit dans de nouveaux blocs, d’anciennes copies peuvent subsister. Le chiffrement du disque (LUKS) offre la vraie protection."
+
+#: src/ui/settings_page.rs
+msgid "Not encrypted, hard disk. Secure Delete overwrites the data in place."
+msgstr "Disque dur non chiffré. La suppression sécurisée écrase les données sur place."
+
+#: src/ui/settings_page.rs
+msgid "Off. Magnífico will not start automatically at login"
+msgstr "Désactivé. Magnífico ne démarrera pas automatiquement à la connexion"
+
+#: src/ui/settings_page.rs
+msgid "Starts in the background at login; scheduled cleanup can then run"
+msgstr "Démarre en arrière-plan à la connexion pour permettre le nettoyage planifié"
+
+#: src/ui/settings_page.rs
+msgid "Unavailable: system journal cleanup requires pkexec and journalctl"
+msgstr "Indisponible : le nettoyage du journal système nécessite pkexec et journalctl"
+
+#: src/ui/settings_page.rs
+msgid "Vacuum archived systemd journal data during manual cleanup; administrator approval is required"
+msgstr "Nettoyer les journaux systemd archivés lors du nettoyage manuel ; une autorisation administrateur est requise"
+
+#: src/models/cleanup_plan.rs src/services/file_finder.rs src/ui/large_files_page.rs
+msgid "AI Models"
+msgstr "Modèles IA"
+
+#: src/ui/large_files_page.rs src/ui/storage_analyzer_page.rs
+msgid "Delete Selected"
+msgstr "Supprimer la sélection"
+
+#: src/models/scan_category.rs
+msgid "Browser Data"
+msgstr "Données du navigateur"
+
+#: src/models/scan_category.rs
+msgid "Developer Tools"
+msgstr "Outils de développement"
+
+#: src/models/scan_category.rs
+msgid "Inactive Projects"
+msgstr "Projets inactifs"
+
+#: src/models/scan_category.rs
+msgid "System Junk"
+msgstr "Fichiers système inutiles"
+
+#: src/models/cleanup_plan.rs src/models/scan_category.rs
+msgid "Temporary files, thumbnails, crash reports, package caches and the trash."
+msgstr "Fichiers temporaires, miniatures, rapports de plantage, caches de paquets et corbeille."
+
+#: src/models/scan_category.rs
+msgid "Caches that apps rebuild on their own the next time they need them."
+msgstr "Caches que les applications recréent lorsqu’elles en ont besoin."
+
+#: src/models/scan_category.rs
+msgid "Package and build caches of tools such as cargo, npm, pip and Gradle. They are downloaded again when a project needs them."
+msgstr "Caches de paquets et de compilation d’outils comme cargo, npm, pip et Gradle. Ils sont téléchargés à nouveau lorsqu’un projet en a besoin."
+
+#: src/models/scan_category.rs
+msgid "Old log files kept past the retention period you set."
+msgstr "Anciens journaux dépassant la durée de conservation définie."
+
+#: src/models/scan_category.rs
+msgid "Browser caches, and the cookies, history or sessions you chose. Cookies sign you out of websites."
+msgstr "Caches du navigateur et cookies, historique ou sessions sélectionnés. Supprimer les cookies vous déconnecte des sites."
+
+#: src/models/scan_category.rs
+msgid "Folders you added yourself. Check that nothing you need is inside."
+msgstr "Dossiers que vous avez ajoutés. Vérifiez qu’ils ne contiennent rien d’utile."
+
+#: src/models/scan_category.rs
+msgid "Dependency and build folders (node_modules, target, .venv…) of projects you have not changed in a while. Building the project again brings them back."
+msgstr "Dossiers de dépendances et de compilation (node_modules, target, .venv…) des projets sans modification récente. Une nouvelle compilation les recrée."
+
+#: src/ui/custom_page.rs
+msgid "Add Custom Rule"
+msgstr "Ajouter une règle personnalisée"
+
+#: src/ui/custom_page.rs
+msgid "Add Disabled Rule"
+msgstr "Ajouter une règle désactivée"
+
+#: src/ui/custom_page.rs
+msgid "Add Rule"
+msgstr "Ajouter une règle"
+
+#: src/ui/custom_page.rs
+msgid "Add your own directories to clean. Use with caution - these rules can delete important files if misconfigured."
+msgstr "Ajoutez vos dossiers à nettoyer. Attention : des règles mal configurées peuvent supprimer des fichiers importants."
+
+#: src/ui/custom_page.rs
+msgid "Advanced setting: verify every custom path before enabling cleanup."
+msgstr "Paramètre avancé : vérifiez chaque chemin personnalisé avant d’activer le nettoyage."
+
+#: src/ui/custom_page.rs
+msgid "Cache & Temp"
+msgstr "Cache et fichiers temporaires"
+
+#: src/ui/custom_page.rs
+msgid "Choose a Directory"
+msgstr "Choisir un dossier"
+
+#: src/ui/custom_page.rs
+msgid "Choose a directory"
+msgstr "Choisir un dossier"
+
+#: src/ui/custom_page.rs
+msgid "Click 'Add Rule' to create one"
+msgstr "Cliquez sur « Ajouter une règle » pour en créer une"
+
+#: src/ui/custom_page.rs
+msgid "Could not expand home directory in path."
+msgstr "Impossible de résoudre le dossier personnel dans le chemin."
+
+#: src/ui/custom_page.rs
+msgid "Custom Rules"
+msgstr "Règles personnalisées"
+
+#: src/ui/custom_page.rs
+msgid "Delete Rule"
+msgstr "Supprimer la règle"
+
+#: src/ui/custom_page.rs
+msgid "Delete this rule"
+msgstr "Supprimer cette règle"
+
+#: src/ui/custom_page.rs
+msgid "Deletion Mode"
+msgstr "Mode de suppression"
+
+#: src/ui/custom_page.rs
+msgid "Directory Path"
+msgstr "Chemin du dossier"
+
+#: src/ui/custom_page.rs
+msgid "File Pattern"
+msgstr "Motif de fichiers"
+
+#: src/ui/custom_page.rs
+msgid "Files and directories"
+msgstr "Fichiers et dossiers"
+
+#: src/ui/custom_page.rs
+msgid "Files only (keep directory structure)"
+msgstr "Fichiers uniquement (conserver les dossiers)"
+
+#: src/ui/custom_page.rs
+msgid "High-Risk Custom Location"
+msgstr "Emplacement personnalisé à haut risque"
+
+#: src/ui/custom_page.rs
+msgid "Invalid Folder Pattern"
+msgstr "Motif de dossiers invalide"
+
+#: src/ui/custom_page.rs
+msgid "Invalid Path"
+msgstr "Chemin invalide"
+
+#: src/ui/custom_page.rs
+msgid "Minimum Age"
+msgstr "Ancienneté minimale"
+
+#: src/ui/custom_page.rs
+msgid "No Matches Yet"
+msgstr "Aucune correspondance pour le moment"
+
+#: src/ui/custom_page.rs
+msgid "No custom rules"
+msgstr "Aucune règle personnalisée"
+
+#: src/ui/custom_page.rs
+msgid "Only Rust (Cargo) build folders"
+msgstr "Dossiers de compilation Rust (Cargo) uniquement"
+
+#: src/ui/custom_page.rs
+msgid "Only clean matches that Cargo marked as its own build output (CACHEDIR.TAG). Folders that just share the name are left alone."
+msgstr "Nettoyer uniquement les dossiers marqués par Cargo comme résultats de compilation (CACHEDIR.TAG). Les dossiers simplement homonymes sont conservés."
+
+#: src/ui/custom_page.rs
+msgid "Path is not safe for cleanup"
+msgstr "Ce chemin ne peut pas être nettoyé sans risque"
+
+#: src/ui/custom_page.rs
+msgid "Remove this custom cleanup rule"
+msgstr "Supprimer cette règle de nettoyage personnalisée"
+
+#: src/ui/custom_page.rs
+msgid "Rule Name"
+msgstr "Nom de la règle"
+
+#: src/ui/custom_page.rs
+msgid "Rust (Cargo) build folders"
+msgstr "Dossiers de compilation Rust (Cargo)"
+
+#: src/ui/custom_page.rs
+msgid "Search Subfolders Matching"
+msgstr "Rechercher les sous-dossiers correspondant à"
+
+#: src/ui/custom_page.rs
+msgid "Subfolder Search"
+msgstr "Recherche de sous-dossiers"
+
+#: src/ui/custom_page.rs
+msgid "Your custom cleanup directories"
+msgstr "Vos dossiers de nettoyage personnalisés"
+
+#: src/ui/scan_overview.rs
+msgid "Safe to clean"
+msgstr "Nettoyage sûr"
+
+#: src/ui/scan_overview.rs
+msgid "looking for files"
+msgstr "recherche de fichiers"
+
+#: src/ui/scan_overview.rs
+msgid "why zero?"
+msgstr "pourquoi zéro ?"
+
+#: src/ui/rule_preview.rs
+msgid "View files"
+msgstr "Voir les fichiers"
+
+#: src/ui/dashboard_page.rs
+msgid "A scan or cleanup is already running. Please wait for it to complete."
+msgstr "Une analyse ou un nettoyage est en cours. Attendez la fin."
+
+#: src/ui/dashboard_page.rs
+msgid "Cancel Operation"
+msgstr "Annuler l’opération"
+
+#: src/ui/dashboard_page.rs
+msgid "Cancel the active scan or wait for the administrator operation to finish before cleaning."
+msgstr "Annulez l’analyse ou attendez la fin de l’opération administrateur avant le nettoyage."
+
+#: src/ui/dashboard_page.rs
+msgid "No files were found to clean with the current settings."
+msgstr "Aucun fichier à nettoyer avec les paramètres actuels."
+
+#: src/ui/dashboard_page.rs
+msgid "Scheduled cleanup found nothing to delete"
+msgstr "Le nettoyage planifié n’a rien trouvé à supprimer"
+
+#: src/ui/dashboard_page.rs
+msgid "Scheduled cleanup skipped because cleanup rules changed during its scan"
+msgstr "Nettoyage planifié ignoré car les règles ont changé pendant l’analyse"
+
+#: src/ui/dashboard_page.rs
+msgid "The results below are from before the change. Scan again to see what can be freed now."
+msgstr "Ces résultats précèdent la modification. Relancez l’analyse pour voir l’espace libérable."
+
+#: src/ui/dashboard_page.rs
+msgid "Wait for the current scan or cleanup to finish before closing Magnífico."
+msgstr "Attendez la fin de l’analyse ou du nettoyage avant de fermer Magnífico."
+
+#: src/ui/dashboard_page.rs
+msgid "Your cleanup rules changed"
+msgstr "Vos règles de nettoyage ont changé"
+
+#: src/ui/project_settings.rs
+msgid "1 month"
+msgstr "1 mois"
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "App caches"
+msgstr "Caches d’apps"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Development"
+msgstr "Développement"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Uninstall apps"
+msgstr "Désinstaller"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Analyzing your disk…"
+msgstr "Analyse de votre disque…"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "Disk usage"
+msgstr "Utilisation du disque"
+
+#: src/ui/scan_loading.rs src/ui/clean_workflow.rs src/ui/main_window.rs
+msgid "No safe items to clean."
+msgstr "Aucun élément sûr à nettoyer."
+
+msgid "{count} items · {size}"
+msgstr "{count} éléments · {size}"
+
+msgid "{count} models"
+msgstr "{count} modèles"
+
+msgid "{count} games"
+msgstr "{count} jeux"
+
+msgid "Nothing found."
+msgstr "Rien trouvé."
+
+msgid "{count} items · {size} to review"
+msgstr "{count} éléments · {size} à vérifier"
+
+msgid "Last used"
+msgstr "Dernière utilisation"
+
+msgid "Models are downloaded again the next time an app needs them."
+msgstr "Les modèles seront retéléchargés la prochaine fois qu’une app en aura besoin."
+
+msgid "Games can be installed again from their launcher. Saved games in the cloud or in compatdata are kept."
+msgstr "Les jeux peuvent être réinstallés depuis leur lanceur. Les sauvegardes dans le cloud ou dans compatdata sont conservées."
+
+msgid "Close Steam before removing Steam games, then try again."
+msgstr "Fermez Steam avant de supprimer des jeux Steam, puis réessayez."
+
+msgid "Keep Steam closed while they are removed."
+msgstr "Gardez Steam fermé pendant la suppression."
+
+msgid "Selected items will be moved to Trash."
+msgstr "Les éléments sélectionnés seront déplacés dans la corbeille."
+
+msgid "Data ({size}): {paths}"
+msgstr "Données ({size}) : {paths}"
+
+msgid "Also remove app data (caches, settings and saved data) — {size}"
+msgstr "Supprimer aussi les données de l’app (caches, réglages et données enregistrées) — {size}"
+
+msgid "When closing the window"
+msgstr "À la fermeture de la fenêtre"
+
+msgid "In the system tray, scheduled cleanup stays available."
+msgstr "Dans la zone de notification, le nettoyage planifié reste disponible."
+
+msgid "Quit completely"
+msgstr "Quitter complètement"
+
+msgid "Keep in the system tray"
+msgstr "Garder dans la zone de notification"
+
+msgid "Middle-click to show in Files · Right-click to copy the path"
+msgstr "Clic milieu : afficher dans Fichiers · Clic droit : copier le chemin"
+
+msgid "Path copied"
+msgstr "Chemin copié"
+
+msgid "Open Settings"
+msgstr "Ouvrir les paramètres"
+
+msgid "Cleanup blocked by safety limit: {count} files found, limit is {limit}."
+msgstr "Nettoyage bloqué par la limite de sécurité : {count} fichiers trouvés, la limite est {limit}."
+
+msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
+msgstr "Nettoyage bloqué par la limite de sécurité : {size} sélectionnés, la limite est {limit} par opération. Augmentez la limite dans Paramètres → Sécurité."

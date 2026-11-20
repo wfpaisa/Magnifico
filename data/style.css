@@ -1,0 +1,1271 @@
+/* Magnífico - Application Styles */
+/* See LICENSE for the original copyright notice. */
+/* https://github.com/wfpaisa/Magnifico */
+
+/* Bundled National Park (see src/fonts.rs); the theme font is the fallback. */
+window, popover, tooltip {
+    font-family: "National Park", sans-serif;
+}
+
+/* ===== Semantic Theme Tokens ===== */
+/* These tokens map to libadwaita semantic roles and stay desktop-neutral. */
+@define-color cleaner_window_bg @window_bg_color;
+@define-color cleaner_window_fg @window_fg_color;
+@define-color cleaner_view_bg @view_bg_color;
+@define-color cleaner_view_fg @view_fg_color;
+@define-color cleaner_headerbar_bg @headerbar_bg_color;
+@define-color cleaner_headerbar_fg @headerbar_fg_color;
+@define-color cleaner_sidebar_bg @sidebar_bg_color;
+@define-color cleaner_sidebar_fg @sidebar_fg_color;
+@define-color cleaner_secondary_sidebar_bg @secondary_sidebar_bg_color;
+@define-color cleaner_secondary_sidebar_fg @secondary_sidebar_fg_color;
+@define-color cleaner_card_bg @card_bg_color;
+@define-color cleaner_card_fg @card_fg_color;
+@define-color cleaner_dialog_bg @dialog_bg_color;
+@define-color cleaner_dialog_fg @dialog_fg_color;
+@define-color cleaner_popover_bg @popover_bg_color;
+@define-color cleaner_popover_fg @popover_fg_color;
+@define-color cleaner_tooltip_bg @popover_bg_color;
+@define-color cleaner_tooltip_fg @popover_fg_color;
+@define-color cleaner_accent_bg @accent_bg_color;
+@define-color cleaner_accent_fg @accent_fg_color;
+@define-color cleaner_accent @accent_color;
+@define-color cleaner_success @success_bg_color;
+@define-color cleaner_warning @warning_bg_color;
+@define-color cleaner_error @error_bg_color;
+@define-color cleaner_destructive @error_bg_color;
+@define-color cleaner_primary_text @view_fg_color;
+@define-color cleaner_secondary_text alpha(@view_fg_color, 0.72);
+@define-color cleaner_border alpha(@window_fg_color, 0.12);
+@define-color cleaner_divider alpha(@window_fg_color, 0.10);
+@define-color cleaner_shade alpha(@window_fg_color, 0.06);
+@define-color cleaner_selection_bg alpha(@accent_bg_color, 0.18);
+@define-color cleaner_selection_fg @view_fg_color;
+@define-color cleaner_button_bg @card_bg_color;
+@define-color cleaner_button_fg @card_fg_color;
+@define-color cleaner_button_border alpha(@window_fg_color, 0.12);
+@define-color cleaner_flat_button_hover alpha(@window_fg_color, 0.08);
+@define-color cleaner_flat_button_pressed alpha(@window_fg_color, 0.12);
+@define-color cleaner_icon_button_fg @window_fg_color;
+@define-color cleaner_text_button_fg @accent_color;
+@define-color cleaner_link_fg @accent_color;
+@define-color cleaner_entry_bg @view_bg_color;
+@define-color cleaner_entry_fg @view_fg_color;
+@define-color cleaner_entry_border alpha(@window_fg_color, 0.14);
+@define-color cleaner_focus_ring alpha(@accent_color, 0.95);
+@define-color cleaner_active_state alpha(@accent_bg_color, 0.16);
+@define-color cleaner_hover_state alpha(@window_fg_color, 0.08);
+@define-color cleaner_pressed_state alpha(@window_fg_color, 0.12);
+@define-color cleaner_overlay_bg alpha(@dialog_bg_color, 0.92);
+/* Shell surfaces sampled from the supplied light and dark references. */
+@define-color cleaner_light_sidebar_surface #ebebed;
+@define-color cleaner_light_content_surface #ffffff;
+@define-color cleaner_dark_sidebar_surface #2e2e32;
+@define-color cleaner_dark_content_surface #343437;
+
+window.magnifico-dark,
+window.magnifico-light,
+window.background {
+    background-color: @cleaner_window_bg;
+    color: @cleaner_window_fg;
+}
+
+.magnifico-window-layout {
+    background-color: @cleaner_window_bg;
+}
+
+.magnifico-content,
+.magnifico-view,
+.view.magnifico-view {
+    background-color: @cleaner_headerbar_bg;
+    color: @cleaner_view_fg;
+}
+
+.magnifico-sidebar {
+    background-color: @cleaner_sidebar_bg;
+    color: @cleaner_sidebar_fg;
+}
+
+/* Keep each half of the shell visually continuous from its header down. */
+headerbar.magnifico-content-header {
+    background-color: @cleaner_headerbar_bg;
+    border: none;
+    box-shadow: none;
+}
+
+headerbar.magnifico-sidebar-header {
+    background-color: @cleaner_sidebar_bg;
+    border: none;
+    box-shadow: none;
+}
+
+headerbar.custom-rule-header {
+    border-bottom: none;
+    box-shadow: none;
+}
+
+/* Match the two-surface shell shown in the visual references. */
+.magnifico-light .magnifico-sidebar,
+.magnifico-light headerbar.magnifico-sidebar-header {
+    background-color: @cleaner_light_sidebar_surface;
+}
+
+.magnifico-light .magnifico-content,
+.magnifico-light .magnifico-view,
+.magnifico-light .view.magnifico-view,
+.magnifico-light headerbar.magnifico-content-header {
+    background-color: @cleaner_light_content_surface;
+}
+
+.magnifico-dark .magnifico-sidebar,
+.magnifico-dark headerbar.magnifico-sidebar-header {
+    background-color: @cleaner_dark_sidebar_surface;
+}
+
+.magnifico-dark .magnifico-content,
+.magnifico-dark .magnifico-view,
+.magnifico-dark .view.magnifico-view,
+.magnifico-dark headerbar.magnifico-content-header {
+    background-color: @cleaner_dark_content_surface;
+}
+
+/* Popup surfaces follow the main content pane. Without this, libadwaita paints
+   dialogs with @dialog_bg_color and popovers with @popover_bg_color, which are
+   slightly darker than the white content area in the light theme. */
+.magnifico-dialog.magnifico-light {
+    background-color: @cleaner_light_content_surface;
+    color: @cleaner_view_fg;
+}
+
+.magnifico-dialog.magnifico-dark {
+    background-color: @cleaner_dark_content_surface;
+    color: @cleaner_view_fg;
+}
+
+.magnifico-light popover.background > contents,
+.magnifico-light popover.menu > contents {
+    background-color: @cleaner_light_content_surface;
+    color: @cleaner_popover_fg;
+}
+
+.magnifico-dark popover.background > contents,
+.magnifico-dark popover.menu > contents {
+    background-color: @cleaner_dark_content_surface;
+    color: @cleaner_popover_fg;
+}
+
+/* Scrollable dialog bodies: keep the surface flat and let the global
+   scrollbar styling provide the visible indicator. */
+.dialog-scroll,
+.dialog-scroll > viewport,
+label.dialog-body-text {
+    background-color: transparent;
+}
+
+label.dialog-body-text {
+    font-weight: 400;
+    line-height: 140%;
+    padding: 0;
+}
+
+.navigation-sidebar {
+    background-color: transparent;
+    color: @cleaner_sidebar_fg;
+}
+
+.sidebar-section-heading {
+    font-size: 0.85em;
+    margin: 12px 12px 6px;
+}
+
+.navigation-sidebar row {
+    margin: 2px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.navigation-sidebar row:hover {
+    background-color: @cleaner_hover_state;
+}
+
+.navigation-sidebar row:selected {
+    background-color: @cleaner_selection_bg;
+    border-color: alpha(@cleaner_focus_ring, 0.22);
+}
+
+.navigation-sidebar row:selected label,
+.navigation-sidebar row:selected image {
+    color: inherit;
+}
+
+.magnifico-surface-card {
+    border-color: @cleaner_border;
+    box-shadow: 0 1px 2px alpha(@cleaner_shade, 0.8);
+}
+
+/* Dashboard sections share the workspace surface instead of looking like cards. */
+frame.dashboard-section,
+frame.dashboard-section > border {
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.welcome-title {
+    color: @cleaner_primary_text;
+}
+
+.disk-storage-card {
+    min-height: 226px;
+}
+
+.cleanup-log-summary {
+    color: @cleaner_secondary_text;
+}
+
+frame.cleanup-log-frame,
+frame.cleanup-log-frame > border {
+    background-color: alpha(@cleaner_window_fg, 0.025);
+    border: 1px solid alpha(@cleaner_window_fg, 0.10);
+    border-radius: 8px;
+}
+
+textview.cleanup-log-view,
+textview.cleanup-log-view text {
+    background-color: transparent;
+    color: @cleaner_primary_text;
+}
+
+.disk-usage-details {
+    min-width: 280px;
+}
+
+.disk-metrics {
+    border-top: 1px solid @cleaner_divider;
+    padding-top: 14px;
+}
+
+.disk-metric-value {
+    font-size: 14pt;
+    font-weight: 700;
+    color: @cleaner_primary_text;
+}
+
+/* ===== Storage Analyzer ===== */
+.storage-analyzer-page {
+    background-color: transparent;
+}
+
+.storage-analyzer-toolbar {
+    min-height: 38px;
+}
+
+.storage-location-chips > flowboxchild {
+    padding: 0;
+}
+
+button.storage-location-chip {
+    min-height: 24px;
+    padding: 4px 12px;
+}
+
+.storage-analyzer-summary {
+    min-height: 34px;
+    padding: 0 2px;
+}
+
+frame.storage-treemap-frame,
+frame.storage-treemap-frame > border {
+    background-color: alpha(@cleaner_window_fg, 0.035);
+    border: 1px solid @cleaner_border;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.storage-breadcrumbs {
+    min-height: 38px;
+    padding: 2px 0;
+}
+
+button.storage-breadcrumb {
+    min-height: 28px;
+    padding: 2px 7px;
+    border-radius: 6px;
+}
+
+.storage-results-header {
+    min-height: 28px;
+    padding: 0 8px;
+    color: @cleaner_secondary_text;
+    font-size: 9pt;
+    font-weight: 700;
+    border-bottom: 1px solid @cleaner_divider;
+}
+
+.storage-results-scroll {
+    background-color: transparent;
+    border-bottom: 1px solid @cleaner_divider;
+}
+
+.storage-results-list,
+.storage-results-list row {
+    background-color: transparent;
+}
+
+.storage-results-list row.storage-result-row {
+    border-bottom: 1px solid alpha(@cleaner_window_fg, 0.07);
+}
+
+.storage-results-list row.storage-result-row:hover {
+    background-color: @cleaner_hover_state;
+}
+
+progressbar.storage-size-bar {
+    min-height: 7px;
+}
+
+progressbar.storage-size-bar trough {
+    min-height: 7px;
+    border-radius: 999px;
+    background-color: alpha(@cleaner_window_fg, 0.10);
+}
+
+progressbar.storage-size-bar progress {
+    min-height: 7px;
+    border-radius: 999px;
+    background-color: @cleaner_accent_bg;
+}
+
+.storage-selection-bar {
+    min-height: 58px;
+    padding-top: 10px;
+}
+
+button.storage-delete-button {
+    min-height: 28px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.magnifico-high-contrast frame.storage-treemap-frame,
+.magnifico-high-contrast .storage-results-header,
+.magnifico-high-contrast .storage-results-scroll,
+.magnifico-high-contrast .storage-results-list row.storage-result-row {
+    border-color: alpha(@cleaner_window_fg, 0.34);
+}
+
+.title-1 {
+    font-size: 24pt;
+    font-weight: 800;
+    color: @cleaner_primary_text;
+}
+
+.title-2 {
+    font-size: 18pt;
+    font-weight: 700;
+    color: @cleaner_primary_text;
+}
+
+.title-3 {
+    font-size: 14pt;
+    font-weight: 600;
+    color: @cleaner_primary_text;
+}
+
+.title-4 {
+    font-size: 12pt;
+    font-weight: 500;
+    color: @cleaner_primary_text;
+}
+
+.heading {
+    font-weight: 600;
+    color: @cleaner_primary_text;
+}
+
+.caption {
+    font-size: 10pt;
+    color: @cleaner_secondary_text;
+}
+
+.dim-label {
+    color: @cleaner_secondary_text;
+}
+
+.success {
+    color: @cleaner_success;
+}
+
+.warning {
+    color: @cleaner_warning;
+}
+
+.error {
+    color: @cleaner_error;
+}
+
+.accent {
+    color: @cleaner_accent;
+}
+
+.action-icon {
+    color: @cleaner_icon_button_fg;
+}
+
+.pill {
+    border-radius: 999px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+preferencesgroup {
+    margin-bottom: 24px;
+}
+
+row.expander {
+    padding: 8px 0;
+}
+
+row.expander.expanded {
+    background-color: alpha(@cleaner_view_bg, 0.6);
+}
+
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    min-width: 8px;
+    min-height: 8px;
+    border-radius: 4px;
+    background-color: alpha(@cleaner_window_fg, 0.15);
+}
+
+scrollbar slider:hover {
+    background-color: alpha(@cleaner_window_fg, 0.24);
+}
+
+progressbar.osd {
+    min-height: 8px;
+}
+
+progressbar.osd trough {
+    background-color: alpha(@cleaner_window_fg, 0.1);
+    border-radius: 4px;
+}
+
+progressbar.osd progress {
+    background-color: @cleaner_accent_bg;
+    border-radius: 4px;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.pulsing {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.compact .navigation-sidebar row {
+    padding: 8px 12px;
+}
+
+.compact .card {
+    border-radius: 8px;
+}
+
+.compact .title-1 {
+    font-size: 20pt;
+}
+
+.compact .title-2 {
+    font-size: 16pt;
+}
+
+.theme-selector {
+    border-radius: 50%;
+    border: 2px solid alpha(@cleaner_window_fg, 0.3);
+    padding: 0;
+    margin: 0;
+}
+
+.theme-default {
+    background: conic-gradient(from 135deg, #fafafb 0deg, #fafafb 180deg, #222226 180deg, #222226 360deg);
+    background-size: 100% 100%;
+    background-origin: border-box;
+}
+
+.theme-light {
+    background-color: #fafafb;
+    border-color: alpha(@cleaner_window_fg, 0.24);
+}
+
+.theme-dark {
+    background-color: #222226;
+}
+
+.theme-button {
+    padding: 4px;
+    min-width: 52px;
+    min-height: 52px;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.theme-button:checked {
+    background-color: @cleaner_selection_bg;
+    border-radius: 50%;
+}
+
+.theme-button:checked .theme-selector {
+    border-color: @cleaner_focus_ring;
+    border-width: 3px;
+}
+
+.theme-check {
+    color: @cleaner_accent;
+    background-color: @cleaner_window_bg;
+    border-radius: 50%;
+    padding: 2px;
+    -gtk-icon-size: 16px;
+}
+
+.menu-item {
+    border-radius: 6px;
+    margin: 1px 0;
+    color: @cleaner_popover_fg;
+}
+
+.menu-item:hover {
+    background-color: @cleaner_hover_state;
+}
+
+popover.menu contents {
+    padding: 6px;
+    color: @cleaner_popover_fg;
+}
+
+.section-title {
+    color: @cleaner_primary_text;
+    font-weight: 600;
+}
+
+.app-version-label {
+    margin: 4px 14px 8px 14px;
+    color: alpha(@cleaner_window_fg, 0.52);
+    font-size: 9pt;
+}
+
+.magnifico-high-contrast .navigation-sidebar row,
+.magnifico-high-contrast .magnifico-surface-card {
+    border-width: 1px;
+    border-color: alpha(@cleaner_window_fg, 0.28);
+    box-shadow: none;
+}
+
+.magnifico-high-contrast .dim-label,
+.magnifico-high-contrast .caption {
+    color: alpha(@cleaner_primary_text, 0.86);
+}
+
+.magnifico-reduced-motion .navigation-sidebar row,
+.magnifico-reduced-motion .theme-button,
+.magnifico-reduced-motion .magnifico-surface-card,
+.magnifico-reduced-motion .pulsing {
+    transition: none;
+    animation: none;
+}
+
+/* Collapsed navigation rail.
+   `set_width_request` only raises a widget's minimum width; a non-expanding
+   GtkBox child is allocated its natural width, so the sidebar can only reach
+   SIDEBAR_COLLAPSED_WIDTH once the header bar inside it stops asking for more.
+   Trimming the header's padding and the row margins drops that natural width
+   below the request, matching the Speech to Text rail. */
+.sidebar-collapsed .magnifico-sidebar-header {
+    padding-left: 0;
+    padding-right: 0;
+    min-width: 0;
+}
+
+.sidebar-collapsed .navigation-sidebar row {
+    padding: 0;
+    margin: 2px 4px;
+}
+
+.sidebar-collapsed .navigation-sidebar .nav-row-box {
+    margin: 0;
+}
+
+/* ===== Safety labels (overview and review list) ===== */
+label.safety-pill {
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 0.85em;
+    font-weight: 700;
+}
+label.safety-safe {
+    background-color: alpha(@success_color, 0.16);
+    color: @success_color;
+}
+label.safety-review {
+    background-color: alpha(@warning_color, 0.18);
+    color: @warning_color;
+}
+
+/* Cleanup progress: the big counting number */
+label.clean-progress-number {
+    font-size: 72px;
+    font-weight: 600;
+    font-feature-settings: "tnum";
+}
+
+/* ===== Cleanup screen: disk bar, goal, mosaic, details tree ===== */
+@define-color impact_free #10b981;
+@define-color impact_rebuild #8b5cf6;
+@define-color impact_redownload #f43f5e;
+
+.cleanup-card {
+    background-color: alpha(currentColor, 0.03);
+    border: 1px solid alpha(currentColor, 0.06);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 1px 2px alpha(black, 0.06), 0 8px 24px alpha(black, 0.06);
+}
+
+.caption-text {
+    font-size: 0.85em;
+    opacity: 0.7;
+}
+
+.goal-value {
+    font-size: 1.3em;
+    font-weight: 600;
+    font-feature-settings: "tnum";
+}
+
+.goal-scale trough > highlight {
+    background-image: linear-gradient(to right, @impact_free, @impact_rebuild, @impact_redownload);
+}
+
+button.mosaic-tile {
+    border-radius: 16px;
+    padding: 12px 14px;
+    border: 1px solid alpha(currentColor, 0.1);
+    background-color: transparent;
+    box-shadow: none;
+    transition: opacity 300ms ease-out, filter 120ms ease-out, box-shadow 120ms ease-out;
+}
+
+button.mosaic-tile:hover {
+    filter: brightness(1.1);
+    box-shadow: inset 0 0 0 1px alpha(currentColor, 0.25);
+}
+
+button.mosaic-tile:active {
+    filter: brightness(0.92);
+}
+
+/* Unticked tiles stay a faint tint, so the picked ones stand out. */
+button.mosaic-tile.off {
+    opacity: 0.6;
+}
+
+button.mosaic-tile.off:hover {
+    opacity: 0.85;
+}
+
+/* Scanning, nothing found…: big and centred, no card. */
+.cleanup-status {
+    padding-bottom: 72px;
+}
+
+.cleanup-status-label {
+    font-size: 1.35em;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.magnifico-light .cleanup-card {
+    background-color: alpha(white, 0.7);
+    border-color: alpha(black, 0.07);
+}
+
+/* What a group holds but does not offer (recent or in use). */
+.tile-locked {
+    font-size: 0.85em;
+    opacity: 0.75;
+}
+
+/* Picked tiles are solid; their text stays white on the group colour. */
+button.mosaic-tile.on .tile-of,
+button.mosaic-tile.on .tile-impact {
+    opacity: 0.8;
+}
+
+button.mosaic-tile.on {
+    box-shadow: 0 4px 14px alpha(black, 0.18);
+}
+
+.tile-impact {
+    opacity: 0.55;
+}
+
+.tile-title {
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+.usage-delta {
+    color: @impact_free;
+    font-weight: 700;
+    font-feature-settings: "tnum";
+}
+
+.usage-value {
+    font-size: 1.9em;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-feature-settings: "tnum";
+}
+
+.impact-chip {
+    border-radius: 7px;
+    padding: 2px 8px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+.impact-chip.impact-free { color: @impact_free; background-color: alpha(@impact_free, 0.14); }
+.impact-chip.impact-rebuild { color: @impact_rebuild; background-color: alpha(@impact_rebuild, 0.14); }
+.impact-chip.impact-redownload { color: @impact_redownload; background-color: alpha(@impact_redownload, 0.14); }
+
+.impact-chip-size {
+    font-size: 0.9em;
+    opacity: 0.75;
+    font-feature-settings: "tnum";
+}
+
+
+.tile-size {
+    font-size: 1.5em;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-feature-settings: "tnum";
+}
+
+.tile-of {
+    font-size: 0.85em;
+    opacity: 0.85;
+}
+
+.impact-badge {
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 0.85em;
+    color: white;
+}
+
+.impact-badge.impact-free { background-color: @impact_free; }
+.impact-badge.impact-rebuild { background-color: @impact_rebuild; }
+.impact-badge.impact-redownload { background-color: @impact_redownload; }
+
+.tier-section {
+    border-radius: 16px;
+    padding: 6px;
+    background-color: alpha(currentColor, 0.03);
+    border: 1px solid alpha(currentColor, 0.07);
+}
+
+.tier-section.impact-free { box-shadow: inset 3px 0 alpha(@impact_free, 0.9); }
+.tier-section.impact-rebuild { box-shadow: inset 3px 0 alpha(@impact_rebuild, 0.9); }
+.tier-section.impact-redownload { box-shadow: inset 3px 0 alpha(@impact_redownload, 0.9); }
+
+.tier-section.impact-free .tree-icon { color: @impact_free; }
+.tier-section.impact-rebuild .tree-icon { color: @impact_rebuild; }
+.tier-section.impact-redownload .tree-icon { color: @impact_redownload; }
+
+.tree-row {
+    padding: 4px 10px;
+    border-radius: 10px;
+    min-height: 30px;
+    transition: background-color 100ms ease-out;
+}
+
+.tree-row:hover {
+    background-color: alpha(currentColor, 0.07);
+}
+
+.tree-row.pinned {
+    opacity: 0.55;
+}
+
+button.tree-chevron {
+    min-width: 22px;
+    min-height: 22px;
+    padding: 0;
+}
+
+.tier-section.impact-free checkbutton.tree-check check:checked,
+.tier-section.impact-free checkbutton.tree-check check:indeterminate {
+    background-color: @impact_free;
+}
+
+.tier-section.impact-rebuild checkbutton.tree-check check:checked,
+.tier-section.impact-rebuild checkbutton.tree-check check:indeterminate {
+    background-color: @impact_rebuild;
+}
+
+.tier-section.impact-redownload checkbutton.tree-check check:checked,
+.tier-section.impact-redownload checkbutton.tree-check check:indeterminate {
+    background-color: @impact_redownload;
+}
+
+/* The trash button paints its own round fill; CSS adds the float. */
+button.clean-go {
+    padding: 0;
+    min-height: 56px;
+    border-radius: 999px;
+    background: none;
+    box-shadow: 0 8px 22px alpha(#0a6cf0, 0.42), 0 2px 4px alpha(black, 0.2);
+    transition: box-shadow 150ms ease-out, filter 150ms ease-out;
+}
+.clean-go-label {
+    color: white;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-feature-settings: "tnum";
+    text-shadow: 0 1px 2px alpha(#003a8c, 0.5);
+}
+button.clean-go:disabled .clean-go-label { opacity: 0.6; }
+button.clean-go:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 10px 28px alpha(#1e90ff, 0.6), 0 2px 4px alpha(black, 0.2);
+}
+button.clean-go:active { filter: brightness(0.94); }
+button.clean-go:disabled { box-shadow: none; }
+button.scan-stale { color: @error_color; }
+
+/* Tiles being cleaned fade while their particles fly off. */
+button.mosaic-tile.launching {
+    opacity: 0.25;
+    filter: saturate(0.4);
+}
+
+/* Details tree: rows slide in one after another. */
+@keyframes tree-enter {
+    from {
+        opacity: 0;
+        transform: translateX(-14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.tree-row.enter {
+    animation: tree-enter 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.tree-row.enter-1 { animation-delay: 28ms; }
+.tree-row.enter-2 { animation-delay: 56ms; }
+.tree-row.enter-3 { animation-delay: 84ms; }
+.tree-row.enter-4 { animation-delay: 112ms; }
+.tree-row.enter-5 { animation-delay: 140ms; }
+.tree-row.enter-6 { animation-delay: 168ms; }
+.tree-row.enter-7 { animation-delay: 196ms; }
+.tree-row.enter-8 { animation-delay: 224ms; }
+.tree-row.enter-9 { animation-delay: 252ms; }
+.tree-row.enter-10 { animation-delay: 280ms; }
+.tree-row.enter-11 { animation-delay: 308ms; }
+.tree-row.enter-12 { animation-delay: 336ms; }
+.tree-row.enter-13 { animation-delay: 364ms; }
+.tree-row.enter-14 { animation-delay: 392ms; }
+.tree-row.enter-15 { animation-delay: 420ms; }
+
+/* Group colours stay stable across the mosaic, tree and hover cards. */
+@define-color group_blue #2563eb;
+button.mosaic-tile.group-blue { background-image: linear-gradient(160deg, alpha(@group_blue, 0.24), alpha(@group_blue, 0.08)); border-color: alpha(@group_blue, 0.38); }
+button.mosaic-tile.group-blue.partial { background-image: linear-gradient(160deg, alpha(@group_blue, 0.6), alpha(@group_blue, 0.38)); border-color: alpha(@group_blue, 0.75); }
+button.mosaic-tile.group-blue.on { background-image: linear-gradient(160deg, mix(@group_blue, white, 0.08), mix(@group_blue, black, 0.22)); border-color: mix(@group_blue, white, 0.3); color: white; }
+.group-accent.group-blue { border-left: 3px solid @group_blue; }
+.group-accent.group-blue .tree-icon { color: @group_blue; }
+.group-accent.group-blue checkbutton.tree-check check:checked,
+.group-accent.group-blue checkbutton.tree-check check:indeterminate { background-color: @group_blue; }
+@define-color group_green #047857;
+button.mosaic-tile.group-green { background-image: linear-gradient(160deg, alpha(@group_green, 0.24), alpha(@group_green, 0.08)); border-color: alpha(@group_green, 0.38); }
+button.mosaic-tile.group-green.partial { background-image: linear-gradient(160deg, alpha(@group_green, 0.6), alpha(@group_green, 0.38)); border-color: alpha(@group_green, 0.75); }
+button.mosaic-tile.group-green.on { background-image: linear-gradient(160deg, mix(@group_green, white, 0.08), mix(@group_green, black, 0.22)); border-color: mix(@group_green, white, 0.3); color: white; }
+.group-accent.group-green { border-left: 3px solid @group_green; }
+.group-accent.group-green .tree-icon { color: @group_green; }
+.group-accent.group-green checkbutton.tree-check check:checked,
+.group-accent.group-green checkbutton.tree-check check:indeterminate { background-color: @group_green; }
+@define-color group_yellow #a16207;
+button.mosaic-tile.group-yellow { background-image: linear-gradient(160deg, alpha(@group_yellow, 0.24), alpha(@group_yellow, 0.08)); border-color: alpha(@group_yellow, 0.38); }
+button.mosaic-tile.group-yellow.partial { background-image: linear-gradient(160deg, alpha(@group_yellow, 0.6), alpha(@group_yellow, 0.38)); border-color: alpha(@group_yellow, 0.75); }
+button.mosaic-tile.group-yellow.on { background-image: linear-gradient(160deg, mix(@group_yellow, white, 0.08), mix(@group_yellow, black, 0.22)); border-color: mix(@group_yellow, white, 0.3); color: white; }
+.group-accent.group-yellow { border-left: 3px solid @group_yellow; }
+.group-accent.group-yellow .tree-icon { color: @group_yellow; }
+.group-accent.group-yellow checkbutton.tree-check check:checked,
+.group-accent.group-yellow checkbutton.tree-check check:indeterminate { background-color: @group_yellow; }
+@define-color group_orange #c2410c;
+button.mosaic-tile.group-orange { background-image: linear-gradient(160deg, alpha(@group_orange, 0.24), alpha(@group_orange, 0.08)); border-color: alpha(@group_orange, 0.38); }
+button.mosaic-tile.group-orange.partial { background-image: linear-gradient(160deg, alpha(@group_orange, 0.6), alpha(@group_orange, 0.38)); border-color: alpha(@group_orange, 0.75); }
+button.mosaic-tile.group-orange.on { background-image: linear-gradient(160deg, mix(@group_orange, white, 0.08), mix(@group_orange, black, 0.22)); border-color: mix(@group_orange, white, 0.3); color: white; }
+.group-accent.group-orange { border-left: 3px solid @group_orange; }
+.group-accent.group-orange .tree-icon { color: @group_orange; }
+.group-accent.group-orange checkbutton.tree-check check:checked,
+.group-accent.group-orange checkbutton.tree-check check:indeterminate { background-color: @group_orange; }
+@define-color group_purple #7c3aed;
+button.mosaic-tile.group-purple { background-image: linear-gradient(160deg, alpha(@group_purple, 0.24), alpha(@group_purple, 0.08)); border-color: alpha(@group_purple, 0.38); }
+button.mosaic-tile.group-purple.partial { background-image: linear-gradient(160deg, alpha(@group_purple, 0.6), alpha(@group_purple, 0.38)); border-color: alpha(@group_purple, 0.75); }
+button.mosaic-tile.group-purple.on { background-image: linear-gradient(160deg, mix(@group_purple, white, 0.08), mix(@group_purple, black, 0.22)); border-color: mix(@group_purple, white, 0.3); color: white; }
+.group-accent.group-purple { border-left: 3px solid @group_purple; }
+.group-accent.group-purple .tree-icon { color: @group_purple; }
+.group-accent.group-purple checkbutton.tree-check check:checked,
+.group-accent.group-purple checkbutton.tree-check check:indeterminate { background-color: @group_purple; }
+@define-color group_brown #0e7490;
+button.mosaic-tile.group-brown { background-image: linear-gradient(160deg, alpha(@group_brown, 0.24), alpha(@group_brown, 0.08)); border-color: alpha(@group_brown, 0.38); }
+button.mosaic-tile.group-brown.partial { background-image: linear-gradient(160deg, alpha(@group_brown, 0.6), alpha(@group_brown, 0.38)); border-color: alpha(@group_brown, 0.75); }
+button.mosaic-tile.group-brown.on { background-image: linear-gradient(160deg, mix(@group_brown, white, 0.08), mix(@group_brown, black, 0.22)); border-color: mix(@group_brown, white, 0.3); color: white; }
+.group-accent.group-brown { border-left: 3px solid @group_brown; }
+.group-accent.group-brown .tree-icon { color: @group_brown; }
+.group-accent.group-brown checkbutton.tree-check check:checked,
+.group-accent.group-brown checkbutton.tree-check check:indeterminate { background-color: @group_brown; }
+@define-color group_red #e11d48;
+button.mosaic-tile.group-red { background-image: linear-gradient(160deg, alpha(@group_red, 0.24), alpha(@group_red, 0.08)); border-color: alpha(@group_red, 0.38); }
+button.mosaic-tile.group-red.partial { background-image: linear-gradient(160deg, alpha(@group_red, 0.6), alpha(@group_red, 0.38)); border-color: alpha(@group_red, 0.75); }
+button.mosaic-tile.group-red.on { background-image: linear-gradient(160deg, mix(@group_red, white, 0.08), mix(@group_red, black, 0.22)); border-color: mix(@group_red, white, 0.3); color: white; }
+.group-accent.group-red { border-left: 3px solid @group_red; }
+.group-accent.group-red .tree-icon { color: @group_red; }
+.group-accent.group-red checkbutton.tree-check check:checked,
+.group-accent.group-red checkbutton.tree-check check:indeterminate { background-color: @group_red; }
+@define-color group_teal #4d7c0f;
+button.mosaic-tile.group-teal { background-image: linear-gradient(160deg, alpha(@group_teal, 0.24), alpha(@group_teal, 0.08)); border-color: alpha(@group_teal, 0.38); }
+button.mosaic-tile.group-teal.partial { background-image: linear-gradient(160deg, alpha(@group_teal, 0.6), alpha(@group_teal, 0.38)); border-color: alpha(@group_teal, 0.75); }
+button.mosaic-tile.group-teal.on { background-image: linear-gradient(160deg, mix(@group_teal, white, 0.08), mix(@group_teal, black, 0.22)); border-color: mix(@group_teal, white, 0.3); color: white; }
+.group-accent.group-teal { border-left: 3px solid @group_teal; }
+.group-accent.group-teal .tree-icon { color: @group_teal; }
+.group-accent.group-teal checkbutton.tree-check check:checked,
+.group-accent.group-teal checkbutton.tree-check check:indeterminate { background-color: @group_teal; }
+@define-color group_indigo #4f46e5;
+button.mosaic-tile.group-indigo { background-image: linear-gradient(160deg, alpha(@group_indigo, 0.24), alpha(@group_indigo, 0.08)); border-color: alpha(@group_indigo, 0.38); }
+button.mosaic-tile.group-indigo.partial { background-image: linear-gradient(160deg, alpha(@group_indigo, 0.6), alpha(@group_indigo, 0.38)); border-color: alpha(@group_indigo, 0.75); }
+button.mosaic-tile.group-indigo.on { background-image: linear-gradient(160deg, mix(@group_indigo, white, 0.08), mix(@group_indigo, black, 0.22)); border-color: mix(@group_indigo, white, 0.3); color: white; }
+.group-accent.group-indigo { border-left: 3px solid @group_indigo; }
+.group-accent.group-indigo .tree-icon { color: @group_indigo; }
+.group-accent.group-indigo checkbutton.tree-check check:checked,
+.group-accent.group-indigo checkbutton.tree-check check:indeterminate { background-color: @group_indigo; }
+@define-color group_pink #db2777;
+button.mosaic-tile.group-pink { background-image: linear-gradient(160deg, alpha(@group_pink, 0.24), alpha(@group_pink, 0.08)); border-color: alpha(@group_pink, 0.38); }
+button.mosaic-tile.group-pink.partial { background-image: linear-gradient(160deg, alpha(@group_pink, 0.6), alpha(@group_pink, 0.38)); border-color: alpha(@group_pink, 0.75); }
+button.mosaic-tile.group-pink.on { background-image: linear-gradient(160deg, mix(@group_pink, white, 0.08), mix(@group_pink, black, 0.22)); border-color: mix(@group_pink, white, 0.3); color: white; }
+.group-accent.group-pink { border-left: 3px solid @group_pink; }
+.group-accent.group-pink .tree-icon { color: @group_pink; }
+.group-accent.group-pink checkbutton.tree-check check:checked,
+.group-accent.group-pink checkbutton.tree-check check:indeterminate { background-color: @group_pink; }
+@define-color group_olive #c026d3;
+button.mosaic-tile.group-olive { background-image: linear-gradient(160deg, alpha(@group_olive, 0.24), alpha(@group_olive, 0.08)); border-color: alpha(@group_olive, 0.38); }
+button.mosaic-tile.group-olive.partial { background-image: linear-gradient(160deg, alpha(@group_olive, 0.6), alpha(@group_olive, 0.38)); border-color: alpha(@group_olive, 0.75); }
+button.mosaic-tile.group-olive.on { background-image: linear-gradient(160deg, mix(@group_olive, white, 0.08), mix(@group_olive, black, 0.22)); border-color: mix(@group_olive, white, 0.3); color: white; }
+.group-accent.group-olive { border-left: 3px solid @group_olive; }
+.group-accent.group-olive .tree-icon { color: @group_olive; }
+.group-accent.group-olive checkbutton.tree-check check:checked,
+.group-accent.group-olive checkbutton.tree-check check:indeterminate { background-color: @group_olive; }
+
+/* "🖴 /home2" on a tile or row whose files live on another disk. */
+.disk-chip {
+    border-radius: 7px;
+    padding: 1px 7px;
+    font-size: 0.8em;
+    font-weight: 600;
+    background-color: alpha(currentColor, 0.14);
+}
+
+/* Usage line of another disk under the main bar. */
+.other-disk-name {
+    font-weight: 700;
+}
+.other-disk-used {
+    font-weight: 600;
+    font-feature-settings: "tnum";
+}
+
+/* Purge visual system (MIT, © 2026 Jithin Sabu). See THIRD_PARTY_LICENSES.md.
+ * GTK 4.8 named colors are global, so each palette has its own pc_* tokens.
+ * Theme classes below select the matching palette without CSS variables. */
+@define-color pc_text_primary #2E2D2B;
+@define-color pc_dark_text_primary #ECEAE6;
+@define-color pc_text_secondary #64625E;
+@define-color pc_dark_text_secondary #A6A39D;
+@define-color pc_text_tertiary #85827C;
+@define-color pc_dark_text_tertiary #807D78;
+@define-color pc_surface_base #F6F5F3;
+@define-color pc_dark_surface_base #171615;
+@define-color pc_surface_card #FFFFFF;
+@define-color pc_dark_surface_card #1E1D1C;
+@define-color pc_card_hover #F4F2EF;
+@define-color pc_dark_card_hover #2A2927;
+@define-color pc_fill_secondary #EFEDEA;
+@define-color pc_dark_fill_secondary #282725;
+@define-color pc_fill_secondary_hover #E8E6E2;
+@define-color pc_dark_fill_secondary_hover #2F2E2C;
+@define-color pc_border_subtle #E6E3DF;
+@define-color pc_dark_border_subtle #302F2D;
+@define-color pc_border_strong #D5D2CD;
+@define-color pc_dark_border_strong #3D3B38;
+@define-color pc_action_primary #2E2D2B;
+@define-color pc_dark_action_primary #ECEAE6;
+@define-color pc_on_action_primary #FFFFFF;
+@define-color pc_dark_on_action_primary #171615;
+@define-color pc_destructive #D1312A;
+@define-color pc_dark_destructive #D9372D;
+@define-color pc_safe_text #1F7A35;
+@define-color pc_dark_safe_text #5FD36B;
+@define-color pc_safe_fill #E6F4EA;
+@define-color pc_dark_safe_fill #1B2E22;
+@define-color pc_check_text #8A5300;
+@define-color pc_dark_check_text #F2B84B;
+@define-color pc_check_fill #FAEEDA;
+@define-color pc_dark_check_fill #332910;
+@define-color pc_chart_caches #56B4E9;
+@define-color pc_chart_models #009E73;
+@define-color pc_dark_chart_models #2BBF92;
+@define-color pc_chart_games #7A5CE0;
+@define-color pc_dark_chart_games #A38BFF;
+@define-color pc_dark_chart_caches #6CC3F0;
+@define-color pc_chart_dev #0072B2;
+@define-color pc_dark_chart_dev #3A94D0;
+@define-color pc_chart_system #85827C;
+@define-color pc_dark_chart_system #807D78;
+@define-color pc_chart_large #E69F00;
+@define-color pc_dark_chart_large #F0B020;
+@define-color pc_chart_apps #D55E00;
+@define-color pc_dark_chart_apps #E8772A;
+@define-color pc_chart_leftovers #CC79A7;
+@define-color pc_dark_chart_leftovers #DA93BA;
+@define-color pc_chart_else #8C8983;
+@define-color pc_dark_chart_else #A8A49D;
+@define-color pc_chart_free #DAD7D2;
+@define-color pc_dark_chart_free #4E4B47;
+
+.pc-overview { padding: 28px 28px 28px; }
+.pc-page-title { font-size: 22px; font-weight: bold; }
+.pc-disk-used { font-size: 36px; font-weight: bold; }
+.pc-row-title, .pc-row-size { font-size: 15px; font-weight: 600; }
+.pc-icon-tile { min-width: 34px; min-height: 34px; border-radius: 9px; padding: 0; color: white; background-image: linear-gradient(alpha(white, 0.18), transparent); }
+.pc-badge { border-radius: 4px; padding: 2px 6px; font-size: 11px; font-weight: 600; }
+button.pc-primary, button.pc-secondary-button, button.pc-chip { border-radius: 999px; padding: 6px 14px; font-weight: 600; box-shadow: none; min-height: 22px; }
+button.pc-primary:disabled, button.pc-secondary-button:disabled { opacity: 0.45; }
+.pc-card { border-radius: 12px; padding: 0; }
+button.pc-item-row { border-radius: 0; border: none; border-bottom: 1px solid transparent; box-shadow: none; background: transparent; padding: 14px 16px; min-height: 42px; }
+/* Hover fills the card edge to edge; the ends follow its rounded corners. */
+.pc-card > button.pc-item-row:first-child { border-top-left-radius: 11px; border-top-right-radius: 11px; }
+.pc-card > button.pc-item-row:last-child { border-bottom-left-radius: 11px; border-bottom-right-radius: 11px; }
+button.pc-item-row:last-child { border-bottom: none; }
+button.pc-item-row.pc-dimmed { opacity: 0.3; }
+.pc-segmented-bar { border-radius: 5px; }
+.pc-sidebar { min-width: 235px; padding: 0 12px 14px; border-right: 1px solid transparent; }
+.pc-brand { margin: 0 8px; }
+.pc-sidebar-top { padding: 20px 0 22px; min-height: 30px; }
+.pc-sidebar headerbar.magnifico-sidebar-header { margin: 0 -12px; }
+.pc-nav-row { padding: 10px 8px; }
+.pc-sidebar .navigation-sidebar { padding: 0; background: transparent; }
+.pc-sidebar .navigation-sidebar row { margin: 2px 0; padding: 0; border-radius: 8px; }
+.pc-sidebar-section { padding: 20px 8px 6px; font-size: 11px; font-weight: 600; }
+button.pc-sidebar-bottom { border-radius: 8px; box-shadow: none; background: transparent; border: none; padding: 10px 8px; }
+button.pc-trash-footer { border-radius: 12px; box-shadow: none; border: none; padding: 12px 8px; margin-top: 8px; }
+.pc-skeleton { border-radius: 12px; opacity: 0.45; }
+.magnifico-light .magnifico-window-layout, .magnifico-light .magnifico-content.magnifico-view, .magnifico-light .magnifico-view, .magnifico-light headerbar.magnifico-content-header { background-color: @pc_surface_base; color: @pc_text_primary; }
+.magnifico-light .pc-overview, .magnifico-light .pc-sidebar { color: @pc_text_primary; }
+.magnifico-light .pc-sidebar { background-color: @pc_surface_base; border-color: @pc_border_subtle; }
+.magnifico-light .pc-secondary { color: @pc_text_secondary; }
+.magnifico-light .pc-tertiary, .magnifico-light .pc-sidebar-section { color: @pc_text_tertiary; }
+.magnifico-light .pc-card { background-color: @pc_surface_card; border: 1px solid @pc_border_subtle; }
+.magnifico-light button.pc-item-row { color: @pc_text_primary; border-bottom-color: @pc_border_subtle; }
+.magnifico-light button.pc-item-row:hover, .magnifico-light button.pc-item-row.pc-highlighted { background-color: @pc_card_hover; }
+.magnifico-light button.pc-item-row.pc-dimmed .pc-icon-tile { background-color: @pc_chart_else; }
+.magnifico-light .pc-badge.pc-safe, .magnifico-light button.pc-chip.pc-safe:checked { color: @pc_safe_text; background-color: @pc_safe_fill; }
+.magnifico-light .pc-badge.pc-check { color: @pc_check_text; background-color: @pc_check_fill; }
+.magnifico-light button.pc-secondary-button, .magnifico-light button.pc-chip, .magnifico-light button.pc-trash-footer { color: @pc_text_primary; background-color: @pc_fill_secondary; background-image: none; border-color: @pc_border_strong; }
+.magnifico-light button.pc-secondary-button:hover, .magnifico-light button.pc-chip:hover, .magnifico-light button.pc-trash-footer:hover { background-color: @pc_fill_secondary_hover; }
+.magnifico-light button.pc-chip:checked { background-color: @pc_action_primary; color: @pc_on_action_primary; }
+.magnifico-light .pc-sidebar .navigation-sidebar row:selected { background-color: transparent; border-color: transparent; color: @pc_text_primary; }
+.magnifico-light .pc-sidebar .navigation-sidebar row:hover, .magnifico-light button.pc-sidebar-bottom:hover { background-color: @pc_fill_secondary_hover; }
+.magnifico-light .pc-sidebar .navigation-sidebar row, .magnifico-light button.pc-sidebar-bottom { color: @pc_text_secondary; }
+.magnifico-light .pc-skeleton { background-color: @pc_fill_secondary; }
+.magnifico-light .pc-icon-tile.pc-caches { background-color: @pc_chart_caches; }
+.magnifico-light .pc-icon-tile.pc-dev { background-color: @pc_chart_dev; }
+.magnifico-light .pc-icon-tile.pc-system { background-color: @pc_chart_system; }
+.magnifico-light .pc-icon-tile.pc-large { background-color: @pc_chart_large; }
+.magnifico-light .pc-icon-tile.pc-apps { background-color: @pc_chart_apps; }
+.magnifico-light .pc-icon-tile.pc-leftovers { background-color: @pc_chart_leftovers; }
+.magnifico-light .pc-icon-tile.pc-else { background-color: @pc_chart_else; }
+.magnifico-light .pc-icon-tile.pc-models { background-color: @pc_chart_models; }
+.magnifico-light .pc-icon-tile.pc-games { background-color: @pc_chart_games; }
+.magnifico-light .pc-icon-tile.pc-free { background-color: @pc_chart_free; }
+.magnifico-dark .magnifico-window-layout, .magnifico-dark .magnifico-content.magnifico-view, .magnifico-dark .magnifico-view, .magnifico-dark headerbar.magnifico-content-header { background-color: @pc_dark_surface_base; color: @pc_dark_text_primary; }
+.magnifico-dark .pc-overview, .magnifico-dark .pc-sidebar { color: @pc_dark_text_primary; }
+.magnifico-dark .pc-sidebar { background-color: @pc_dark_surface_base; border-color: @pc_dark_border_subtle; }
+.magnifico-dark .pc-secondary { color: @pc_dark_text_secondary; }
+.magnifico-dark .pc-tertiary, .magnifico-dark .pc-sidebar-section { color: @pc_dark_text_tertiary; }
+.magnifico-dark .pc-card { background-color: @pc_dark_surface_card; border: 1px solid @pc_dark_border_subtle; }
+.magnifico-dark button.pc-item-row { color: @pc_dark_text_primary; border-bottom-color: @pc_dark_border_subtle; }
+.magnifico-dark button.pc-item-row:hover, .magnifico-dark button.pc-item-row.pc-highlighted { background-color: @pc_dark_card_hover; }
+.magnifico-dark button.pc-item-row.pc-dimmed .pc-icon-tile { background-color: @pc_dark_chart_else; }
+.magnifico-dark .pc-badge.pc-safe, .magnifico-dark button.pc-chip.pc-safe:checked { color: @pc_dark_safe_text; background-color: @pc_dark_safe_fill; }
+.magnifico-dark .pc-badge.pc-check { color: @pc_dark_check_text; background-color: @pc_dark_check_fill; }
+.magnifico-dark button.pc-secondary-button, .magnifico-dark button.pc-chip, .magnifico-dark button.pc-trash-footer { color: @pc_dark_text_primary; background-color: @pc_dark_fill_secondary; background-image: none; border-color: @pc_dark_border_strong; }
+.magnifico-dark button.pc-secondary-button:hover, .magnifico-dark button.pc-chip:hover, .magnifico-dark button.pc-trash-footer:hover { background-color: @pc_dark_fill_secondary_hover; }
+.magnifico-dark button.pc-chip:checked { background-color: @pc_dark_action_primary; color: @pc_dark_on_action_primary; }
+.magnifico-dark .pc-sidebar .navigation-sidebar row:selected { background-color: transparent; border-color: transparent; color: @pc_dark_text_primary; }
+.magnifico-dark .pc-sidebar .navigation-sidebar row:hover, .magnifico-dark button.pc-sidebar-bottom:hover { background-color: @pc_dark_fill_secondary_hover; }
+.magnifico-dark .pc-sidebar .navigation-sidebar row, .magnifico-dark button.pc-sidebar-bottom { color: @pc_dark_text_secondary; }
+.magnifico-dark .pc-skeleton { background-color: @pc_dark_fill_secondary; }
+.magnifico-dark .pc-icon-tile.pc-caches { background-color: @pc_dark_chart_caches; }
+.magnifico-dark .pc-icon-tile.pc-dev { background-color: @pc_dark_chart_dev; }
+.magnifico-dark .pc-icon-tile.pc-system { background-color: @pc_dark_chart_system; }
+.magnifico-dark .pc-icon-tile.pc-large { background-color: @pc_dark_chart_large; }
+.magnifico-dark .pc-icon-tile.pc-apps { background-color: @pc_dark_chart_apps; }
+.magnifico-dark .pc-icon-tile.pc-leftovers { background-color: @pc_dark_chart_leftovers; }
+.magnifico-dark .pc-icon-tile.pc-else { background-color: @pc_dark_chart_else; }
+.magnifico-dark .pc-icon-tile.pc-models { background-color: @pc_dark_chart_models; }
+.magnifico-dark .pc-icon-tile.pc-games { background-color: @pc_dark_chart_games; }
+.magnifico-dark .pc-icon-tile.pc-free { background-color: @pc_dark_chart_free; }
+
+/* Keep symbolic glyphs white even when a row inherits a theme foreground. */
+.pc-icon-tile image { color: white; min-width: 18px; min-height: 18px; }
+
+/* Clean lists share the overview tokens, with a separate card per result. */
+button.pc-item-row.pc-clean-item { border-radius: 12px; padding: 18px; border: 1px solid transparent; min-height: 64px; }
+.magnifico-light button.pc-clean-item { background-color: @pc_surface_card; border-color: @pc_border_subtle; }
+.magnifico-dark button.pc-clean-item { background-color: @pc_dark_surface_card; border-color: @pc_dark_border_subtle; }
+.magnifico-light button.pc-clean-item:hover { background-color: @pc_card_hover; }
+.magnifico-dark button.pc-clean-item:hover { background-color: @pc_dark_card_hover; }
+.pc-clean-list .pc-row-title { font-weight: 600; }
+.pc-clean-list .pc-sort { border-radius: 24px; }
+.magnifico-light button.pc-chip.pc-check:checked { color: @pc_check_text; background-color: @pc_check_fill; }
+.magnifico-dark button.pc-chip.pc-check:checked { color: @pc_dark_check_text; background-color: @pc_dark_check_fill; }
+.magnifico-light button.pc-clean-item, .magnifico-dark button.pc-clean-item { border-style: solid; border-width: 1px; }
+
+/* Review pages, adapted from Purge (MIT, © 2026 Jithin Sabu). */
+.pc-review-page { padding: 28px 28px 28px; }
+.pc-dropdown, .pc-search { border-radius: 999px; background: @pc_fill_secondary; color: @pc_text_secondary; }
+.pc-dropdown > button { border-radius: 999px; padding: 5px 12px; }
+.pc-app-card { min-width: 150px; padding: 14px; }
+.pc-app-card:hover { background: @pc_card_hover; }
+.pc-radio-selection check { border-radius: 999px; }
+.pc-review-page flowboxchild { padding: 0; }
+.pc-review-page button.pc-item-row { border-radius: 12px; padding: 16px; border: 1px solid transparent; }
+.magnifico-light .pc-review-page button.pc-item-row { background-color: @pc_surface_card; border-color: @pc_border_subtle; }
+.magnifico-dark .pc-review-page button.pc-item-row { background-color: @pc_dark_surface_card; border-color: @pc_dark_border_subtle; }
+.magnifico-light .pc-review-page button.pc-item-row:hover { background-color: @pc_card_hover; }
+.magnifico-dark .pc-review-page button.pc-item-row:hover { background-color: @pc_dark_card_hover; }
+.magnifico-dark .pc-dropdown, .magnifico-dark .pc-search { background: @pc_dark_fill_secondary; color: @pc_dark_text_secondary; }
+.pc-file-thumbnail { border-radius: 6px; }
+
+/* Purge removal sheets and settings (MIT, © 2026 Jithin Sabu). */
+.pc-removal-card {
+    background: @pc_surface_card;
+    border: 1px solid @pc_border_subtle;
+    border-radius: 12px;
+    padding: 18px;
+}
+.pc-removal-footer {
+    border-top: 1px solid @pc_border_subtle;
+    padding: 20px 24px;
+}
+.pc-removal-footer button { padding: 10px 20px; border-radius: 999px; }
+.pc-settings preferencesgroup > box > label { font-size: 15px; font-weight: 600; }
+.pc-settings list.boxed-list { border-radius: 14px; background: @pc_surface_card; box-shadow: none; border: 1px solid @pc_border_subtle; }
+.pc-settings row { padding: 12px 8px; }
+.pc-theme-choice { padding: 8px; border: 2px solid transparent; border-radius: 10px; background: transparent; }
+.pc-theme-choice:checked { border-color: @pc_text_primary; background: @pc_fill_secondary; }
+.pc-theme-choice drawingarea { border-radius: 6px; }
+.pc-cleaning-bar trough, .pc-cleaning-bar progress { min-height: 4px; border-radius: 3px; }
+.pc-cleaning-bar progress { background: @pc_text_primary; }
+.magnifico-dark .pc-removal-card, .magnifico-dark .pc-settings list.boxed-list {
+    background: @pc_dark_surface_card; border-color: @pc_dark_border_subtle;
+}
+.magnifico-dark .pc-removal-footer { border-color: @pc_dark_border_subtle; }
+.magnifico-dark .pc-theme-choice:checked { border-color: @pc_dark_text_primary; background: @pc_dark_fill_secondary; }
+.magnifico-dark .pc-cleaning-bar progress { background: @pc_dark_text_primary; }
+
+/* Settings already supplies the 24px gap between groups. */
+.pc-settings preferencesgroup { margin-bottom: 0; }
+
+/* "Clean Safe Items": the earlier blue bolt pill, header-button size. */
+/* Every cleaning action shares the blue pill of "Clean Safe Items". */
+button.pc-clean-go, button.pc-primary {
+    border-radius: 999px;
+    padding: 6px 16px 6px 12px;
+    min-height: 22px;
+    font-weight: 700;
+    color: white;
+    border: 1px solid #0a6cf0;
+    background-color: #1e90ff;
+    background-image: linear-gradient(to bottom, #5cb8ff, #1e90ff 55%, #0a6cf0);
+    text-shadow: 0 1px 2px alpha(#003a8c, 0.5);
+    box-shadow: inset 0 1px alpha(white, 0.35), 0 4px 12px alpha(#0a6cf0, 0.38), 0 1px 2px alpha(black, 0.2);
+    transition: box-shadow 150ms ease-out, filter 150ms ease-out;
+}
+button.pc-clean-go:hover, button.pc-primary:hover {
+    filter: brightness(1.08);
+    box-shadow: inset 0 1px alpha(white, 0.35), 0 6px 18px alpha(#1e90ff, 0.55), 0 1px 2px alpha(black, 0.2);
+}
+button.pc-clean-go:active, button.pc-primary:active { filter: brightness(0.94); }
+button.pc-clean-go:disabled, button.pc-primary:disabled { opacity: 0.5; box-shadow: none; }
+
+/* Removal sheet: summary, compact cards and a solid red action. */
+.pc-removal-summary { padding: 18px 24px 12px 24px; }
+.pc-removal-headline { font-size: 20px; font-weight: 700; }
+.pc-removal-card { padding: 12px 16px; }
+.pc-removal-size { font-weight: 700; font-feature-settings: "tnum"; }
+button.pc-danger-button {
+    color: white;
+    font-weight: 700;
+    background-color: #D1312A;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+button.pc-danger-button:hover { background-color: #E0433B; }
+button.pc-danger-button:active { background-color: #B52822; }
+button.pc-danger-button:disabled { opacity: 0.45; }
+.magnifico-dark button.pc-danger-button { background-color: #D9372D; }
+.magnifico-dark button.pc-danger-button:hover { background-color: #E8493F; }
+.pc-removal-option { padding: 14px 24px; border-top: 1px solid @pc_border_subtle; }
+.magnifico-dark .pc-removal-option { border-color: @pc_dark_border_subtle; }
+
+/* Selected sidebar item: no fill or border; icon, name and size in the clean button's blue. */
+.magnifico-light .pc-sidebar .navigation-sidebar row:selected image,
+.magnifico-light .pc-sidebar .navigation-sidebar row:selected label { color: #1e90ff; }
+.magnifico-dark .pc-sidebar .navigation-sidebar row:selected image,
+.magnifico-dark .pc-sidebar .navigation-sidebar row:selected label { color: #4aa8ff; }
+
+/* Settings rows sit on the card's own surface; libadwaita's row fill can
+   follow the system's dark scheme and turn the cards grey in the light theme. */
+.pc-settings list.boxed-list > row { background-color: transparent; }
+.magnifico-light .pc-settings list.boxed-list > row:hover { background-color: alpha(@pc_fill_secondary, 0.6); }
+
+/* Strip above each page holding the window buttons. */
+.pc-content-bar { padding: 8px 8px 0; min-height: 30px; }
+
+/* Same height for every pill action, whatever icon it carries. */
+button.pc-clean-go > box, button.pc-primary > box, button.pc-secondary-button > box { min-height: 20px; }
+button.pc-secondary-button { padding: 6px 16px 6px 12px; }
+
+/* Trash footer in the sidebar: a soft red tint and a red icon, enough to
+   notice there is something to empty without shouting. It is a
+   menubutton, so the fill goes on its inner button. */
+.magnifico-light menubutton.pc-trash-footer > button, .magnifico-dark menubutton.pc-trash-footer > button { background-image: none; border: 1px solid alpha(#e5484d, 0.22); box-shadow: none; border-radius: 12px; }
+.magnifico-dark menubutton.pc-trash-footer > button { color: @pc_dark_text_primary; background-color: alpha(#e5484d, 0.10); }
+.magnifico-light menubutton.pc-trash-footer > button { color: @pc_text_primary; background-color: alpha(#e5484d, 0.08); }
+.magnifico-light menubutton.pc-trash-footer > button:hover, .magnifico-dark menubutton.pc-trash-footer > button:hover { background-color: alpha(#e5484d, 0.16); }
+.magnifico-light menubutton.pc-trash-footer > button:checked, .magnifico-dark menubutton.pc-trash-footer > button:checked { background-color: alpha(#e5484d, 0.20); }
+.magnifico-dark menubutton.pc-trash-footer image, .magnifico-dark menubutton.pc-trash-footer label { color: #ff6b6b; }
+.magnifico-light menubutton.pc-trash-footer image, .magnifico-light menubutton.pc-trash-footer label { color: #d92d2d; }

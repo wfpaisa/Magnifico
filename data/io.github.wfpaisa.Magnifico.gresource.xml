@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/io/github/wfpaisa/Magnifico">
+    <file>style.css</file>
+    <file alias="icons/scalable/actions/pc-user-trash-symbolic.svg" preprocess="xml-stripblanks">icons/app/user-trash.svg</file>
+    <file alias="icons/scalable/actions/pc-edit-delete-symbolic.svg" preprocess="xml-stripblanks">icons/app/edit-delete.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-unknown-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-unknown.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-open-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-open.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-download-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-download.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-documents-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-documents.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-system-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-system.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-projects-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-projects.svg</file>
+    <file alias="icons/scalable/actions/pc-folder-saved-search-symbolic.svg" preprocess="xml-stripblanks">icons/app/folder-saved-search.svg</file>
+    <file alias="icons/scalable/actions/pc-view-refresh-symbolic.svg" preprocess="xml-stripblanks">icons/app/view-refresh.svg</file>
+    <file alias="icons/scalable/actions/pc-text-x-generic-symbolic.svg" preprocess="xml-stripblanks">icons/app/text-x-generic.svg</file>
+    <file alias="icons/scalable/actions/pc-computer-symbolic.svg" preprocess="xml-stripblanks">icons/app/computer.svg</file>
+    <file alias="icons/scalable/actions/pc-package-x-generic-symbolic.svg" preprocess="xml-stripblanks">icons/app/package-x-generic.svg</file>
+    <file alias="icons/scalable/actions/pc-view-grid-symbolic.svg" preprocess="xml-stripblanks">icons/app/view-grid.svg</file>
+    <file alias="icons/scalable/actions/pc-drive-harddisk-symbolic.svg" preprocess="xml-stripblanks">icons/app/drive-harddisk.svg</file>
+    <file alias="icons/scalable/actions/pc-web-browser-symbolic.svg" preprocess="xml-stripblanks">icons/app/web-browser.svg</file>
+    <file alias="icons/scalable/actions/pc-image-x-generic-symbolic.svg" preprocess="xml-stripblanks">icons/app/image-x-generic.svg</file>
+    <file alias="icons/scalable/actions/pc-applications-engineering-symbolic.svg" preprocess="xml-stripblanks">icons/app/applications-engineering.svg</file>
+    <file alias="icons/scalable/actions/pc-view-list-symbolic.svg" preprocess="xml-stripblanks">icons/app/view-list.svg</file>
+    <file alias="icons/scalable/actions/pc-security-high-symbolic.svg" preprocess="xml-stripblanks">icons/app/security-high.svg</file>
+    <file alias="icons/scalable/actions/pc-security-medium-symbolic.svg" preprocess="xml-stripblanks">icons/app/security-medium.svg</file>
+    <file alias="icons/scalable/actions/pc-security-low-symbolic.svg" preprocess="xml-stripblanks">icons/app/security-low.svg</file>
+    <file alias="icons/scalable/actions/pc-preferences-system-symbolic.svg" preprocess="xml-stripblanks">icons/app/preferences-system.svg</file>
+    <file alias="icons/scalable/actions/pc-go-next-symbolic.svg" preprocess="xml-stripblanks">icons/app/go-next.svg</file>
+    <file alias="icons/scalable/actions/pc-go-previous-symbolic.svg" preprocess="xml-stripblanks">icons/app/go-previous.svg</file>
+    <file alias="icons/scalable/actions/pc-pan-end-symbolic.svg" preprocess="xml-stripblanks">icons/app/pan-end.svg</file>
+    <file alias="icons/scalable/actions/pc-pan-down-symbolic.svg" preprocess="xml-stripblanks">icons/app/pan-down.svg</file>
+    <file alias="icons/scalable/actions/pc-dialog-warning-symbolic.svg" preprocess="xml-stripblanks">icons/app/dialog-warning.svg</file>
+    <file alias="icons/scalable/actions/pc-dialog-error-symbolic.svg" preprocess="xml-stripblanks">icons/app/dialog-error.svg</file>
+    <file alias="icons/scalable/actions/pc-dialog-question-symbolic.svg" preprocess="xml-stripblanks">icons/app/dialog-question.svg</file>
+    <file alias="icons/scalable/actions/pc-dialog-information-symbolic.svg" preprocess="xml-stripblanks">icons/app/dialog-information.svg</file>
+    <file alias="icons/scalable/actions/pc-help-about-symbolic.svg" preprocess="xml-stripblanks">icons/app/help-about.svg</file>
+    <file alias="icons/scalable/actions/pc-application-x-executable-symbolic.svg" preprocess="xml-stripblanks">icons/app/application-x-executable.svg</file>
+    <file alias="icons/scalable/actions/pc-application-x-addon-symbolic.svg" preprocess="xml-stripblanks">icons/app/application-x-addon.svg</file>
+    <file alias="icons/scalable/actions/pc-application-pdf-symbolic.svg" preprocess="xml-stripblanks">icons/app/application-pdf.svg</file>
+    <file alias="icons/scalable/actions/pc-application-exit-symbolic.svg" preprocess="xml-stripblanks">icons/app/application-exit.svg</file>
+    <file alias="icons/scalable/actions/pc-view-pin-symbolic.svg" preprocess="xml-stripblanks">icons/app/view-pin.svg</file>
+    <file alias="icons/scalable/actions/pc-video-x-generic-symbolic.svg" preprocess="xml-stripblanks">icons/app/video-x-generic.svg</file>
+    <file alias="icons/scalable/actions/pc-audio-x-generic-symbolic.svg" preprocess="xml-stripblanks">icons/app/audio-x-generic.svg</file>
+    <file alias="icons/scalable/actions/pc-utilities-terminal-symbolic.svg" preprocess="xml-stripblanks">icons/app/utilities-terminal.svg</file>
+    <file alias="icons/scalable/actions/pc-process-stop-symbolic.svg" preprocess="xml-stripblanks">icons/app/process-stop.svg</file>
+    <file alias="icons/scalable/actions/pc-object-select-symbolic.svg" preprocess="xml-stripblanks">icons/app/object-select.svg</file>
+    <file alias="icons/scalable/actions/pc-emblem-ok-symbolic.svg" preprocess="xml-stripblanks">icons/app/emblem-ok.svg</file>
+    <file alias="icons/scalable/actions/pc-list-add-symbolic.svg" preprocess="xml-stripblanks">icons/app/list-add.svg</file>
+    <file alias="icons/scalable/actions/pc-applications-science-symbolic.svg" preprocess="xml-stripblanks">icons/app/applications-science.svg</file>
+    <file alias="icons/scalable/actions/pc-view-reveal-symbolic.svg" preprocess="xml-stripblanks">icons/app/view-reveal.svg</file>
+    <file alias="icons/scalable/actions/pc-view-more-symbolic.svg" preprocess="xml-stripblanks">icons/app/view-more.svg</file>
+    <file alias="icons/scalable/actions/pc-user-home-symbolic.svg" preprocess="xml-stripblanks">icons/app/user-home.svg</file>
+    <file alias="icons/scalable/actions/pc-open-menu-symbolic.svg" preprocess="xml-stripblanks">icons/app/open-menu.svg</file>
+    <file alias="icons/scalable/actions/pc-media-optical-symbolic.svg" preprocess="xml-stripblanks">icons/app/media-optical.svg</file>
+    <file alias="icons/scalable/actions/pc-input-gaming-symbolic.svg" preprocess="xml-stripblanks">icons/app/input-gaming.svg</file>
+    <file alias="icons/scalable/actions/pc-edit-find-symbolic.svg" preprocess="xml-stripblanks">icons/app/edit-find.svg</file>
+    <file alias="icons/scalable/actions/pc-edit-copy-symbolic.svg" preprocess="xml-stripblanks">icons/app/edit-copy.svg</file>
+    <file alias="icons/scalable/actions/pc-edit-clear-all-symbolic.svg" preprocess="xml-stripblanks">icons/app/edit-clear-all.svg</file>
+    <file alias="icons/scalable/actions/pc-document-save-symbolic.svg" preprocess="xml-stripblanks">icons/app/document-save.svg</file>
+    <file alias="icons/scalable/actions/pc-magnifico-redownload-symbolic.svg" preprocess="xml-stripblanks">icons/app/magnifico-redownload.svg</file>
+    <file alias="icons/scalable/actions/pc-magnifico-rebuild-symbolic.svg" preprocess="xml-stripblanks">icons/app/magnifico-rebuild.svg</file>
+    <file alias="icons/scalable/actions/pc-magnifico-free-symbolic.svg" preprocess="xml-stripblanks">icons/app/magnifico-free.svg</file>
+    <file alias="icons/scalable/actions/pc-magnifico-ai-symbolic.svg" preprocess="xml-stripblanks">icons/app/magnifico-ai.svg</file>
+    <file>icons/browsers/firefox.svg</file>
+    <file>icons/browsers/chrome.svg</file>
+    <file>icons/browsers/chromium.svg</file>
+    <file>icons/browsers/brave.svg</file>
+    <file>icons/browsers/edge.svg</file>
+    <file>icons/browsers/opera.svg</file>
+    <file>icons/browsers/vivaldi.svg</file>
+    <file>icons/browsers/yandex.svg</file>
+    <file>icons/browsers/duckduckgo.svg</file>
+  </gresource>
+</gresources>
