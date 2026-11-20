@@ -29,6 +29,14 @@ Magnífico is designed to make cleanup operations transparent and predictable:
 
 Always review the selected cleanup options before removing data you may want to keep, especially browser cookies and session data.
 
+## Install
+
+Download the latest `.deb`, `.rpm` or tarball from the [Releases](https://github.com/wfpaisa/Magnifico/releases) page, or let the script pick the right one for your distribution:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/wfpaisa/Magnifico/main/scripts/install.sh | bash
+```
+
 ## Requirements
 
 - Linux
