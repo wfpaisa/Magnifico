@@ -82,6 +82,8 @@ pub struct OverviewPage {
     store: CleanScanStore,
     review: ReviewScanStore,
     latest: Rc<RefCell<Option<Readings>>>,
+    rendered: Rc<RefCell<Option<Readings>>>,
+    disk_revision: Rc<Cell<u64>>,
 }
 
 impl OverviewPage {
@@ -89,6 +91,7 @@ impl OverviewPage {
         storage: Arc<Storage>,
         store: CleanScanStore,
         review: ReviewScanStore,
+        summary: Option<crate::services::scan_cache::ScanSummary>,
         on_sizes: impl Fn([u64; 6], u64) + 'static,
     ) -> Self {
         let widget = gtk4::ScrolledWindow::new();
@@ -121,7 +124,9 @@ impl OverviewPage {
             cancel: Arc::new(AtomicBool::new(false)),
             store,
             review,
-            latest: Rc::new(RefCell::new(None)),
+            latest: Rc::new(RefCell::new(summary.map(Readings::from))),
+            rendered: Rc::new(RefCell::new(None)),
+            disk_revision: Rc::new(Cell::new(0)),
         };
         let widget = page.widget.downgrade();
         let body = page.body.downgrade();
@@ -134,6 +139,8 @@ impl OverviewPage {
         let store = page.store.clone();
         let review = page.review.clone();
         let latest = page.latest.clone();
+        let rendered = page.rendered.clone();
+        let disk_revision = page.disk_revision.clone();
         page.scan.connect_clicked(move |scan| {
             if let (Some(widget), Some(body), Some(subtitle)) =
                 (widget.upgrade(), body.upgrade(), subtitle.upgrade())
@@ -151,6 +158,8 @@ impl OverviewPage {
                     store: store.clone(),
                     review: review.clone(),
                     latest: latest.clone(),
+                    rendered: rendered.clone(),
+                    disk_revision: disk_revision.clone(),
                 }
                 .scan_everything();
             }
@@ -162,9 +171,22 @@ impl OverviewPage {
         let listener = page.listener();
         page.store.subscribe(move |_| listener());
         page.review.subscribe(page.listener());
-        page.review.request_all(false);
-        page.store.request_all(false);
+        page.render_cached();
+        page.store.request_all_staggered(true);
+        page.review.request_all_staggered(true);
         page.refresh();
+        let rendered = page.rendered.clone();
+        page.widget.add_tick_callback(move |_, _| {
+            if rendered.borrow().is_some() {
+                tracing::debug!(
+                    elapsed_ms = crate::STARTED.elapsed().as_millis() as u64,
+                    "overview_values_visible"
+                );
+                glib::ControlFlow::Break
+            } else {
+                glib::ControlFlow::Continue
+            }
+        });
         page
     }
 
@@ -179,6 +201,8 @@ impl OverviewPage {
         let on_sizes = self.on_sizes.clone();
         let cancel = self.cancel.clone();
         let latest = self.latest.clone();
+        let rendered = self.rendered.clone();
+        let disk_revision = self.disk_revision.clone();
         let store = self.store.downgrade();
         let review = self.review.downgrade();
         move || {
@@ -208,6 +232,8 @@ impl OverviewPage {
                     on_sizes: on_sizes.clone(),
                     cancel: cancel.clone(),
                     latest: latest.clone(),
+                    rendered: rendered.clone(),
+                    disk_revision: disk_revision.clone(),
                     store,
                     review,
                 }
@@ -227,20 +253,31 @@ impl OverviewPage {
         self.cancel.store(false, Ordering::Relaxed);
         self.scan.set_sensitive(false);
         self.subtitle.set_text(&tr("Scanning…"));
-        self.clear_readings();
         self.update_loader();
         let (tx, rx) = async_channel::bounded(1);
         let storage = self.storage.clone();
         let cancel = self.cancel.clone();
         crate::runtime().spawn_blocking(move || {
+            let _permit = crate::services::scan_jobs::acquire();
             let _ = tx.send_blocking(readings(&storage, &cancel));
         });
         let page = self.clone();
+        let revision = self.disk_revision.get();
         glib::spawn_future_local(async move {
             if let Ok(data) = rx.recv().await {
-                *page.latest.borrow_mut() = Some(data);
+                let mut latest = page.latest.borrow_mut();
+                if revision != page.disk_revision.get() {
+                    // Keep the local delta when an older disk reading finishes.
+                } else if let Some(previous) = latest.as_mut() {
+                    previous.total = data.total;
+                    previous.used = data.used;
+                    previous.free = data.free;
+                    previous.trash = data.trash;
+                } else {
+                    *latest = Some(data);
+                }
             } else {
-                page.clear_readings();
+                // Keep the last successful readings on refresh failure.
                 page.subtitle
                     .set_text(&tr("Scan could not finish. Try scanning again."));
             }
@@ -267,16 +304,42 @@ impl OverviewPage {
         })
         .or_else(|| self.review.loading(Kind::Apps).then_some("Applications"));
         self.loader.set_loading(
-            self.loading.get() || phase.is_some(),
+            self.latest.borrow().is_none() && (self.loading.get() || phase.is_some()),
             phase.unwrap_or("Disk usage"),
         );
     }
-    fn render_cached(&self) {
+    pub fn render_cached(&self) {
         self.update_loader();
         self.scan
             .set_sensitive(!self.loading.get() && !self.store.busy() && !self.review.busy());
-        let Some(mut data) = self.latest.borrow().clone() else {
-            return;
+        let mut data = match self.latest.borrow().clone() {
+            Some(data) => data,
+            None if self
+                .store
+                .items(crate::services::clean_sources::CleanPageKind::AppCaches)
+                .is_some()
+                || self
+                    .store
+                    .items(crate::services::clean_sources::CleanPageKind::DevTools)
+                    .is_some()
+                || self
+                    .store
+                    .items(crate::services::clean_sources::CleanPageKind::System)
+                    .is_some()
+                || self.review.large().is_some()
+                || self.review.apps().is_some()
+                || self
+                    .review
+                    .items(super::review_scan_store::Kind::Models)
+                    .is_some()
+                || self
+                    .review
+                    .items(super::review_scan_store::Kind::Games)
+                    .is_some() =>
+            {
+                Readings::default()
+            }
+            None => return,
         };
         for kind in [
             crate::services::clean_sources::CleanPageKind::AppCaches,
@@ -284,7 +347,7 @@ impl OverviewPage {
             crate::services::clean_sources::CleanPageKind::System,
         ] {
             let Some(items) = self.store.items(kind) else {
-                return;
+                continue;
             };
             data.sizes[kind.index()] = items.iter().map(|i| i.bytes).sum();
             data.safe[kind.index()] = items
@@ -295,24 +358,34 @@ impl OverviewPage {
         }
         // Counts and bytes come from the exact snapshots displayed by the
         // review pages; disk categorization must never replace these totals.
-        let large = self.review.large();
-        let apps = self.review.apps();
-        data.sizes[3] = large.as_ref().map_or(0, |s| s.bytes());
-        data.large_count = large.as_ref().map_or(0, |s| s.files.len());
-        data.sizes[4] = apps.as_ref().map_or(0, |s| s.app_bytes());
-        data.sizes[5] = apps.as_ref().map_or(0, |s| s.leftover_bytes());
-        data.app_count = apps.as_ref().map_or(0, |s| s.apps.len());
-        let models = self.review.items(super::review_scan_store::Kind::Models);
-        let games = self.review.items(super::review_scan_store::Kind::Games);
-        data.sizes[6] = models.as_ref().map_or(0, |s| s.bytes());
-        data.sizes[7] = games.as_ref().map_or(0, |s| s.bytes());
-        data.model_count = models.as_ref().map_or(0, |s| s.items.len());
-        data.game_count = games.as_ref().map_or(0, |s| s.items.len());
-        data.leftover_count = apps.as_ref().map_or(0, |s| s.leftovers.len());
+        if let Some(large) = self.review.large() {
+            data.sizes[3] = large.bytes();
+            data.large_count = large.files.len();
+        }
+        if let Some(apps) = self.review.apps() {
+            data.sizes[4] = apps.app_bytes();
+            data.sizes[5] = apps.leftover_bytes();
+            data.app_count = apps.apps.len();
+            data.leftover_count = apps.leftovers.len();
+        }
+        if let Some(models) = self.review.items(super::review_scan_store::Kind::Models) {
+            data.sizes[6] = models.bytes();
+            data.model_count = models.items.len();
+        }
+        if let Some(games) = self.review.items(super::review_scan_store::Kind::Games) {
+            data.sizes[7] = games.bytes();
+            data.game_count = games.items.len();
+        }
         normalize(&mut data);
-        self.clear_readings();
-        self.render(&data);
-        (self.on_sizes)(data.sizes[..6].try_into().unwrap(), data.trash);
+        crate::services::scan_cache::update(data.summary());
+        *self.latest.borrow_mut() = Some(data.clone());
+        self.update_loader();
+        if self.rendered.borrow().as_ref() != Some(&data) {
+            self.clear_readings();
+            self.render(&data);
+            (self.on_sizes)(data.sizes[..6].try_into().unwrap(), data.trash);
+            *self.rendered.borrow_mut() = Some(data.clone());
+        }
         self.subtitle.set_text(&tr(
             if self.store.busy() || self.review.busy() || self.loading.get() {
                 "Scanning…"
@@ -320,6 +393,32 @@ impl OverviewPage {
                 "Scanned just now"
             },
         ));
+    }
+
+    pub fn apply_removed(&self, update: &crate::services::removal_update::RemovalUpdate) {
+        self.disk_revision.set(self.disk_revision.get() + 1);
+        {
+            let mut latest = self.latest.borrow_mut();
+            let data = latest.get_or_insert_with(Readings::default);
+            data.apply_disk_delta(update.freed_bytes, update.trashed_bytes);
+        }
+        self.render_cached();
+    }
+    pub fn empty_trash(&self, bytes: u64, remaining: u64) {
+        self.disk_revision.set(self.disk_revision.get() + 1);
+        {
+            let mut latest = self.latest.borrow_mut();
+            let data = latest.get_or_insert_with(Readings::default);
+            data.trash = remaining;
+            data.apply_disk_delta(bytes, 0);
+        }
+        self.render_cached();
+    }
+
+    pub fn save_summary(&self) {
+        if let Some(data) = self.latest.borrow().as_ref() {
+            crate::services::scan_cache::update(data.summary());
+        }
     }
 
     fn clear_readings(&self) {
@@ -413,8 +512,9 @@ impl OverviewPage {
                 8 => tr("Linux, your documents and photos, and other files"),
                 _ => tr("Available for new files"),
             };
-            let pending = (i == 3 && self.review.large().is_none())
-                || ((i == 4 || i == 5) && self.review.apps().is_none());
+            let pending = !self.review.has_summary()
+                && ((i == 3 && self.review.large().is_none())
+                    || ((i == 4 || i == 5) && self.review.apps().is_none()));
             row.description.set_text(&if pending {
                 tr("Scanning…")
             } else {
@@ -588,7 +688,7 @@ fn fraction(bytes: u64, total: u64) -> f64 {
     }
 }
 
-#[derive(Clone, Default)]
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
 struct Readings {
     total: u64,
     used: u64,
@@ -601,6 +701,54 @@ struct Readings {
     game_count: usize,
     leftover_count: usize,
     app_count: usize,
+}
+
+impl From<crate::services::scan_cache::ScanSummary> for Readings {
+    fn from(summary: crate::services::scan_cache::ScanSummary) -> Self {
+        let mut sizes = [0; 10];
+        sizes[..8].copy_from_slice(&summary.bytes);
+        let [large_count, app_count, leftover_count, model_count, game_count] = summary.counts;
+        let mut data = Self {
+            sizes,
+            total: summary.total,
+            free: summary.free,
+            used: summary.total.saturating_sub(summary.free),
+            safe: summary.safe,
+            trash: summary.trash_bytes,
+            large_count,
+            app_count,
+            leftover_count,
+            model_count,
+            game_count,
+        };
+        normalize(&mut data);
+        data
+    }
+}
+impl Readings {
+    fn apply_disk_delta(&mut self, freed: u64, trashed: u64) {
+        self.free = self.free.saturating_add(freed).min(self.total);
+        self.used = self.total.saturating_sub(self.free);
+        self.trash = self.trash.saturating_add(trashed);
+    }
+    fn summary(&self) -> crate::services::scan_cache::ScanSummary {
+        crate::services::scan_cache::ScanSummary {
+            bytes: self.sizes[..8].try_into().unwrap(),
+            counts: [
+                self.large_count,
+                self.app_count,
+                self.leftover_count,
+                self.model_count,
+                self.game_count,
+            ],
+            trash_bytes: self.trash,
+            saved_at: chrono::Utc::now().timestamp(),
+            total: self.total,
+            free: self.free,
+            safe: self.safe,
+            ..Default::default()
+        }
+    }
 }
 
 // Measurements are read-only and independent of enabled deletion rules. Each
@@ -928,6 +1076,27 @@ fn chart_sizes(data: &Readings) -> [u64; 10] {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn local_disk_deltas_preserve_categories_and_round_trip_the_summary() {
+        let mut data = Readings {
+            total: 1_000,
+            used: 800,
+            free: 200,
+            trash: 100,
+            sizes: [10, 20, 30, 40, 50, 60, 70, 80, 0, 200],
+            large_count: 4,
+            ..Default::default()
+        };
+        data.apply_disk_delta(50, 20);
+        assert_eq!((data.free, data.used, data.trash), (250, 750, 120));
+        assert_eq!(data.sizes[3], 40);
+        normalize(&mut data);
+        assert_eq!(Readings::from(data.summary()), data);
+        data.trash = 0;
+        data.apply_disk_delta(120, 0);
+        assert_eq!((data.free, data.used, data.trash), (370, 630, 0));
+    }
+
     #[test]
     fn chart_fits_home_without_truncating_measured_sizes() {
         let mut data = Readings {

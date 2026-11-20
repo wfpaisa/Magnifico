@@ -42,6 +42,7 @@ struct Page {
     cleaning: Cell<bool>,
     scanned: Cell<bool>,
     generation: Cell<u64>,
+    dirty: Cell<bool>,
     store: CleanScanStore,
     snapshot: RefCell<Option<Inventory>>,
 }
@@ -124,6 +125,7 @@ impl CleanListPage {
             cleaning: Cell::new(false),
             scanned: Cell::new(false),
             generation: Cell::new(0),
+            dirty: Cell::new(true),
             store: store.clone(),
             snapshot: RefCell::new(None),
         }));
@@ -186,8 +188,10 @@ impl CleanListPage {
     fn sync_store(&self) {
         let p = &self.0;
         p.loading.set(p.store.loading(p.kind));
-        p.loader
-            .set_loading(p.store.items(p.kind).is_none(), p.kind.title());
+        p.loader.set_loading(
+            p.store.items(p.kind).is_none() && !p.store.has_summary(),
+            p.kind.title(),
+        );
         if let Some(items) = p.store.items(p.kind) {
             let changed = p
                 .snapshot
@@ -195,6 +199,7 @@ impl CleanListPage {
                 .as_ref()
                 .is_none_or(|old| !Arc::ptr_eq(old, &items));
             if changed {
+                p.dirty.set(true);
                 *p.items.borrow_mut() = items
                     .iter()
                     .cloned()
@@ -211,13 +216,18 @@ impl CleanListPage {
         if p.loading.get() {
             p.subtitle.set_text(&tr("Scanning…"));
         }
-        self.render();
+        if p.dirty.get() || p.chips.first_child().is_none() {
+            self.render();
+        } else {
+            self.update_selection();
+        }
     }
     fn render(&self) {
         let p = &self.0;
         if !p.widget.is_mapped() {
             return;
         }
+        p.dirty.set(false);
         p.syncing.set(true);
         let mut first: Option<gtk4::ToggleButton> = None;
         let mut child = p.chips.first_child();

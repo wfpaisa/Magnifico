@@ -63,6 +63,86 @@ impl StorageAnalysis {
     pub fn item_count(&self) -> usize {
         self.files_scanned + self.directories_scanned
     }
+
+    /// Also discount files omitted from the displayed tree by its size/child limits.
+    pub fn apply_removed(&mut self, update: &super::removal_update::RemovalUpdate) -> bool {
+        if update.removes(&self.root.path) {
+            self.root.children.clear();
+            self.root.size = 0;
+            self.files_scanned = 0;
+            self.directories_scanned = 1;
+            return true;
+        }
+        let visible: Vec<_> = update
+            .paths
+            .iter()
+            .filter(|p| self.root.find(p).is_some())
+            .cloned()
+            .collect();
+        let mut changed = !visible.is_empty();
+        fn discount(node: &mut StorageNode, path: &Path, bytes: u64) {
+            if !path.starts_with(&node.path) {
+                return;
+            }
+            node.size = node.size.saturating_sub(bytes);
+            for child in &mut node.children {
+                discount(child, path, bytes);
+            }
+        }
+        for (path, bytes) in &update.sizes {
+            if *bytes > 0
+                && path.starts_with(&self.root.path)
+                && self.root.find(path).is_none()
+                && !visible.iter().any(|parent| path.starts_with(parent))
+            {
+                discount(&mut self.root, path, *bytes);
+                changed = true;
+            }
+        }
+        self.remove_paths(&visible);
+        changed
+    }
+
+    pub fn remove_paths(&mut self, removed: &[PathBuf]) {
+        fn remove(node: &mut StorageNode, path: &Path) -> Option<StorageNode> {
+            if !path.starts_with(&node.path) {
+                return None;
+            }
+            let index = node
+                .children
+                .iter()
+                .position(|child| path.starts_with(&child.path))?;
+            let removed = if node.children[index].path == path {
+                node.children.remove(index)
+            } else {
+                remove(&mut node.children[index], path)?
+            };
+            node.size = node.size.saturating_sub(removed.size);
+            Some(removed)
+        }
+
+        fn counts(node: &StorageNode) -> (usize, usize) {
+            node.children.iter().fold(
+                match node.kind {
+                    StorageNodeKind::File => (1, 0),
+                    StorageNodeKind::Directory => (0, 1),
+                },
+                |(files, directories), child| {
+                    let (child_files, child_directories) = counts(child);
+                    (files + child_files, directories + child_directories)
+                },
+            )
+        }
+
+        // The scan root is protected by trash validation and stays as the anchor.
+        for path in removed {
+            if let Some(node) = remove(&mut self.root, path) {
+                let (files, directories) = counts(&node);
+                self.files_scanned = self.files_scanned.saturating_sub(files);
+                self.directories_scanned = self.directories_scanned.saturating_sub(directories);
+            }
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -397,6 +477,157 @@ fn validate_trash_target(scan_root: &Path, target: &TrashTarget) -> Result<(), S
 mod tests {
     use super::*;
     use std::io::Write;
+
+    fn removal_analysis() -> StorageAnalysis {
+        fn node(path: &str, size: u64, children: Option<Vec<StorageNode>>) -> StorageNode {
+            StorageNode {
+                path: path.into(),
+                kind: if children.is_some() {
+                    StorageNodeKind::Directory
+                } else {
+                    StorageNodeKind::File
+                },
+                size,
+                modified: None,
+                device: 1,
+                inode: 1,
+                children: children.unwrap_or_default(),
+            }
+        }
+        StorageAnalysis {
+            root: node(
+                "/scan",
+                200,
+                Some(vec![
+                    node(
+                        "/scan/a",
+                        140,
+                        Some(vec![node(
+                            "/scan/a/b",
+                            110,
+                            Some(vec![
+                                node("/scan/a/b/one", 60, None),
+                                node("/scan/a/b/two", 30, None),
+                            ]),
+                        )]),
+                    ),
+                    node("/scan/keep", 40, None),
+                ]),
+            ),
+            files_scanned: 3,
+            directories_scanned: 3,
+            skipped: vec![],
+        }
+    }
+
+    #[test]
+    fn external_removals_discount_hidden_files_without_double_counting_directories() {
+        let mut analysis = removal_analysis();
+        let original = analysis.root.size;
+        analysis.root.size += 10;
+        let update = super::super::removal_update::RemovalUpdate {
+            paths: [
+                "/scan/hidden".into(),
+                "/scan/a/b".into(),
+                "/scan/a/b/one".into(),
+            ]
+            .into(),
+            sizes: vec![("/scan/hidden".into(), 10), ("/scan/a/b/one".into(), 60)],
+            ..Default::default()
+        };
+        assert!(analysis.apply_removed(&update));
+        assert_eq!(analysis.root.size, original - 110);
+        assert!(analysis.root.find(Path::new("/scan/a/b")).is_none());
+        assert!(!analysis.apply_removed(&super::super::removal_update::RemovalUpdate::default()));
+    }
+
+    #[test]
+    fn remove_file_updates_every_ancestor_and_counts() {
+        let mut analysis = removal_analysis();
+        analysis.remove_paths(&["/scan/a/b/one".into()]);
+        assert!(analysis.root.find(Path::new("/scan/a/b/one")).is_none());
+        assert_eq!(analysis.root.size, 140);
+        assert_eq!(analysis.root.find(Path::new("/scan/a")).unwrap().size, 80);
+        assert_eq!(analysis.root.find(Path::new("/scan/a/b")).unwrap().size, 50);
+        assert_eq!(
+            analysis.root.find(Path::new("/scan/keep")).unwrap().size,
+            40
+        );
+        assert_eq!(
+            (analysis.files_scanned, analysis.directories_scanned),
+            (2, 3)
+        );
+    }
+
+    #[test]
+    fn remove_directory_uses_its_total_size_and_counts_descendants() {
+        let mut analysis = removal_analysis();
+        analysis.remove_paths(&["/scan/a/b".into()]);
+        assert!(analysis.root.find(Path::new("/scan/a/b")).is_none());
+        assert_eq!(analysis.root.size, 90);
+        assert_eq!(analysis.root.find(Path::new("/scan/a")).unwrap().size, 30);
+        assert_eq!(
+            analysis.root.find(Path::new("/scan/keep")).unwrap().size,
+            40
+        );
+        assert_eq!(
+            (analysis.files_scanned, analysis.directories_scanned),
+            (1, 2)
+        );
+    }
+
+    #[test]
+    fn remove_nested_and_repeated_paths_only_subtracts_once() {
+        for paths in [
+            vec!["/scan/a", "/scan/a/b", "/scan/a/b/one", "/scan/a"],
+            vec!["/scan/a/b/one", "/scan/a/b", "/scan/a", "/scan/a"],
+        ] {
+            let mut analysis = removal_analysis();
+            analysis.remove_paths(&paths.into_iter().map(PathBuf::from).collect::<Vec<_>>());
+            assert!(analysis.root.find(Path::new("/scan/a")).is_none());
+            assert_eq!(analysis.root.size, 60);
+            assert_eq!(analysis.root.children.len(), 1);
+            assert_eq!(
+                (analysis.files_scanned, analysis.directories_scanned),
+                (1, 1)
+            );
+        }
+    }
+
+    #[test]
+    fn remove_missing_paths_preserves_sizes_and_counts() {
+        let mut analysis = removal_analysis();
+        analysis.remove_paths(&[
+            "/scan/a/b/missing".into(),
+            "/scan/a-old".into(),
+            "/outside".into(),
+        ]);
+        analysis.remove_paths(&[]);
+        assert_eq!(analysis.root.size, 200);
+        assert_eq!(analysis.root.find(Path::new("/scan/a")).unwrap().size, 140);
+        assert_eq!(
+            analysis.root.find(Path::new("/scan/a/b")).unwrap().size,
+            110
+        );
+        assert_eq!(
+            (analysis.files_scanned, analysis.directories_scanned),
+            (3, 3)
+        );
+    }
+
+    #[test]
+    fn removal_saturates_sizes_and_counts() {
+        let mut analysis = removal_analysis();
+        analysis.root.size = 1;
+        analysis.files_scanned = 0;
+        analysis.directories_scanned = 0;
+        analysis.remove_paths(&["/scan/a".into()]);
+        assert_eq!(analysis.root.size, 0);
+        assert_eq!(
+            (analysis.files_scanned, analysis.directories_scanned),
+            (0, 0)
+        );
+    }
 
     #[test]
     fn child_limit_preserves_totals_and_stable_order() {

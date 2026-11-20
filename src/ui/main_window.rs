@@ -80,6 +80,7 @@ impl NavItem {
             Self::SystemCleanup,
             Self::LargeFiles,
             Self::Applications,
+            Self::StorageAnalyzer,
             Self::AiModels,
             Self::Games,
         ]
@@ -106,6 +107,8 @@ mod imp {
         pub(super) uninstaller_page:
             RefCell<Option<super::super::uninstaller_page::UninstallerPage>>,
         pub reviewing: Cell<bool>,
+        pub(super) summary: RefCell<Option<crate::services::scan_cache::ScanSummary>>,
+        pub(super) sidebar_spinners: RefCell<Vec<(NavItem, super::super::cleanup_fx::Spinner)>>,
         pub sidebar_sizes: RefCell<Vec<gtk4::Label>>,
         pub(super) clean_pages: RefCell<Vec<super::super::clean_list_page::CleanListPage>>,
         pub(super) review_store: RefCell<Option<super::super::review_scan_store::ReviewScanStore>>,
@@ -193,6 +196,9 @@ impl MainWindow {
         self.imp().clean_pages.borrow_mut().clear();
         let storage = self.imp().storage.borrow().as_ref().unwrap().clone();
 
+        let summary = crate::services::scan_cache::snapshot();
+        self.imp().summary.replace(summary.clone());
+
         // Main horizontal layout: a dark navigation rail and a lighter,
         // uninterrupted content surface.
         let main_box = gtk4::Box::new(gtk4::Orientation::Horizontal, 0);
@@ -201,6 +207,20 @@ impl MainWindow {
 
         // === SIDEBAR ===
         let sidebar_box = self.create_sidebar(&storage);
+        if let Some(summary) = &summary {
+            for ((item, label), index) in self.imp().optional_sizes.borrow().iter().zip([6, 7]) {
+                label.set_text(&bytesize::ByteSize(summary.bytes[index]).to_string());
+                if let Some((_, row)) = self
+                    .imp()
+                    .nav_rows
+                    .borrow()
+                    .iter()
+                    .find(|(nav, _)| nav == item)
+                {
+                    row.set_visible(summary.bytes[index] > 0);
+                }
+            }
+        }
 
         // === CONTENT AREA ===
         let content_box = gtk4::Box::new(gtk4::Orientation::Vertical, 0);
@@ -277,6 +297,7 @@ impl MainWindow {
             .borrow_mut()
             .get_or_insert_with(super::review_scan_store::ReviewScanStore::new)
             .clone();
+        review_store.set_summary_present(summary.is_some());
         let applications_page = super::uninstaller_page::UninstallerPage::new(review_store.clone());
         self.imp()
             .uninstaller_page
@@ -289,6 +310,7 @@ impl MainWindow {
             .borrow_mut()
             .get_or_insert_with(|| super::clean_scan_store::CleanScanStore::new(storage.clone()))
             .clone();
+        clean_store.set_summary_present(summary.is_some());
         for (kind, name) in [
             (
                 crate::services::clean_sources::CleanPageKind::AppCaches,
@@ -318,23 +340,17 @@ impl MainWindow {
         dashboard_page.set_visible(false);
         main_box.append(&dashboard_page);
         let weak = self.downgrade();
-        let sidebar_review = review_store.clone();
         let overview = super::overview_page::OverviewPage::new(
             storage.clone(),
-            clean_store,
+            clean_store.clone(),
             review_store.clone(),
+            self.imp().summary.borrow().clone(),
             move |sizes, trash| {
                 if let Some(window) = weak.upgrade() {
                     let labels = window.imp().sidebar_sizes.borrow();
                     for (label, index) in labels.iter().zip([0, 1, 2, 3, 4]) {
                         let bytes = sizes[index];
-                        let pending = (index == 3 && sidebar_review.large().is_none())
-                            || (index == 4 && sidebar_review.apps().is_none());
-                        label.set_text(&if pending {
-                            crate::i18n::tr("…")
-                        } else {
-                            bytesize::ByteSize(bytes).to_string()
-                        });
+                        label.set_text(&bytesize::ByteSize(bytes).to_string());
                     }
                     if let Some(label) = window.imp().trash_label.borrow().as_ref() {
                         label.set_text(&crate::i18n::tr_args(
@@ -380,8 +396,17 @@ impl MainWindow {
         review_store.subscribe(move || {
             if let Some(window) = weak.upgrade() {
                 window.sync_optional_rows(&watched);
+                window.sync_sidebar_spinners();
             }
         });
+        let weak = self.downgrade();
+        clean_store.subscribe(move |_| {
+            if let Some(window) = weak.upgrade() {
+                window.sync_sidebar_spinners();
+            }
+        });
+        self.sync_optional_rows(&review_store);
+        self.sync_sidebar_spinners();
         let large_files_page = super::large_files_page::LargeFilesPage::new(review_store);
         self.imp()
             .large_files_page
@@ -466,6 +491,7 @@ impl MainWindow {
 
     fn create_sidebar(&self, _storage: &Arc<Storage>) -> gtk4::Box {
         use crate::i18n::tr;
+        self.imp().sidebar_spinners.borrow_mut().clear();
         let sidebar = gtk4::Box::new(gtk4::Orientation::Vertical, 8);
         sidebar.set_width_request(Self::SIDEBAR_EXPANDED_WIDTH);
         sidebar.set_hexpand(false);
@@ -529,11 +555,43 @@ impl MainWindow {
                 size.add_css_class("pc-tertiary");
                 size.set_ellipsize(gtk4::pango::EllipsizeMode::None);
                 size.set_hexpand(false);
+                let cached_index = match item {
+                    NavItem::Browsers => 0,
+                    NavItem::UserSystem => 1,
+                    NavItem::SystemCleanup => 2,
+                    NavItem::LargeFiles => 3,
+                    NavItem::Applications => 4,
+                    NavItem::AiModels => 6,
+                    _ => 7,
+                };
+                if *item == NavItem::StorageAnalyzer {
+                    size.set_text("");
+                } else if let Some(summary) = self.imp().summary.borrow().as_ref() {
+                    size.set_text(&bytesize::ByteSize(summary.bytes[cached_index]).to_string());
+                }
                 content.append(&size);
+                let spinner = super::cleanup_fx::Spinner::new(12);
+                spinner.widget().set_tooltip_text(Some(&tr("Refreshing…")));
+                spinner.set_spinning(false);
+                let space = gtk4::Box::new(gtk4::Orientation::Horizontal, 0);
+                space.set_size_request(12, 12);
+                space.set_valign(gtk4::Align::Center);
+                space.append(spinner.widget());
+                content.append(&space);
+                self.imp()
+                    .sidebar_spinners
+                    .borrow_mut()
+                    .push((*item, spinner));
                 if matches!(item, NavItem::AiModels | NavItem::Games) {
-                    row.set_visible(false);
+                    row.set_visible(
+                        self.imp()
+                            .summary
+                            .borrow()
+                            .as_ref()
+                            .is_some_and(|s| s.bytes[cached_index] > 0),
+                    );
                     optional.push((*item, size));
-                } else {
+                } else if *item != NavItem::StorageAnalyzer {
                     sizes.push(size);
                 }
             }
@@ -701,11 +759,68 @@ impl MainWindow {
                 NavItem::AiModels => super::review_scan_store::Kind::Models,
                 _ => super::review_scan_store::Kind::Games,
             };
-            let bytes = store.items(kind).map(|i| i.bytes()).unwrap_or(0);
+            let index = if *item == NavItem::AiModels { 6 } else { 7 };
+            let bytes = store.items(kind).map(|i| i.bytes()).unwrap_or_else(|| {
+                self.imp()
+                    .summary
+                    .borrow()
+                    .as_ref()
+                    .map_or(0, |s| s.bytes[index])
+            });
             label.set_text(&bytesize::ByteSize(bytes).to_string());
             if let Some((_, row)) = rows.iter().find(|(i, _)| i == item) {
                 row.set_visible(bytes > 0);
             }
+        }
+    }
+
+    pub(crate) fn sync_sidebar_spinners(&self) {
+        use super::review_scan_store::Kind;
+        use crate::services::clean_sources::CleanPageKind;
+        for (item, spinner) in self.imp().sidebar_spinners.borrow().iter() {
+            let clean = match item {
+                NavItem::Browsers => Some(CleanPageKind::AppCaches),
+                NavItem::UserSystem => Some(CleanPageKind::DevTools),
+                NavItem::SystemCleanup => Some(CleanPageKind::System),
+                _ => None,
+            };
+            let review = match item {
+                NavItem::LargeFiles => Some(Kind::LargeFiles),
+                NavItem::Applications => Some(Kind::Apps),
+                NavItem::AiModels => Some(Kind::Models),
+                NavItem::Games => Some(Kind::Games),
+                _ => None,
+            };
+            let loading = clean.is_some_and(|kind| {
+                self.imp()
+                    .clean_store
+                    .borrow()
+                    .as_ref()
+                    .is_some_and(|s| s.loading(kind))
+            }) || review.is_some_and(|kind| {
+                self.imp()
+                    .review_store
+                    .borrow()
+                    .as_ref()
+                    .is_some_and(|s| s.loading(kind))
+            });
+            let loading = loading
+                || (*item == NavItem::StorageAnalyzer
+                    && self
+                        .imp()
+                        .storage_analyzer_page
+                        .borrow()
+                        .as_ref()
+                        .is_some_and(|p| p.is_analyzing()));
+            if spinner.is_spinning() != loading {
+                spinner.set_spinning(loading);
+            }
+        }
+    }
+
+    pub fn save_scan_summary(&self) {
+        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
+            overview.save_summary();
         }
     }
 
@@ -734,12 +849,31 @@ impl MainWindow {
         }
     }
 
-    pub fn refresh_dashboard_disk_usage(&self) {
-        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
-            overview.refresh();
+    /// Publish successful removals everywhere without starting any scan.
+    pub async fn apply_removed(&self, update: crate::services::removal_update::RemovalUpdate) {
+        let update = Arc::new(update);
+        let review = self.imp().review_store.borrow().clone();
+        let clean = self.imp().clean_store.borrow().clone();
+        if let Some(review) = review {
+            review.set_summary_present(true);
+            review.apply_removed(&update);
         }
-        if let Some(dashboard) = self.imp().dashboard_page.borrow().as_ref() {
-            dashboard.refresh_disk_usage();
+        if let Some(clean) = clean {
+            clean.set_summary_present(true);
+            clean.apply_removed(update.clone()).await;
+        }
+        if let Some(analyzer) = self.imp().storage_analyzer_page.borrow().as_ref() {
+            analyzer.apply_removed(&update);
+        }
+        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
+            overview.apply_removed(&update);
+        }
+        self.refresh_dashboard();
+    }
+
+    pub fn apply_emptied_trash(&self, bytes: u64, remaining: u64) {
+        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
+            overview.empty_trash(bytes, remaining);
         }
     }
 

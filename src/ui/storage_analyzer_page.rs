@@ -543,6 +543,7 @@ impl StorageAnalyzerPage {
         };
         let (sender, receiver) = async_channel::bounded(1);
         crate::runtime().spawn_blocking(move || {
+            let _permit = crate::services::scan_jobs::acquire();
             let result = analyze_storage(&path, options, cancellation);
             let _ = sender.send_blocking(result);
         });
@@ -1194,13 +1195,9 @@ impl StorageAnalyzerPage {
             selected.len(),
             progress.clone(),
         );
-        let worker_root = scan_root.clone();
         crate::runtime().spawn_blocking(move || {
-            let result = crate::services::move_to_trash_with_progress(
-                &worker_root,
-                &targets,
-                Some(&progress),
-            );
+            let result =
+                crate::services::move_to_trash_with_progress(&scan_root, &targets, Some(&progress));
             let _ = sender.send_blocking(result);
         });
 
@@ -1219,10 +1216,11 @@ impl StorageAnalyzerPage {
             };
             page.set_operation_running(false);
             page.set_controls_for_operation(false, "Scan Again");
-            for (path, _) in &result.moved {
-                page.imp().selected.borrow_mut().remove(path);
+            if !result.moved.is_empty()
+                && !super::review_widgets::removed(&page, (&result).into()).await
+            {
+                page.apply_removed(&(&result).into());
             }
-            page.refresh_selection_summary();
 
             let moved = result.moved.len();
             let failed = result.failed.len();
@@ -1248,15 +1246,33 @@ impl StorageAnalyzerPage {
                     ("{details}", &failure_details),
                 ],
             );
-            page.show_trash_result(&message, moved > 0, scan_root);
+            super::review_widgets::report(&page, &message);
         });
     }
 
-    fn show_trash_result(&self, message: &str, rescan: bool, scan_root: PathBuf) {
-        super::review_widgets::report(self, message);
-        if rescan {
-            self.start_scan(scan_root);
+    pub fn apply_removed(&self, update: &crate::services::removal_update::RemovalUpdate) {
+        {
+            let mut analysis = self.imp().analysis.borrow_mut();
+            if let Some(analysis) = analysis.as_mut() {
+                if !analysis.apply_removed(update) {
+                    return;
+                }
+                let mut current = self.imp().current_path.borrow_mut();
+                if let Some(path) = current.as_ref() {
+                    *current = path
+                        .ancestors()
+                        .find(|p| analysis.root.find(p).is_some())
+                        .map(Path::to_path_buf);
+                }
+            } else {
+                return;
+            }
         }
+        self.imp()
+            .selected
+            .borrow_mut()
+            .retain(|path, _| !update.removes(path));
+        self.refresh_results();
     }
 
     fn dashboard_operation_is_running(&self) -> bool {
@@ -1276,8 +1292,13 @@ impl StorageAnalyzerPage {
             .and_then(|root| root.downcast::<gtk4::Window>().ok())
             .and_then(|window| window.downcast::<crate::ui::MainWindow>().ok())
         {
+            window.sync_sidebar_spinners();
             window.refresh_dashboard();
         }
+    }
+
+    pub(crate) fn is_analyzing(&self) -> bool {
+        self.operation_is_running() && self.imp().cancel_flag.borrow().is_some()
     }
 
     pub fn operation_is_running(&self) -> bool {

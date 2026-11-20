@@ -455,12 +455,18 @@ fn valid_package(name: &str) -> bool {
             .all(|c| c.is_ascii_alphanumeric() || "+-._:@".contains(c))
 }
 /// Commands run without a shell; data moves only after a successful uninstall.
+pub struct UninstallOutcome {
+    pub update: super::removal_update::RemovalUpdate,
+    pub errors: Vec<String>,
+}
+
 pub fn uninstall_with_progress(
     home: &Path,
     app: &InstalledApp,
     include_data: bool,
     progress: Option<&super::CleanProgress>,
-) -> Result<String, String> {
+) -> Result<UninstallOutcome, String> {
+    let managed = app.command().is_some();
     if let Some(args) = app.command() {
         let out = Command::new(&args[0])
             .args(&args[1..])
@@ -483,16 +489,21 @@ pub fn uninstall_with_progress(
         targets.extend(app.data_targets.iter().cloned());
     }
     let result = super::move_to_trash_with_progress(home, &targets, progress);
-    if result.failed.is_empty() {
-        Ok(app.name.clone())
-    } else {
-        Err(result
+    let mut update = super::removal_update::RemovalUpdate::from(&result);
+    if managed || result.failed.is_empty() {
+        update.uninstalled.push(app.id.clone());
+    }
+    if managed {
+        update.freed_bytes = app.bytes;
+    }
+    Ok(UninstallOutcome {
+        update,
+        errors: result
             .failed
             .iter()
-            .map(|(p, e)| format!("{}: {e}", p.display()))
-            .collect::<Vec<_>>()
-            .join("\n"))
-    }
+            .map(|(path, error)| format!("{}: {error}", path.display()))
+            .collect(),
+    })
 }
 #[cfg(test)]
 mod tests {

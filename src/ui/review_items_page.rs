@@ -63,6 +63,7 @@ struct Inner {
     busy: Cell<bool>,
     syncing: Cell<bool>,
     generation: Cell<u64>,
+    dirty: Cell<bool>,
 }
 
 impl ReviewItemsPage {
@@ -108,6 +109,7 @@ impl ReviewItemsPage {
             busy: Cell::new(false),
             syncing: Cell::new(false),
             generation: Cell::new(0),
+            dirty: Cell::new(true),
         }));
         let weak = Rc::downgrade(&page.0);
         page.0.scan.connect_clicked(move |_| {
@@ -189,16 +191,15 @@ impl ReviewItemsPage {
             if changed {
                 *self.0.snapshot.borrow_mut() = Some(snapshot);
                 self.0.selected.borrow_mut().clear();
-                if self.0.widget.is_mapped() {
-                    self.render_rows();
-                }
+                self.0.dirty.set(true);
             }
         }
         if self.0.widget.is_mapped() {
-            let loading = self.0.snapshot.borrow().is_none()
+            let loading = !self.0.store.has_summary()
+                && self.0.snapshot.borrow().is_none()
                 && self.0.store.error(self.0.spec.kind).is_none();
             self.0.loader.set_loading(loading, self.0.spec.title);
-            if !loading && self.0.list.first_child().is_none() {
+            if !loading && self.0.dirty.replace(false) {
                 self.render_rows();
             }
         }
@@ -447,6 +448,13 @@ impl ReviewItemsPage {
                             "Moved {size} to Trash.",
                             &[("{size}", &review::size(result.bytes_moved()))],
                         );
+                        let moved: Vec<_> =
+                            result.moved.iter().map(|(path, _)| path.clone()).collect();
+                        if !moved.is_empty()
+                            && !review::removed(&p.0.widget, (&result).into()).await
+                        {
+                            p.0.store.forget_paths(&moved);
+                        }
                         for (path, reason) in result.failed {
                             text.push_str(&format!("\n{}: {}", review::home_path(&path), reason));
                         }
@@ -454,7 +462,7 @@ impl ReviewItemsPage {
                     }
                     p.0.busy.set(false);
                     screen.close();
-                    p.scan();
+                    p.update();
                 });
             },
         );

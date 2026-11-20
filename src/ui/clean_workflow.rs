@@ -217,7 +217,13 @@ fn execute(
     glib::spawn_future_local(async move {
         if let Ok((result, completed, report, warning)) = rx.recv().await {
             let blocked = result.blocked_reason.clone();
-            store.apply_cleaned(result, completed).await;
+            let mut update = crate::services::removal_update::RemovalUpdate::from(&result);
+            update.commands = completed.clone();
+            if window.root().is_some() {
+                window.apply_removed(update).await;
+            } else {
+                store.apply_cleaned(result, completed).await;
+            }
             window.record_cleanup_report(&report);
             window.show_cleanup_report(&report, warning);
             if let Some(reason) = &blocked {
@@ -225,7 +231,7 @@ fn execute(
             }
         }
         progress_window.close();
-        window.refresh_dashboard_disk_usage();
+        window.save_scan_summary();
         finished();
     });
 }

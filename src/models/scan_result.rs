@@ -159,6 +159,8 @@ pub struct CleanResult {
     pub deleted_files: Vec<PathBuf>,
     pub deleted_directories: Vec<PathBuf>,
     pub bytes_freed: u64,
+    /// Sizes of successful file removals, reused for local inventory updates.
+    pub removed_sizes: Vec<(PathBuf, u64)>,
     pub failed: Vec<(PathBuf, String)>,
     pub skipped: Vec<(PathBuf, String)>,
     pub cancelled: bool,
@@ -180,6 +182,7 @@ impl CleanResult {
 
     pub fn add_deleted_file(&mut self, path: PathBuf, size: u64) {
         self.bytes_freed += size;
+        self.removed_sizes.push((path.clone(), size));
         self.deleted_files.push(path);
     }
 
@@ -215,6 +218,7 @@ impl CleanResult {
     /// Add a second cleanup's outcome to this one.
     pub fn merge(&mut self, other: CleanResult) {
         self.deleted_files.extend(other.deleted_files);
+        self.removed_sizes.extend(other.removed_sizes);
         self.deleted_directories.extend(other.deleted_directories);
         self.bytes_freed += other.bytes_freed;
         self.failed.extend(other.failed);

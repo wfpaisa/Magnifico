@@ -617,6 +617,7 @@ impl CustomPage {
         let search_root = root.clone();
         let pattern = search_name.clone();
         crate::runtime().spawn_blocking(move || {
+            let _permit = crate::services::scan_jobs::acquire();
             let matches = crate::services::Scanner::new().find_matching_subdirectories_filtered(
                 &search_root,
                 &pattern,

@@ -105,6 +105,7 @@ impl DashboardPage {
             .replace(Some(Arc::new(AtomicBool::new(false))));
         page.setup_ui();
         page.refresh();
+        page.refresh_disk_usage();
         page
     }
 
@@ -460,8 +461,6 @@ impl DashboardPage {
             self.imp().reclaimable_bytes.replace(0);
             self.imp().has_scanned.replace(false);
         }
-
-        self.refresh_disk_usage();
     }
 
     fn on_scan_clicked(&self) {
@@ -590,6 +589,7 @@ impl DashboardPage {
         });
 
         crate::runtime().spawn_blocking(move || {
+            let _permit = crate::services::scan_jobs::acquire();
             let scanner = Scanner::with_options_and_cancellation(scan_options, cancellation);
             // Same order as before, so a path claimed by two rules is
             // counted in the first category only.
@@ -714,6 +714,7 @@ impl DashboardPage {
         };
         let (sender, receiver) = async_channel::bounded(1);
         crate::runtime().spawn_blocking(move || {
+            let _permit = crate::services::scan_jobs::acquire();
             let scanner = Scanner::with_options_and_cancellation(scan_options, cancellation);
             let _ = sender.send_blocking(crate::services::build_cleanup_plan(&scanner, &inputs));
         });
@@ -1122,6 +1123,17 @@ impl DashboardPage {
                 window.close();
             }
             if let Ok((result, journal_result)) = received {
+                if let Some(window) = page
+                    .root()
+                    .and_downcast::<gtk4::Window>()
+                    .and_downcast::<super::MainWindow>()
+                {
+                    let mut update = crate::services::removal_update::RemovalUpdate::from(&result);
+                    if journal_result.as_ref().is_some_and(Result::is_ok) {
+                        update.commands.push("System Journal".into());
+                    }
+                    window.apply_removed(update).await;
+                }
                 if let Some(reason) = result.blocked_reason.as_deref() {
                     page.store_cleanup_log(
                         &result,

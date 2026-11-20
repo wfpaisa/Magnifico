@@ -76,6 +76,10 @@ mod imp {
                     window.show_operation_running_dialog();
                     return glib::Propagation::Stop;
                 }
+                window.save_scan_summary();
+                if let Err(error) = crate::services::scan_cache::flush() {
+                    tracing::warn!("Could not flush scan summary: {error}");
+                }
                 if !window.is_maximized() && !window.is_fullscreen() {
                     let size = window.default_size();
                     if let Err(error) =
@@ -349,6 +353,12 @@ impl MagnificoApplication {
             }
         }
 
+        if let Some(window) = self.imp().window.borrow().as_ref() {
+            window.save_scan_summary();
+        }
+        if let Err(error) = crate::services::scan_cache::flush() {
+            tracing::warn!("Could not flush scan summary: {error}");
+        }
         if let Some(sender) = self.imp().tray_cmd.borrow().as_ref() {
             let _ = sender.try_send(crate::tray::TrayCmd::Disable);
         }

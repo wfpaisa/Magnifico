@@ -99,8 +99,15 @@ fn remove(file: &gio::File) -> Result<(), glib::Error> {
 }
 
 /// Delete only the entries reviewed in the sheet, never new arrivals or the root.
-pub fn empty(entries: &[Entry], progress: &super::CleanProgress) -> Vec<String> {
+pub struct EmptyResult {
+    pub errors: Vec<String>,
+    pub removed: Vec<String>,
+    pub bytes: u64,
+}
+pub fn empty(entries: &[Entry], progress: &super::CleanProgress) -> EmptyResult {
     let mut errors = Vec::new();
+    let mut removed = Vec::new();
+    let mut bytes = 0;
     for entry in entries {
         let file = gio::File::for_uri(&entry.uri);
         if file.parent().as_ref().map(|p| p.uri()).as_deref() != Some("trash:///") {
@@ -124,7 +131,7 @@ pub fn empty(entries: &[Entry], progress: &super::CleanProgress) -> Vec<String> 
             continue;
         }
         // Home-trash entries retain the existing inode and metadata revalidation.
-        let removed = if let Some(local) = &entry.local {
+        let deletion = if let Some(local) = &entry.local {
             if super::cleanup_trash::delete(vec![local.clone()]) == 0 {
                 Ok(())
             } else {
@@ -136,8 +143,10 @@ pub fn empty(entries: &[Entry], progress: &super::CleanProgress) -> Vec<String> 
         } else {
             remove(&file)
         };
-        match removed {
+        match deletion {
             Ok(()) => {
+                removed.push(entry.uri.clone());
+                bytes += entry.bytes;
                 progress
                     .bytes_done
                     .fetch_add(entry.bytes, Ordering::Relaxed);
@@ -146,7 +155,11 @@ pub fn empty(entries: &[Entry], progress: &super::CleanProgress) -> Vec<String> 
             Err(error) => errors.push(format!("{}: {error}", entry.name)),
         }
     }
-    errors
+    EmptyResult {
+        errors,
+        removed,
+        bytes,
+    }
 }
 
 #[cfg(test)]

@@ -51,6 +51,7 @@ struct Inner {
     snapshot: RefCell<Option<Arc<AppInventory>>>,
     store: ReviewScanStore,
     generation: Cell<u64>,
+    dirty: Cell<bool>,
 }
 impl UninstallerPage {
     pub fn new(store: ReviewScanStore) -> Self {
@@ -122,6 +123,7 @@ impl UninstallerPage {
             snapshot: RefCell::default(),
             store,
             generation: Cell::new(0),
+            dirty: Cell::new(true),
         }));
         let weak = Rc::downgrade(&page.0);
         page.0.scan.connect_clicked(move |_| {
@@ -204,13 +206,18 @@ impl UninstallerPage {
                 .as_ref()
                 .is_none_or(|old| !Arc::ptr_eq(old, &snapshot));
             if changed {
+                self.0.dirty.set(true);
                 *self.0.apps.borrow_mut() = snapshot.apps.clone();
                 *self.0.leftovers.borrow_mut() = snapshot.leftovers.clone();
                 *self.0.snapshot.borrow_mut() = Some(snapshot);
                 self.0.selected.borrow_mut().clear();
             }
         }
-        self.render();
+        if self.0.dirty.get() || self.0.content.first_child().is_none() {
+            self.render();
+        } else {
+            self.update();
+        }
     }
     fn entries(&self) -> Vec<Entry> {
         let mut entries: Vec<_> = if self.0.leftovers_tab.is_active() {
@@ -272,13 +279,15 @@ impl UninstallerPage {
         if !p.widget.is_mapped() {
             return;
         }
+        p.dirty.set(false);
         while let Some(child) = p.content.first_child() {
             p.content.remove(&child);
         }
         let generation = p.generation.get().wrapping_add(1);
         p.generation.set(generation);
-        if p.store.loading(Kind::Apps)
-            || (p.snapshot.borrow().is_none() && p.store.error(Kind::Apps).is_none())
+        if p.snapshot.borrow().is_none()
+            && !p.store.has_summary()
+            && p.store.error(Kind::Apps).is_none()
         {
             p.loader.set_loading(true, "Applications");
             self.update();
@@ -545,8 +554,7 @@ impl UninstallerPage {
                     return;
                 }
                 p.update();
-                let apps = apps.clone();
-                let leftovers = leftovers.clone();
+
                 let progress = Arc::new(crate::services::CleanProgress::default());
                 let parent = p.0.widget.root().and_downcast::<gtk4::Window>();
                 let screen = super::clean_progress::CleanProgressWindow::show(
@@ -562,6 +570,7 @@ impl UninstallerPage {
                 std::thread::spawn(move || {
                     let home = dirs::home_dir().unwrap_or_default();
                     let mut lines = Vec::new();
+                    let mut update = crate::services::removal_update::RemovalUpdate::default();
                     for app in apps {
                         lines.push(
                             match app_uninstall::uninstall_with_progress(
@@ -570,7 +579,14 @@ impl UninstallerPage {
                                 include_data,
                                 Some(&progress),
                             ) {
-                                Ok(name) => tr_args("Uninstalled {app}", &[("{app}", &name)]),
+                                Ok(outcome) => {
+                                    update.merge(outcome.update);
+                                    if outcome.errors.is_empty() {
+                                        tr_args("Uninstalled {app}", &[("{app}", &app.name)])
+                                    } else {
+                                        outcome.errors.join("\n")
+                                    }
+                                }
                                 Err(e) => format!("{}: {e}", app.name),
                             },
                         );
@@ -582,20 +598,24 @@ impl UninstallerPage {
                             "Moved {size} to Trash.",
                             &[("{size}", &review::size(result.bytes_moved()))],
                         ));
+                        update.merge((&result).into());
                         for (path, e) in result.failed {
                             lines.push(format!("{}: {e}", path.display()));
                         }
                     }
-                    let _ = tx.send_blocking(lines.join("\n"));
+                    let _ = tx.send_blocking((lines.join("\n"), update));
                 });
                 let p = p.clone();
                 glib::spawn_future_local(async move {
-                    if let Ok(report) = rx.recv().await {
+                    if let Ok((report, update)) = rx.recv().await {
+                        if !review::removed(&p.0.widget, update.clone()).await {
+                            p.0.store.apply_removed(&update);
+                        }
                         review::report(&p.0.widget, &report);
                     }
                     p.0.busy.set(false);
                     screen.close();
-                    p.scan();
+                    p.update();
                 });
             },
         );

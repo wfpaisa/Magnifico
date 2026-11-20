@@ -12,6 +12,8 @@ mod ui;
 use once_cell::sync::Lazy;
 use tokio::runtime::Runtime;
 
+pub static STARTED: Lazy<std::time::Instant> = Lazy::new(std::time::Instant::now);
+
 static TOKIO_RUNTIME: Lazy<Runtime> = Lazy::new(|| {
     tokio::runtime::Builder::new_multi_thread()
         .enable_all()
@@ -37,6 +39,7 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const DISPLAY_VERSION: &str = VERSION;
 
 fn main() -> glib::ExitCode {
+    Lazy::force(&STARTED);
     glib::set_prgname(Some(APP_ID));
     glib::set_application_name(APP_NAME);
 
@@ -47,6 +50,7 @@ fn main() -> glib::ExitCode {
 
     tracing::info!("Starting {} v{}", APP_NAME, VERSION);
 
+    services::scan_cache::init();
     fonts::register();
 
     if let Err(e) = libadwaita::init() {

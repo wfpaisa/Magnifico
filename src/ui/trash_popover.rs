@@ -44,9 +44,13 @@ pub fn button(label: &gtk4::Label) -> gtk4::MenuButton {
     let snapshot = entries.clone();
     let empty_clone = empty.clone();
     let label = label.clone();
-    popover.connect_show(move |_| {
+    let total_after = total.clone();
+    let label_after = label.clone();
+    let refresh: Rc<dyn Fn()> = Rc::new(move || {
         empty_clone.set_sensitive(false);
         total.set_text(&tr("Measuring Trash…"));
+        label.set_text(&tr("Measuring Trash…"));
+        snapshot.borrow_mut().clear();
         let (tx, rx) = async_channel::bounded(1);
         std::thread::spawn(move || {
             let _ = tx.send_blocking(trash_store::entries().map_err(|e| e.to_string()));
@@ -69,11 +73,19 @@ pub fn button(label: &gtk4::Label) -> gtk4::MenuButton {
                     empty.set_sensitive(!items.is_empty());
                     snapshot.replace(items);
                 }
-                Ok(Err(e)) => total.set_text(&e),
-                Err(_) => total.set_text(&tr("Could not read Trash")),
+                Ok(Err(e)) => {
+                    total.set_text(&e);
+                    label.set_text(&e);
+                }
+                Err(_) => {
+                    total.set_text(&tr("Could not read Trash"));
+                    label.set_text(&tr("Could not read Trash"));
+                }
             }
         });
     });
+    let refresh_on_show = refresh.clone();
+    popover.connect_show(move |_| refresh_on_show());
     let weak = button.downgrade();
     empty.connect_clicked(move |_| {
         let Some(button) = weak.upgrade() else {
@@ -100,6 +112,9 @@ pub fn button(label: &gtk4::Label) -> gtk4::MenuButton {
                 safe: false,
             })
             .collect();
+        let entries = entries.clone();
+        let total = total_after.clone();
+        let label = label_after.clone();
         removal_dialog::present(
             &button,
             "Empty Trash",
@@ -123,9 +138,33 @@ pub fn button(label: &gtk4::Label) -> gtk4::MenuButton {
                     let _ = tx.send_blocking(trash_store::empty(&items, &progress));
                 });
                 glib::spawn_future_local(async move {
-                    let errors = rx.recv().await.unwrap_or_else(|e| vec![e.to_string()]);
+                    let result = rx
+                        .recv()
+                        .await
+                        .unwrap_or_else(|e| trash_store::EmptyResult {
+                            errors: vec![e.to_string()],
+                            removed: Vec::new(),
+                            bytes: 0,
+                        });
                     screen.close();
+                    entries
+                        .borrow_mut()
+                        .retain(|e| !result.removed.contains(&e.uri));
+                    let text = tr_args(
+                        "{size} in Trash",
+                        &[(
+                            "{size}",
+                            &size(entries.borrow().iter().map(|e| e.bytes).sum()),
+                        )],
+                    );
+                    total.set_text(&text);
+                    label.set_text(&text);
+                    let errors = result.errors;
                     if let Some(main) = parent.and_downcast::<super::MainWindow>() {
+                        main.apply_emptied_trash(
+                            result.bytes,
+                            entries.borrow().iter().map(|e| e.bytes).sum(),
+                        );
                         main.record_cleanup_report(&format!(
                             "{}\n{}",
                             tr("Empty Trash"),

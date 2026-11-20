@@ -66,6 +66,7 @@ fn open(parent: Option<&gtk4::Window>, title: &str, scan: RuleScan) {
 
     let (sender, receiver) = async_channel::bounded::<ScanResult>(1);
     crate::runtime().spawn_blocking(move || {
+        let _permit = crate::services::scan_jobs::acquire();
         let _ = sender.send_blocking(scan(&Scanner::new()));
     });
 

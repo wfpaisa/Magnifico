@@ -92,6 +92,23 @@ pub fn report(widget: &impl IsA<gtk4::Widget>, text: &str) {
     if let Some(window) = parent.and_downcast::<super::MainWindow>() {
         window.record_cleanup_report(text);
         window.show_cleanup_report(text, false);
-        window.refresh_dashboard_disk_usage();
+        window.save_scan_summary();
+    }
+}
+
+/// Apply a delta to all views when attached to the main window.
+pub async fn removed(
+    widget: &impl IsA<gtk4::Widget>,
+    update: crate::services::removal_update::RemovalUpdate,
+) -> bool {
+    if let Some(window) = widget
+        .root()
+        .and_downcast::<gtk4::Window>()
+        .and_downcast::<super::MainWindow>()
+    {
+        window.apply_removed(update).await;
+        true
+    } else {
+        false
     }
 }

@@ -11,7 +11,10 @@ mod log_cleanup;
 mod open_files;
 mod plan_builder;
 mod projects;
+pub mod removal_update;
 pub mod review_items;
+pub mod scan_cache;
+pub mod scan_jobs;
 mod scanner;
 mod secure_delete;
 mod security;
@@ -30,5 +33,5 @@ pub use secure_delete::storage_facts;
 pub use security::SecurityAuditor;
 pub use storage_analyzer::{
     analyze_storage, move_to_trash_with_progress, StorageAnalysis, StorageAnalysisError,
-    StorageNode, StorageScanOptions, TrashTarget,
+    StorageNode, StorageNodeKind, StorageScanOptions, TrashTarget,
 };

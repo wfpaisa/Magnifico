@@ -62,6 +62,7 @@ struct Inner {
     busy: Cell<bool>,
     syncing: Cell<bool>,
     generation: Cell<u64>,
+    dirty: Cell<bool>,
 }
 impl LargeFilesPage {
     pub fn new(store: ReviewScanStore) -> Self {
@@ -133,6 +134,7 @@ impl LargeFilesPage {
             busy: Cell::new(false),
             syncing: Cell::new(false),
             generation: Cell::new(0),
+            dirty: Cell::new(true),
         }));
         let weak = Rc::downgrade(&page.0);
         page.0.scan.connect_clicked(move |_| {
@@ -233,13 +235,18 @@ impl LargeFilesPage {
                 .as_ref()
                 .is_none_or(|old| !Arc::ptr_eq(old, &snapshot));
             if changed {
+                self.0.dirty.set(true);
                 *self.0.files.borrow_mut() = snapshot.files.clone();
                 *self.0.duplicates.borrow_mut() = snapshot.duplicates.clone();
                 *self.0.snapshot.borrow_mut() = Some(snapshot);
                 self.0.selected.borrow_mut().clear();
             }
         }
-        self.render();
+        if self.0.dirty.get() || self.0.chips.first_child().is_none() {
+            self.render();
+        } else {
+            self.update();
+        }
     }
     fn visible(&self, kind: Option<usize>) -> Vec<FoundFile> {
         let query = self.0.search.text().to_lowercase();
@@ -267,8 +274,10 @@ impl LargeFilesPage {
         if !self.0.widget.is_mapped() {
             return;
         }
-        let loading =
-            self.0.snapshot.borrow().is_none() && self.0.store.error(Kind::LargeFiles).is_none();
+        self.0.dirty.set(false);
+        let loading = self.0.snapshot.borrow().is_none()
+            && !self.0.store.has_summary()
+            && self.0.store.error(Kind::LargeFiles).is_none();
         self.0.loader.set_loading(loading, "Large Files");
         if loading {
             self.update();
@@ -530,6 +539,13 @@ impl LargeFilesPage {
                             "Moved {size} to Trash.",
                             &[("{size}", &review::size(result.bytes_moved()))],
                         );
+                        let moved: Vec<_> =
+                            result.moved.iter().map(|(path, _)| path.clone()).collect();
+                        if !moved.is_empty()
+                            && !review::removed(&p.0.widget, (&result).into()).await
+                        {
+                            p.0.store.forget_paths(&moved);
+                        }
                         for (path, reason) in result.failed {
                             text.push_str(&format!("\n{}: {}", review::home_path(&path), reason));
                         }
@@ -537,7 +553,7 @@ impl LargeFilesPage {
                     }
                     p.0.busy.set(false);
                     screen.close();
-                    p.scan();
+                    p.update();
                 });
             },
         );
