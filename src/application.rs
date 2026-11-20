@@ -204,8 +204,10 @@ impl MagnificoApplication {
         // The glyph colour is fixed to the panel foreground rather than the
         // application's colour scheme — see TRAY_FOREGROUND in tray.rs — so
         // there is nothing to re-render when the desktop switches light/dark.
-        let (cmd_tx, action_rx, status_rx) =
-            crate::tray::start_tray_service(crate::tray::render_tray_icons());
+        let (cmd_tx, action_rx, status_rx) = crate::tray::start_tray_service(
+            crate::tray::render_tray_icons(),
+            crate::tray::render_menu_icons(),
+        );
         *self.imp().tray_cmd.borrow_mut() = Some(cmd_tx.clone());
 
         let app_weak = self.downgrade();

@@ -27,6 +27,16 @@ use ksni::{Tray, TrayMethods};
 const TRAY_SVG: &str =
     include_str!("../data/icons/hicolor/symbolic/apps/io.github.wfpaisa.Magnifico-symbolic.svg");
 
+/// Line art for the context-menu entries, copied from the external icon set.
+/// They paint with `currentColor`, which librsvg cannot resolve on its own, so
+/// [`render_menu_icon`] swaps in a concrete colour before rasterising.
+const MENU_OPEN_SVG: &str = include_str!("../data/icons/tray/open.svg");
+const MENU_CLEAN_SVG: &str = include_str!("../data/icons/tray/clean.svg");
+const MENU_CLOSE_SVG: &str = include_str!("../data/icons/tray/close.svg");
+
+/// Edge, in pixels, of the PNG sent for each menu entry.
+const MENU_ICON_SIZE: i32 = 32;
+
 /// Sizes offered to the host so it can pick the one matching its panel instead
 /// of rescaling a single bitmap.
 const TRAY_SIZES: [i32; 6] = [16, 22, 24, 32, 48, 64];
@@ -67,6 +77,15 @@ pub enum TrayCmd {
     SetIcons(Vec<ksni::Icon>),
 }
 
+/// PNG bytes for the menu entries (`dbusmenu` `icon-data`). Empty when
+/// rasterising failed, which simply leaves that entry without an icon.
+#[derive(Debug, Clone, Default)]
+pub struct MenuIcons {
+    open: Vec<u8>,
+    clean: Vec<u8>,
+    close: Vec<u8>,
+}
+
 struct MagnificoTray {
     tx: async_channel::Sender<TrayAction>,
     status_tx: async_channel::Sender<TrayStatus>,
@@ -74,6 +93,7 @@ struct MagnificoTray {
     /// Rasterised on the main thread; `ksni::Icon` is plain data, so it moves
     /// to the tray's thread with the struct.
     icons: Vec<ksni::Icon>,
+    menu_icons: MenuIcons,
 }
 
 impl MagnificoTray {
@@ -142,6 +162,34 @@ pub fn render_tray_icons() -> Vec<ksni::Icon> {
         .iter()
         .filter_map(|&size| render_icon(svg.as_bytes(), size))
         .collect()
+}
+
+/// Rasterise one menu glyph to PNG in the panel foreground. The menu is drawn
+/// by the host, so — like the tray pixmap — the colour is fixed to white rather
+/// than following the application's scheme.
+fn render_menu_icon(svg: &str) -> Vec<u8> {
+    use gtk4::gdk_pixbuf::PixbufLoader;
+    use gtk4::prelude::PixbufLoaderExt;
+
+    let svg = svg.replace("currentColor", TRAY_FOREGROUND);
+    let render = || -> Option<Vec<u8>> {
+        let loader = PixbufLoader::with_type("svg").ok()?;
+        loader.set_size(MENU_ICON_SIZE, MENU_ICON_SIZE);
+        loader.write(svg.as_bytes()).ok()?;
+        loader.close().ok()?;
+        loader.pixbuf()?.save_to_bufferv("png", &[]).ok()
+    };
+    render().unwrap_or_default()
+}
+
+/// Rasterise the menu glyphs. Call this on the GTK main thread, like
+/// [`render_tray_icons`].
+pub fn render_menu_icons() -> MenuIcons {
+    MenuIcons {
+        open: render_menu_icon(MENU_OPEN_SVG),
+        clean: render_menu_icon(MENU_CLEAN_SVG),
+        close: render_menu_icon(MENU_CLOSE_SVG),
+    }
 }
 
 impl Tray for MagnificoTray {
@@ -218,12 +266,14 @@ impl Tray for MagnificoTray {
         vec![
             StandardItem {
                 label: crate::i18n::tr("Open Magnífico"),
+                icon_data: self.menu_icons.open.clone(),
                 activate: Box::new(|tray: &mut Self| tray.emit(TrayAction::Open)),
                 ..Default::default()
             }
             .into(),
             StandardItem {
                 label: crate::i18n::tr("Clean"),
+                icon_data: self.menu_icons.clean.clone(),
                 activate: Box::new(|tray: &mut Self| tray.emit(TrayAction::Clean)),
                 ..Default::default()
             }
@@ -231,6 +281,7 @@ impl Tray for MagnificoTray {
             MenuItem::Separator,
             StandardItem {
                 label: crate::i18n::tr("Close"),
+                icon_data: self.menu_icons.close.clone(),
                 activate: Box::new(|tray: &mut Self| tray.emit(TrayAction::Close)),
                 ..Default::default()
             }
@@ -241,6 +292,7 @@ impl Tray for MagnificoTray {
 
 pub fn start_tray_service(
     initial_icons: Vec<ksni::Icon>,
+    menu_icons: MenuIcons,
 ) -> (
     async_channel::Sender<TrayCmd>,
     async_channel::Receiver<TrayAction>,
@@ -264,6 +316,7 @@ pub fn start_tray_service(
                         status_tx: status_tx.clone(),
                         icon_name: tray_icon_name(),
                         icons: icons.clone(),
+                        menu_icons: menu_icons.clone(),
                     };
                     match tray.spawn().await {
                         Ok(new_handle) => {
@@ -331,6 +384,7 @@ mod tests {
             status_tx,
             icon_name: tray_icon_name(),
             icons,
+            menu_icons: render_menu_icons(),
         }
     }
 
@@ -411,7 +465,7 @@ mod tests {
     }
 
     #[test]
-    fn tray_uses_symbolic_icon_and_text_only_menu_actions() {
+    fn tray_uses_symbolic_icon_and_menu_actions_carry_png_icons() {
         let tray = test_tray(Vec::new());
 
         assert_eq!(tray.id(), "io.github.wfpaisa.Magnifico");
@@ -428,6 +482,10 @@ mod tests {
             };
             assert_eq!(item.label, expected_label);
             assert!(item.icon_name.is_empty());
+            // No SVG loader on this machine: the entry just has no icon.
+            if !item.icon_data.is_empty() {
+                assert_eq!(&item.icon_data[1..4], b"PNG");
+            }
         }
         assert!(matches!(menu[2], MenuItem::Separator));
     }

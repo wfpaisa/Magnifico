@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 
 APP_NAME="Magnífico"
 APP_ID="io.github.wfpaisa.Magnifico"
-VERSION="1.0.1"
+VERSION="$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)"
 BINARY_NAME="magnifico"
 APPDIR="build/appimage/AppDir"
 OUTPUT="dist/appimage/${BINARY_NAME}-${VERSION}-$(uname -m).AppImage"
