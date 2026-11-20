@@ -1,6 +1,6 @@
 [package]
 name = "magnifico"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["wfpaisa"]
 description = "Magnífico is a native GNOME application for safely cleaning browser data, application caches, and temporary files"

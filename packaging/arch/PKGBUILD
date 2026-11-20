@@ -2,7 +2,7 @@
 # packages it for pacman. From this folder:
 #   makepkg -si
 pkgname=magnifico
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Magnífico: native GNOME app to safely clean browser data, caches and temporary files"
 arch=('x86_64' 'aarch64')

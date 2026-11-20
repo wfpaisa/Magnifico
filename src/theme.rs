@@ -200,10 +200,62 @@ pub fn apply_color_scheme(style_manager: &adw::StyleManager, scheme: ColorScheme
     style_manager.set_color_scheme(color_scheme);
 }
 
-/// GTK 4.24 passes `backdrop-filter` blur to the compositor (GNOME 51 and
-/// newer). Older GTK does not know the property, so nothing is loaded there.
+/// GTK 4.24 passes `backdrop-filter` blur to the compositor, and only GNOME
+/// Shell 51 or newer on Wayland actually blurs it. Anywhere else the window
+/// would just turn see-through, so the blur is offered only when GTK, the
+/// session and the shell all support it. A bundled (AppImage) or newer GTK
+/// on an older shell therefore keeps the blur off. Checked once.
 pub fn blur_supported() -> bool {
-    gtk4::major_version() > 4 || gtk4::minor_version() >= 24
+    static SUPPORTED: std::sync::OnceLock<bool> = std::sync::OnceLock::new();
+    *SUPPORTED.get_or_init(detect_blur_support)
+}
+
+fn gtk_has_backdrop_blur(major: u32, minor: u32) -> bool {
+    major > 4 || (major == 4 && minor >= 24)
+}
+
+fn shell_has_backdrop_blur(version: &str) -> bool {
+    version
+        .split('.')
+        .next()
+        .and_then(|major| major.parse::<u32>().ok())
+        .is_some_and(|major| major >= 51)
+}
+
+fn detect_blur_support() -> bool {
+    if !gtk_has_backdrop_blur(gtk4::major_version(), gtk4::minor_version()) {
+        return false;
+    }
+    let on_wayland = gdk::Display::default()
+        .is_some_and(|display| display.type_().name() == "GdkWaylandDisplay");
+    let on_gnome = std::env::var("XDG_CURRENT_DESKTOP").is_ok_and(|desktop| {
+        desktop
+            .split(':')
+            .any(|name| name.eq_ignore_ascii_case("GNOME"))
+    });
+    if !on_wayland || !on_gnome {
+        return false;
+    }
+    gnome_shell_version().is_some_and(|version| shell_has_backdrop_blur(&version))
+}
+
+/// GNOME Shell's version string (for example "51.1") from the session bus.
+fn gnome_shell_version() -> Option<String> {
+    let proxy = gio::DBusProxy::for_bus_sync(
+        gio::BusType::Session,
+        gio::DBusProxyFlags::DO_NOT_CONNECT_SIGNALS | gio::DBusProxyFlags::DO_NOT_AUTO_START,
+        None,
+        "org.gnome.Shell",
+        "/org/gnome/Shell",
+        "org.gnome.Shell",
+        gio::Cancellable::NONE,
+    )
+    .ok()?;
+    proxy.set_default_timeout(1000);
+    proxy
+        .cached_property("ShellVersion")?
+        .str()
+        .map(str::to_owned)
 }
 
 /// The whole window turns translucent and the desktop behind it is
@@ -535,4 +587,25 @@ const fn fallback_popover_bg(is_dark: bool) -> gdk::RGBA {
 
 const fn fallback_popover_fg(is_dark: bool) -> gdk::RGBA {
     fallback_window_fg(is_dark)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn blur_needs_gtk_4_24_or_newer() {
+        assert!(!gtk_has_backdrop_blur(4, 20));
+        assert!(gtk_has_backdrop_blur(4, 24));
+        assert!(gtk_has_backdrop_blur(5, 0));
+    }
+
+    #[test]
+    fn blur_needs_gnome_shell_51_or_newer() {
+        assert!(!shell_has_backdrop_blur("50.2"));
+        assert!(shell_has_backdrop_blur("51.1"));
+        assert!(shell_has_backdrop_blur("52.beta"));
+        assert!(!shell_has_backdrop_blur(""));
+        assert!(!shell_has_backdrop_blur("unknown"));
+    }
 }

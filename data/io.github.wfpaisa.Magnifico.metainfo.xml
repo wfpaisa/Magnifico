@@ -59,6 +59,16 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.1" date="2026-11-19">
+      <description>
+        <p>Packaging and appearance fixes.</p>
+        <ul>
+          <li>Window blur is offered only where the compositor really supports it (Wayland with GNOME Shell 51 or newer)</li>
+          <li>AppImage no longer forces a GTK theme, so libadwaita styles load correctly</li>
+          <li>Removed migration code for old application names</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.0" date="2026-08-21">
       <description>
         <p>Initial public release of Magnífico.</p>
