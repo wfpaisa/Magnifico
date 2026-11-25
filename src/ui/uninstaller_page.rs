@@ -286,7 +286,6 @@ impl UninstallerPage {
         let generation = p.generation.get().wrapping_add(1);
         p.generation.set(generation);
         if p.snapshot.borrow().is_none()
-            && !p.store.has_summary()
             && p.store.error(Kind::Apps).is_none()
         {
             p.loader.set_loading(true, "Applications");
@@ -418,6 +417,16 @@ impl UninstallerPage {
         p.search.set_sensitive(!busy);
         p.grid_toggle.set_sensitive(!busy);
         let entries = self.entries();
+        super::selection_bus::set_apps_view(if p.leftovers_tab.is_active() { 5 } else { 4 });
+        super::selection_bus::report(
+            if p.leftovers_tab.is_active() { 5 } else { 4 },
+            entries
+                .iter()
+                .filter(|e| p.selected.borrow().contains(&e.0))
+                .map(|e| e.3)
+                .sum(),
+            entries.iter().map(|e| e.3).sum(),
+        );
         p.uninstall
             .set_sensitive(!busy && entries.iter().any(|e| p.selected.borrow().contains(&e.0)));
         if busy || p.snapshot.borrow().is_none() && p.store.error(Kind::Apps).is_none() {

@@ -340,6 +340,7 @@ impl MainWindow {
         dashboard_page.set_visible(false);
         main_box.append(&dashboard_page);
         let weak = self.downgrade();
+        let flights = super::flight_layer::FlightLayer::new();
         let overview = super::overview_page::OverviewPage::new(
             storage.clone(),
             clean_store.clone(),
@@ -360,7 +361,18 @@ impl MainWindow {
                     }
                 }
             },
+            flights.clone(),
         );
+        // Cleaned cells fly to the sidebar's Trash button.
+        if let Some(trash) = self
+            .imp()
+            .trash_label
+            .borrow()
+            .as_ref()
+            .and_then(|label| label.ancestor(gtk4::MenuButton::static_type()))
+        {
+            overview.set_trash_target(&trash);
+        }
         content_stack.add_named(&overview.widget, Some(NavItem::Dashboard.stack_name()));
         content_stack.set_visible_child_name(NavItem::Dashboard.stack_name());
         self.imp().overview_page.replace(Some(overview));
@@ -416,6 +428,23 @@ impl MainWindow {
             Some(NavItem::LargeFiles.stack_name()),
         );
         content_stack.add_named(&settings_page, Some(NavItem::Settings.stack_name()));
+        // Every category page shows the disk map with its own cells in colour.
+        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
+            for (name, category) in [
+                (NavItem::Browsers, 0),
+                (NavItem::UserSystem, 1),
+                (NavItem::SystemCleanup, 2),
+                (NavItem::LargeFiles, 3),
+                (NavItem::Applications, 4),
+                (NavItem::Applications, 5),
+                (NavItem::AiModels, 6),
+                (NavItem::Games, 7),
+            ] {
+                if let Some(page) = content_stack.child_by_name(name.stack_name()) {
+                    overview.attach_strip(&page, category);
+                }
+            }
+        }
 
         // A slim strip above each page: window buttons at the end, and the
         // rest moves the window, as a header would.
@@ -484,7 +513,11 @@ impl MainWindow {
 
         let shell = gtk4::Stack::new();
         shell.add_named(&main_box, Some("main"));
-        self.set_content(Some(&shell));
+        // The flight layer paints over everything, sidebar included.
+        let overlay = gtk4::Overlay::new();
+        overlay.set_child(Some(&shell));
+        overlay.add_overlay(flights.widget());
+        self.set_content(Some(&overlay));
         self.imp().shell.replace(Some(shell));
         crate::i18n::translate_widget_tree(&main_box);
     }
@@ -852,6 +885,9 @@ impl MainWindow {
     /// Publish successful removals everywhere without starting any scan.
     pub async fn apply_removed(&self, update: crate::services::removal_update::RemovalUpdate) {
         let update = Arc::new(update);
+        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
+            overview.begin_removal();
+        }
         let review = self.imp().review_store.borrow().clone();
         let clean = self.imp().clean_store.borrow().clone();
         if let Some(review) = review {

@@ -3332,3 +3332,12 @@ msgstr "Ο καθαρισμός αποκλείστηκε από το όριο α
 
 msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
 msgstr "Ο καθαρισμός αποκλείστηκε από το όριο ασφαλείας: επιλέχθηκαν {size}, το όριο είναι {limit} ανά λειτουργία. Αυξήστε το όριο στις Ρυθμίσεις → Ασφάλεια."
+
+msgid "Safe"
+msgstr "Ασφαλές"
+
+msgid "Careful"
+msgstr "Προσοχή"
+
+msgid "Details"
+msgstr "Λεπτομέρειες"

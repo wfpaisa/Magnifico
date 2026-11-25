@@ -1,7 +1,9 @@
 // Adapted from Purge OverviewView.swift (MIT, © 2026 Jithin Sabu).
 // https://github.com/jithin-sabu/purge-app — see THIRD_PARTY_LICENSES.md.
 use super::clean_scan_store::CleanScanStore;
-use super::purge_widgets::{self as widgets, BadgeKind, Segment};
+use super::flight_layer::FlightLayer;
+use super::overview_grid::{Grid, GridSegment, Sweep};
+use super::purge_widgets as widgets;
 use super::review_scan_store::ReviewScanStore;
 use crate::{
     i18n::{tr, tr_args},
@@ -43,6 +45,68 @@ const COLORS: [&str; 10] = [
     "else",
     "free",
 ];
+const TOKENS: [&str; 10] = [
+    "pc_chart_caches",
+    "pc_chart_dev",
+    "pc_chart_system",
+    "pc_chart_large",
+    "pc_chart_apps",
+    "pc_chart_leftovers",
+    "pc_chart_models",
+    "pc_chart_games",
+    "pc_chart_else",
+    "pc_chart_free",
+];
+const FREE: usize = 9;
+/// Segment id of the grey, unselected used space on a category page.
+const STRIP_USED: usize = 10;
+/// Opacity of the cells of a category page that are not selected.
+const STRIP_FADED: f64 = 0.28;
+
+#[derive(Clone, Copy)]
+enum Tag {
+    Safe,
+    Review,
+    Careful,
+}
+/// How much care each category needs before anything in it is removed.
+const TAGS: [Tag; 9] = [
+    Tag::Safe,
+    Tag::Safe,
+    Tag::Safe,
+    Tag::Careful,
+    Tag::Review,
+    Tag::Review,
+    Tag::Review,
+    Tag::Review,
+    Tag::Careful,
+];
+
+/// State that outlives the page's re-renders: the grid keeps animating while
+/// the rows and labels around it are rebuilt.
+struct Fx {
+    grid: Grid,
+    /// The map shown on top of each category page, by category index.
+    strips: RefCell<Vec<(usize, Grid)>>,
+    flights: FlightLayer,
+    trash: RefCell<glib::WeakRef<gtk4::Widget>>,
+    /// A removal is being applied: its cells fly to the Trash.
+    sweep_next: Cell<bool>,
+    /// Hold renders until the removal has reached every store.
+    hold: Cell<bool>,
+    /// Categories (bit per index, bit 8 = everything else) still being
+    /// measured when the page was last drawn.
+    waiting: Cell<u16>,
+    /// Categories in the order their size arrived while analysing: cells
+    /// already placed never move until the final sort.
+    arrival: RefCell<Vec<usize>>,
+    /// `MAGNIFICO_SIM`: fake readings drive the page so the animations can be
+    /// watched without scanning or deleting anything.
+    sim: bool,
+    sim_mask: Cell<u16>,
+    sim_run: Cell<u32>,
+}
+
 const PAGES: [&str; 10] = [
     "browsers",
     "dev-tools",
@@ -84,6 +148,108 @@ pub struct OverviewPage {
     latest: Rc<RefCell<Option<Readings>>>,
     rendered: Rc<RefCell<Option<Readings>>>,
     disk_revision: Rc<Cell<u64>>,
+    fx: Rc<Fx>,
+}
+
+/// Cells of the disk map, heaviest category first and the free space last.
+fn build_segments(data: &Readings, waiting: u16, arrival: &[usize]) -> Vec<GridSegment> {
+    // Space still being measured flickers; it is everything left over
+    // once every category is known, so it is the last to settle.
+    let is_waiting = |i: usize| waiting & (1 << i) != 0;
+    let mut chart = chart_sizes(&Readings {
+        sizes: {
+            let mut sizes = data.sizes;
+            for (i, size) in sizes.iter_mut().enumerate().take(8) {
+                if is_waiting(i) {
+                    *size = 0;
+                }
+            }
+            sizes
+        },
+        ..data.clone()
+    });
+    if waiting != 0 {
+        chart[8] = data
+            .used
+            .saturating_sub(chart[..8].iter().sum::<u64>())
+            .min(data.used);
+    }
+    let mut by_weight: Vec<usize> = (0..8).filter(|&i| !is_waiting(i)).collect();
+    if waiting == 0 {
+        by_weight.push(8);
+    }
+    if waiting != 0 && !arrival.is_empty() {
+        // Still analysing: keep each category where it landed.
+        let mut placed: Vec<usize> = arrival.iter().copied().filter(|&i| !is_waiting(i)).collect();
+        let missing: Vec<usize> = by_weight.iter().copied().filter(|i| !placed.contains(i)).collect();
+        placed.extend(missing);
+        by_weight = placed;
+    } else {
+        by_weight.sort_by_key(|&i| std::cmp::Reverse(chart[i]));
+    }
+    let describe = |i: usize, bytes: u64| {
+        tr_args(
+            "{category} · {size}",
+            &[("{category}", &tr(TITLES[i])), ("{size}", &size(bytes))],
+        )
+    };
+    let mut segments: Vec<GridSegment> = by_weight
+        .iter()
+        .map(|&i| GridSegment {
+            id: i,
+            fraction: fraction(chart[i], data.total),
+            color: TOKENS[i],
+            alpha: 1.0,
+            label: describe(i, data.sizes[i]),
+        })
+        .collect();
+    if waiting != 0 {
+        segments.push(GridSegment {
+            id: super::overview_grid::PENDING,
+            fraction: fraction(chart[8], data.total),
+            color: TOKENS[8],
+            alpha: 1.0,
+            label: tr("Scanning…"),
+        });
+    }
+    segments.push(GridSegment {
+        id: FREE,
+        fraction: fraction(chart[FREE], data.total),
+        color: TOKENS[FREE],
+        alpha: 1.0,
+        label: describe(FREE, data.free),
+    });
+segments
+}
+
+/// Map of a category page: every cell is that category, the whole map being
+/// everything the page lists. What is selected shows in full colour, the rest
+/// faded like an unticked item.
+fn strip_segments(data: &Readings, category: usize, selected: u64, total: u64) -> Vec<GridSegment> {
+    let total = if total > 0 { total } else { data.sizes[category] };
+    let selected = selected.min(total);
+    let picked = if total > 0 { selected as f64 / total as f64 } else { 0.0 };
+    let mut segments = Vec::new();
+    if selected > 0 {
+        segments.push(GridSegment {
+            id: category,
+            fraction: picked,
+            color: TOKENS[category],
+            alpha: 1.0,
+            label: tr_args(
+                "{category} · {size}",
+                &[("{category}", &tr(TITLES[category])), ("{size}", &size(selected))],
+            ),
+        });
+    }
+    segments.push(GridSegment {
+        id: STRIP_USED,
+        fraction: 1.0 - picked,
+        color: TOKENS[category],
+        alpha: STRIP_FADED,
+        label: tr_args("{size} used", &[("{size}", &size(total - selected))]),
+    });
+    segments
 }
 
 impl OverviewPage {
@@ -93,6 +259,7 @@ impl OverviewPage {
         review: ReviewScanStore,
         summary: Option<crate::services::scan_cache::ScanSummary>,
         on_sizes: impl Fn([u64; 6], u64) + 'static,
+        flights: FlightLayer,
     ) -> Self {
         let widget = gtk4::ScrolledWindow::new();
         widget.set_policy(gtk4::PolicyType::Never, gtk4::PolicyType::Automatic);
@@ -111,6 +278,13 @@ impl OverviewPage {
         actions.set_valign(gtk4::Align::Start);
         actions.append(&scan);
         actions.append(&clean);
+        let simulating = std::env::var_os("MAGNIFICO_SIM").is_some();
+        let sim_clean = gtk4::Button::with_label("Simular limpieza");
+        if simulating {
+            // Nothing real is scanned or deleted in the simulation.
+            clean.set_visible(false);
+            actions.append(&sim_clean);
+        }
         body.append(&widgets::page_header("Overview", &subtitle, &actions));
         let page = Self {
             widget,
@@ -127,6 +301,19 @@ impl OverviewPage {
             latest: Rc::new(RefCell::new(summary.map(Readings::from))),
             rendered: Rc::new(RefCell::new(None)),
             disk_revision: Rc::new(Cell::new(0)),
+            fx: Rc::new(Fx {
+                grid: Grid::new(),
+                strips: RefCell::new(Vec::new()),
+                flights,
+                trash: RefCell::new(glib::WeakRef::new()),
+                sweep_next: Cell::new(false),
+                hold: Cell::new(false),
+                waiting: Cell::new(0),
+                arrival: RefCell::new(Vec::new()),
+                sim: std::env::var_os("MAGNIFICO_SIM").is_some(),
+                sim_mask: Cell::new(0),
+                sim_run: Cell::new(0),
+            }),
         };
         let widget = page.widget.downgrade();
         let body = page.body.downgrade();
@@ -141,6 +328,7 @@ impl OverviewPage {
         let latest = page.latest.clone();
         let rendered = page.rendered.clone();
         let disk_revision = page.disk_revision.clone();
+        let fx = page.fx.clone();
         page.scan.connect_clicked(move |scan| {
             if let (Some(widget), Some(body), Some(subtitle)) =
                 (widget.upgrade(), body.upgrade(), subtitle.upgrade())
@@ -160,6 +348,7 @@ impl OverviewPage {
                     latest: latest.clone(),
                     rendered: rendered.clone(),
                     disk_revision: disk_revision.clone(),
+                    fx: fx.clone(),
                 }
                 .scan_everything();
             }
@@ -172,9 +361,15 @@ impl OverviewPage {
         page.store.subscribe(move |_| listener());
         page.review.subscribe(page.listener());
         page.render_cached();
-        page.store.request_all_staggered(true);
-        page.review.request_all_staggered(true);
-        page.refresh();
+        if page.fx.sim {
+            let sim = page.clone();
+            sim_clean.connect_clicked(move |_| sim.simulate_clean());
+            page.simulate_load();
+        } else {
+            page.store.request_all_staggered(true);
+            page.review.request_all_staggered(true);
+            page.refresh();
+        }
         let rendered = page.rendered.clone();
         page.widget.add_tick_callback(move |_, _| {
             if rendered.borrow().is_some() {
@@ -203,6 +398,7 @@ impl OverviewPage {
         let latest = self.latest.clone();
         let rendered = self.rendered.clone();
         let disk_revision = self.disk_revision.clone();
+        let fx = self.fx.clone();
         let store = self.store.downgrade();
         let review = self.review.downgrade();
         move || {
@@ -234,6 +430,7 @@ impl OverviewPage {
                     latest: latest.clone(),
                     rendered: rendered.clone(),
                     disk_revision: disk_revision.clone(),
+                    fx: fx.clone(),
                     store,
                     review,
                 }
@@ -242,11 +439,18 @@ impl OverviewPage {
         }
     }
     pub fn scan_everything(&self) {
+        if self.fx.sim {
+            self.simulate_load();
+            return;
+        }
         self.store.request_all(true);
         self.review.request_all(true);
         self.refresh();
     }
     pub fn refresh(&self) {
+        if self.fx.sim {
+            return;
+        }
         if self.loading.replace(true) {
             return;
         }
@@ -309,6 +513,9 @@ impl OverviewPage {
         );
     }
     pub fn render_cached(&self) {
+        if self.fx.hold.get() {
+            return;
+        }
         self.update_loader();
         self.scan
             .set_sensitive(!self.loading.get() && !self.store.busy() && !self.review.busy());
@@ -341,6 +548,46 @@ impl OverviewPage {
             }
             None => return,
         };
+        if !self.fx.sim {
+            self.merge_stores(&mut data);
+        }
+        normalize(&mut data);
+        if !self.fx.sim {
+            crate::services::scan_cache::update(data.summary());
+        }
+        *self.latest.borrow_mut() = Some(data.clone());
+        self.update_loader();
+        let waiting = self.waiting_mask();
+        if self.rendered.borrow().as_ref() != Some(&data) || self.fx.waiting.get() != waiting {
+            let previous = self.rendered.borrow().clone();
+            let was_waiting = self.fx.waiting.replace(waiting);
+            let sweep = self.fx.sweep_next.replace(false) && previous.is_some();
+            self.clear_readings();
+            self.render(&data, previous.as_ref(), (was_waiting, waiting), sweep);
+            let sizes: [u64; 6] = data.sizes[..6].try_into().unwrap();
+            let trash = data.trash;
+            if sweep {
+                // The sidebar numbers change once the cells have landed.
+                let on_sizes = self.on_sizes.clone();
+                glib::timeout_add_local_once(std::time::Duration::from_millis(1700), move || {
+                    on_sizes(sizes, trash)
+                });
+            } else {
+                (self.on_sizes)(sizes, trash);
+            }
+            *self.rendered.borrow_mut() = Some(data.clone());
+        }
+        self.subtitle.set_text(&tr(
+            if self.store.busy() || self.review.busy() || self.loading.get() {
+                "Scanning…"
+            } else {
+                "Scanned just now"
+            },
+        ));
+    }
+
+    /// Fold the stores' exact snapshots into the readings.
+    fn merge_stores(&self, data: &mut Readings) {
         for kind in [
             crate::services::clean_sources::CleanPageKind::AppCaches,
             crate::services::clean_sources::CleanPageKind::DevTools,
@@ -376,23 +623,152 @@ impl OverviewPage {
             data.sizes[7] = games.bytes();
             data.game_count = games.items.len();
         }
-        normalize(&mut data);
-        crate::services::scan_cache::update(data.summary());
-        *self.latest.borrow_mut() = Some(data.clone());
-        self.update_loader();
-        if self.rendered.borrow().as_ref() != Some(&data) {
-            self.clear_readings();
-            self.render(&data);
-            (self.on_sizes)(data.sizes[..6].try_into().unwrap(), data.trash);
-            *self.rendered.borrow_mut() = Some(data.clone());
+    }
+
+    /// Bit per category still being measured; bit 8 (everything else) is
+    /// unknown whenever anything else is.
+    fn waiting_mask(&self) -> u16 {
+        if self.fx.sim {
+            return self.fx.sim_mask.get();
         }
-        self.subtitle.set_text(&tr(
-            if self.store.busy() || self.review.busy() || self.loading.get() {
-                "Scanning…"
+        use super::review_scan_store::Kind;
+        use crate::services::clean_sources::CleanPageKind as Clean;
+        let mut mask = 0u16;
+        for (bit, kind) in [Clean::AppCaches, Clean::DevTools, Clean::System]
+            .into_iter()
+            .enumerate()
+        {
+            if self.store.loading(kind) {
+                mask |= 1 << bit;
+            }
+        }
+        let first_scan = !self.review.has_summary();
+        if self.review.loading(Kind::LargeFiles) || (first_scan && self.review.large().is_none()) {
+            mask |= 1 << 3;
+        }
+        if self.review.loading(Kind::Apps) || (first_scan && self.review.apps().is_none()) {
+            mask |= 3 << 4;
+        }
+        if self.review.loading(Kind::Models) {
+            mask |= 1 << 6;
+        }
+        if self.review.loading(Kind::Games) {
+            mask |= 1 << 7;
+        }
+        if mask != 0 {
+            mask |= 1 << 8;
+        }
+        mask
+    }
+
+    fn sim_readings() -> Readings {
+        const GB: u64 = 1_000_000_000;
+        let gb = |tenths: u64| tenths * GB / 10;
+        let mut data = Readings {
+            total: gb(7318),
+            used: gb(6730),
+            free: gb(588),
+            sizes: [gb(260), gb(149), gb(63), gb(930), gb(505), gb(94), gb(1018), gb(1623), 0, 0],
+            safe: [gb(234), gb(90), gb(62)],
+            trash: gb(48),
+            large_count: 166,
+            model_count: 22,
+            game_count: 10,
+            leftover_count: 103,
+            app_count: 134,
+        };
+        normalize(&mut data);
+        data
+    }
+
+    /// Simulation: the categories arrive one by one, like a real scan.
+    fn simulate_load(&self) {
+        let full = Self::sim_readings();
+        let run = self.fx.sim_run.get() + 1;
+        self.fx.sim_run.set(run);
+        let mut start = full.clone();
+        start.sizes = [0; 10];
+        start.safe = [0; 3];
+        *self.latest.borrow_mut() = Some(start);
+        self.fx.sim_mask.set(0x1FF);
+        self.render_cached();
+        for (n, i) in [0usize, 3, 1, 4, 2, 5, 6, 7].into_iter().enumerate() {
+            let page = self.clone();
+            let full = full.clone();
+            glib::timeout_add_local_once(
+                std::time::Duration::from_millis(900 + 800 * n as u64),
+                move || {
+                    if page.fx.sim_run.get() != run {
+                        return;
+                    }
+                    if let Some(data) = page.latest.borrow_mut().as_mut() {
+                        data.sizes[i] = full.sizes[i];
+                        if i < 3 {
+                            data.safe[i] = full.safe[i];
+                        }
+                    }
+                    page.fx.sim_mask.set(page.fx.sim_mask.get() & !(1 << i));
+                    page.render_cached();
+                },
+            );
+        }
+        let page = self.clone();
+        glib::timeout_add_local_once(std::time::Duration::from_millis(900 + 800 * 8 + 300), move || {
+            if page.fx.sim_run.get() != run {
+                return;
+            }
+            page.fx.sim_mask.set(0);
+            page.render_cached();
+        });
+    }
+
+    /// Simulation: first the safe items go, then a quarter of the games.
+    fn simulate_clean(&self) {
+        if let Some(data) = self.latest.borrow_mut().as_mut() {
+            let safe: u64 = data.safe.iter().sum();
+            if safe > 0 {
+                for i in 0..3 {
+                    data.sizes[i] = data.sizes[i].saturating_sub(data.safe[i]);
+                    data.safe[i] = 0;
+                }
+                data.apply_disk_delta(safe, 0);
             } else {
-                "Scanned just now"
-            },
-        ));
+                let cut = data.sizes[7] / 4;
+                data.sizes[7] -= cut;
+                data.apply_disk_delta(cut, 0);
+            }
+        }
+        self.fx.sweep_next.set(true);
+        self.render_cached();
+        self.fx.sweep_next.set(false);
+    }
+
+    /// Simulation: part of one category goes, as if a selection was removed.
+    fn simulate_category(&self, category: usize) {
+        let (picked, listed) = super::selection_bus::state(category);
+        let listed = if listed > 0 {
+            listed
+        } else {
+            self.latest.borrow().as_ref().map_or(0, |data| data.sizes[category])
+        };
+        if picked == 0 {
+            // First the page "selects" 40%, then it removes it.
+            super::selection_bus::report(category, listed * 2 / 5, listed);
+            return;
+        }
+        let cut = picked;
+        let page = self.clone();
+        if let Some(data) = self.latest.borrow_mut().as_mut() {
+            data.sizes[category] -= cut.min(data.sizes[category]);
+            if category < 3 {
+                data.safe[category] = data.safe[category].min(data.sizes[category]);
+            }
+            data.apply_disk_delta(cut, 0);
+        }
+        self.fx.sweep_next.set(true);
+        super::selection_bus::report(category, 0, listed.saturating_sub(cut));
+        page.render_cached();
+        self.fx.sweep_next.set(false);
     }
 
     pub fn apply_removed(&self, update: &crate::services::removal_update::RemovalUpdate) {
@@ -402,7 +778,103 @@ impl OverviewPage {
             let data = latest.get_or_insert_with(Readings::default);
             data.apply_disk_delta(update.freed_bytes, update.trashed_bytes);
         }
+        self.fx.hold.set(false);
         self.render_cached();
+        self.fx.sweep_next.set(false);
+    }
+
+    /// Put a copy of the disk map under the header of a category page, with
+    /// that category in colour. Its cells fly to the Trash on removals.
+    pub fn attach_strip(&self, page: &gtk4::Widget, category: usize) {
+        // Pages that show a loading state keep their content inside a stack.
+        let content = page
+            .first_child()
+            .and_then(|child| child.downcast::<gtk4::Stack>().ok())
+            .and_then(|stack| stack.child_by_name("content"));
+        let Some(page) = content
+            .as_ref()
+            .unwrap_or(page)
+            .downcast_ref::<gtk4::Box>()
+        else {
+            return;
+        };
+        let strip = Grid::with_rows(super::overview_grid::STRIP_ROWS);
+        strip.set_instant_when_hidden(true);
+        match page.first_child() {
+            Some(header) => page.insert_child_after(strip.widget(), Some(&header)),
+            None => page.append(strip.widget()),
+        }
+        let data = self.rendered.borrow().clone();
+        if let Some(data) = data {
+            let (selected, total) = super::selection_bus::state(category);
+            strip.update(
+                strip_segments(&data, category, selected, total),
+                FREE,
+                None,
+                false,
+            );
+        }
+        // The uninstaller has two maps and shows the one of its active tab.
+        let shown = move || !matches!(category, 4 | 5) || super::selection_bus::apps_view() == category;
+        strip.widget().set_visible(shown());
+        let page = self.clone();
+        let widget = strip.widget().clone();
+        super::selection_bus::subscribe(move |changed| {
+            widget.set_visible(shown());
+            if changed == category {
+                page.refresh_strips(category);
+            }
+        });
+        if self.fx.sim {
+            // Simulation: clicking the map removes 40% of that category.
+            let click = gtk4::GestureClick::new();
+            click.set_button(0);
+            click.set_propagation_phase(gtk4::PropagationPhase::Capture);
+            let page = self.clone();
+            click.connect_pressed(move |_, _, _, _| page.simulate_category(category));
+            strip.widget().add_controller(click);
+        }
+        self.fx.strips.borrow_mut().push((category, strip));
+    }
+
+    /// The selection of a category page changed: repaint its map. While a
+    /// removal is on its way the next render does it, flying the cells.
+    fn refresh_strips(&self, category: usize) {
+        if self.fx.hold.get() || self.fx.sweep_next.get() {
+            return;
+        }
+        let Some(data) = self.rendered.borrow().clone() else {
+            return;
+        };
+        let (selected, total) = super::selection_bus::state(category);
+        for (_, strip) in self.fx.strips.borrow().iter().filter(|(c, _)| *c == category) {
+            strip.update(
+                strip_segments(&data, category, selected, total),
+                FREE,
+                None,
+                false,
+            );
+        }
+    }
+
+    /// The Trash button the cleaned cells fly to.
+    pub fn set_trash_target(&self, target: &impl IsA<gtk4::Widget>) {
+        self.fx.trash.borrow().set(Some(target.upcast_ref()));
+    }
+
+    /// A removal is about to reach the stores: wait for the final numbers and
+    /// show the cells leaving for the Trash instead of reflowing them.
+    pub fn begin_removal(&self) {
+        self.fx.hold.set(true);
+        self.fx.sweep_next.set(true);
+        let page = self.clone();
+        // Never stay frozen if the removal path ends without reaching us.
+        glib::timeout_add_local_once(std::time::Duration::from_secs(4), move || {
+            if page.fx.hold.replace(false) {
+                page.fx.sweep_next.set(false);
+                page.render_cached();
+            }
+        });
     }
     pub fn empty_trash(&self, bytes: u64, remaining: u64) {
         self.disk_revision.set(self.disk_revision.get() + 1);
@@ -416,6 +888,9 @@ impl OverviewPage {
     }
 
     pub fn save_summary(&self) {
+        if self.fx.sim {
+            return;
+        }
         if let Some(data) = self.latest.borrow().as_ref() {
             crate::services::scan_cache::update(data.summary());
         }
@@ -425,19 +900,41 @@ impl OverviewPage {
         let Some(header) = self.body.first_child() else {
             return;
         };
-        while let Some(child) = header.next_sibling() {
-            self.body.remove(&child);
+        // The grid stays in place: its allocation is needed to launch the
+        // cells towards the Trash.
+        let grid: gtk4::Widget = self.fx.grid.widget().clone().upcast();
+        let mut next = header.next_sibling();
+        while let Some(child) = next {
+            next = child.next_sibling();
+            if child != grid {
+                self.body.remove(&child);
+            }
         }
     }
 
-    fn render(&self, data: &Readings) {
+    fn render(
+        &self,
+        data: &Readings,
+        prev: Option<&Readings>,
+        (was_waiting, waiting): (u16, u16),
+        sweep: bool,
+    ) {
+        let animated = libadwaita::is_animations_enabled(&self.body);
+        // Numbers count towards their new value while the cells fly away.
+        let (delay, span) = if sweep { (0.6, 1.1) } else { (0.0, 0.5) };
+        let tween_from = |old: Option<u64>, new: u64| if animated { old.unwrap_or(new) } else { new };
+
         let summary = gtk4::Box::new(gtk4::Orientation::Horizontal, 8);
-        let used = gtk4::Label::new(Some(&tr_args(
-            "{size} used",
-            &[("{size}", &size(data.used))],
-        )));
+        let used = gtk4::Label::new(None);
         used.add_css_class("pc-disk-used");
         used.set_ellipsize(gtk4::pango::EllipsizeMode::End);
+        tween(
+            &used,
+            tween_from(prev.map(|p| p.used), data.used),
+            data.used,
+            (delay, span),
+            |bytes| tr_args("{size} used", &[("{size}", &size(bytes))]),
+        );
         summary.append(&used);
         let total = gtk4::Label::new(Some(&tr_args(
             "of {size}",
@@ -446,209 +943,406 @@ impl OverviewPage {
         total.add_css_class("pc-secondary");
         total.set_ellipsize(gtk4::pango::EllipsizeMode::End);
         summary.append(&total);
-        let free = gtk4::Label::new(Some(&tr_args(
-            "{size} free",
-            &[("{size}", &size(data.free))],
-        )));
+        let free = gtk4::Label::new(None);
         free.set_hexpand(true);
         free.set_xalign(1.0);
         free.add_css_class("pc-secondary");
         free.set_ellipsize(gtk4::pango::EllipsizeMode::End);
+        tween(
+            &free,
+            tween_from(prev.map(|p| p.free), data.free),
+            data.free,
+            (delay, span),
+            |bytes| tr_args("{size} free", &[("{size}", &size(bytes))]),
+        );
         summary.append(&free);
-        self.body.append(&summary);
+        match self.body.first_child() {
+            Some(header) => self.body.insert_child_after(&summary, Some(&header)),
+            None => self.body.append(&summary),
+        }
         if data.total == 0 {
             total.set_text(&tr("Disk usage unavailable"));
         }
-        let rows: Vec<_> = (0..10)
-            .map(|i| {
-                let row = widgets::item_card(
-                    None,
-                    &widgets::icon_tile(&format!("pc-{}", COLORS[i]), ICONS[i]),
-                    TITLES[i],
-                    "",
-                    &size(data.sizes[i]),
-                    (3..8).contains(&i).then_some(BadgeKind::Review),
-                );
-                row.size.set_text(&size(data.sizes[i]));
-                row.percent.set_text(&tr_args(
-                    "{percent}%",
-                    &[(
-                        "{percent}",
-                        &format!("{:.1}", fraction(data.sizes[i], data.total) * 100.0),
-                    )],
-                ));
-                row.button.set_action_name(Some("win.open-page"));
-                row.button
-                    .set_action_target_value(Some(&PAGES[i].to_variant()));
-                row
-            })
+
+        // The grid outlives this render so its animations keep running.
+        let is_waiting = |i: usize| waiting & (1 << i) != 0;
+        let (order, wave) = {
+            let mut arrival = self.fx.arrival.borrow_mut();
+            if waiting != 0 {
+                for i in (0..8).filter(|&i| !is_waiting(i)) {
+                    if !arrival.contains(&i) {
+                        arrival.push(i);
+                    }
+                }
+                (arrival.clone(), false)
+            } else {
+                // Analysis is over: the final sort sweeps across the map.
+                let wave = !arrival.is_empty();
+                arrival.clear();
+                (Vec::new(), wave)
+            }
+        };
+        let segments = build_segments(data, waiting, &order);
+        let trash = if sweep {
+            self.fx.trash.borrow().upgrade()
+        } else {
+            None
+        };
+        // Category pages carry their own copy of the map; only the one on
+        // screen sends cells to the Trash.
+        for (category, strip) in self.fx.strips.borrow().iter() {
+            let target = trash.as_ref().filter(|_| strip.widget().is_mapped());
+            let (selected, total) = super::selection_bus::state(*category);
+            strip.update(
+                strip_segments(data, *category, selected, total),
+                FREE,
+                target.map(|target| Sweep {
+                    flights: &self.fx.flights,
+                    target,
+                }),
+                false,
+            );
+        }
+        let target = trash.as_ref().filter(|_| self.fx.grid.widget().is_mapped());
+        self.fx.grid.update(
+            segments,
+            FREE,
+            target.map(|target| Sweep {
+                flights: &self.fx.flights,
+                target,
+            }),
+            wave,
+        );
+        if self.fx.grid.widget().parent().is_none() {
+            self.body.append(self.fx.grid.widget());
+        }
+
+        // Rows: heaviest first; categories still being measured wait at the end.
+        let pending = is_waiting;
+        let mut order: Vec<usize> = (0..9)
+            // AI models and games appear only when the scan found some.
+            .filter(|&i| !((6..8).contains(&i) && data.sizes[i] == 0 && !pending(i)))
             .collect();
-        for (i, row) in rows.iter().enumerate() {
-            let description = match i {
-                0..=2 => tr_args("{size} safe to clean", &[("{size}", &size(data.safe[i]))]),
-                3 => tr_args(
-                    "{count} files over {size}",
-                    &[
-                        ("{count}", &crate::i18n::format_count(data.large_count)),
-                        ("{size}", &size(self.review.minimum())),
-                    ],
-                ),
-                4 => tr_args(
-                    "{count} apps",
-                    &[("{count}", &crate::i18n::format_count(data.app_count))],
-                ),
-                5 => tr_args(
-                    "{count} items",
-                    &[("{count}", &crate::i18n::format_count(data.leftover_count))],
-                ),
-                6 => tr_args(
-                    "{count} models",
-                    &[("{count}", &crate::i18n::format_count(data.model_count))],
-                ),
-                7 => tr_args(
-                    "{count} games",
-                    &[("{count}", &crate::i18n::format_count(data.game_count))],
-                ),
-                8 => tr("Linux, your documents and photos, and other files"),
-                _ => tr("Available for new files"),
-            };
-            let pending = !self.review.has_summary()
-                && ((i == 3 && self.review.large().is_none())
-                    || ((i == 4 || i == 5) && self.review.apps().is_none()));
-            row.description.set_text(&if pending {
+        order.sort_by_key(|&i| (pending(i), std::cmp::Reverse(data.sizes[i])));
+        let largest = order
+            .iter()
+            .filter(|&&i| !pending(i))
+            .map(|&i| data.sizes[i])
+            .max()
+            .unwrap_or(0);
+        // Every column shares its width between the header and all rows.
+        let names = gtk4::SizeGroup::new(gtk4::SizeGroupMode::Horizontal);
+        let details = gtk4::SizeGroup::new(gtk4::SizeGroupMode::Horizontal);
+        let tags = gtk4::SizeGroup::new(gtk4::SizeGroupMode::Horizontal);
+        let sizes = gtk4::SizeGroup::new(gtk4::SizeGroupMode::Horizontal);
+
+        let head = gtk4::Box::new(gtk4::Orientation::Horizontal, 12);
+        head.add_css_class("pc-overview-head");
+        let spacer = gtk4::Box::new(gtk4::Orientation::Horizontal, 0);
+        spacer.set_size_request(26, -1);
+        head.append(&spacer);
+        for (text, group, align, grow) in [
+            ("Name", Some(&names), 0.0, false),
+            ("Details", Some(&details), 0.0, true),
+            ("Safety", Some(&tags), 0.0, false),
+            ("Size", Some(&sizes), 1.0, false),
+        ] {
+            let label = gtk4::Label::new(Some(&tr(text)));
+            label.add_css_class("pc-tertiary");
+            label.set_xalign(align);
+            label.set_hexpand(grow);
+            if let Some(group) = group {
+                group.add_widget(&label);
+            }
+            head.append(&label);
+        }
+        self.body.append(&head);
+
+        let mut buttons: Vec<Option<glib::WeakRef<gtk4::Button>>> = vec![None; 10];
+        let card = gtk4::Box::new(gtk4::Orientation::Vertical, 0);
+        card.add_css_class("pc-card");
+        for &i in &order {
+            let waiting_row = pending(i);
+            let button = gtk4::Button::new();
+            button.add_css_class("pc-item-row");
+            button.add_css_class("pc-overview-row");
+            button.set_action_name(Some("win.open-page"));
+            button.set_action_target_value(Some(&PAGES[i].to_variant()));
+            let line = gtk4::Box::new(gtk4::Orientation::Horizontal, 12);
+            line.append(&small_tile(COLORS[i], ICONS[i]));
+            let title = gtk4::Label::new(Some(&tr(TITLES[i])));
+            title.add_css_class("pc-row-title");
+            title.set_xalign(0.0);
+            // Long names give way first, so the details keep their room.
+            title.set_ellipsize(gtk4::pango::EllipsizeMode::End);
+            title.set_max_width_chars(32);
+            names.add_widget(&title);
+            line.append(&title);
+
+            let detail = gtk4::Label::new(Some(&if waiting_row {
                 tr("Scanning…")
             } else {
-                description
-            });
-            if pending {
-                row.size.set_text(&tr("…"));
-                row.percent.set_text("");
-            }
-            if i < 2 {
-                row.button.set_tooltip_text(Some(&tr(
-                    "Regenerable caches measured independently of cleanup selections.",
+                row_detail(self, data, i)
+            }));
+            detail.add_css_class("pc-secondary");
+            detail.add_css_class("pc-row-detail");
+            detail.set_xalign(0.0);
+            // Takes the room the text needs; it only shortens in a narrow window.
+            detail.set_ellipsize(gtk4::pango::EllipsizeMode::End);
+            detail.set_hexpand(true);
+            details.add_widget(&detail);
+            line.append(&detail);
+
+            let (tag_text, tag_class) = match TAGS[i] {
+                Tag::Safe => ("Safe", "pc-safe"),
+                Tag::Review => ("Review", "pc-check"),
+                Tag::Careful => ("Careful", "pc-careful"),
+            };
+            let tag = gtk4::Label::new(Some(&tr(tag_text)));
+            tag.add_css_class("pc-badge");
+            tag.add_css_class(tag_class);
+            tag.set_valign(gtk4::Align::Center);
+            tag.set_halign(gtk4::Align::Start);
+            tags.add_widget(&tag);
+            line.append(&tag);
+
+            // "28.5% - 208.8 GB" on top, the fourteen-square bar under it.
+            let column = gtk4::Box::new(gtk4::Orientation::Vertical, 4);
+            column.set_valign(gtk4::Align::Center);
+            let filled = if waiting_row || largest == 0 || data.sizes[i] == 0 {
+                0
+            } else {
+                ((data.sizes[i] as f64 / largest as f64 * MINI_CELLS as f64).ceil() as usize)
+                    .clamp(1, MINI_CELLS)
+            };
+            if waiting_row {
+                let skeleton = gtk4::Box::new(gtk4::Orientation::Horizontal, 0);
+                skeleton.add_css_class("pc-skeleton");
+                skeleton.set_size_request(64, 16);
+                skeleton.set_halign(gtk4::Align::End);
+                column.append(&skeleton);
+            } else {
+                let value = gtk4::Label::new(None);
+                value.add_css_class("pc-row-size");
+                value.set_xalign(1.0);
+                value.set_halign(gtk4::Align::End);
+                let share = gtk4::Label::new(Some(&format!(
+                    "{} - ",
+                    tr_args(
+                        "{percent}%",
+                        &[(
+                            "{percent}",
+                            &format!("{:.1}", fraction(data.sizes[i], data.total) * 100.0),
+                        )],
+                    )
                 )));
-            } else if i == 2 {
-                row.button.set_tooltip_text(Some(&tr("Package caches, journal files and unused Flatpak runtimes. Safe amount excludes journal files; review them in System.")));
+                share.add_css_class("pc-tertiary");
+                share.add_css_class("pc-row-share");
+                let top = gtk4::Box::new(gtk4::Orientation::Horizontal, 0);
+                top.set_halign(gtk4::Align::End);
+                top.append(&share);
+                let from = if was_waiting & (1 << i) != 0 {
+                    0
+                } else {
+                    tween_from(prev.map(|p| p.sizes[i]), data.sizes[i])
+                };
+                tween(&value, from, data.sizes[i], (delay, span), size);
+                top.append(&value);
+                column.append(&top);
             }
+            let bar = mini_bar(TOKENS[i], filled);
+            bar.set_halign(gtk4::Align::Fill);
+            column.append(&bar);
+            sizes.add_widget(&column);
+            line.append(&column);
+
+            button.set_child(Some(&line));
+            button.set_tooltip_text(Some(&row_tooltip(self, data, i)));
+            buttons[i] = Some(button.downgrade());
+            card.append(&button);
         }
-        let highlighted = Rc::new(Cell::new(None));
-        let buttons: Vec<_> = rows.iter().map(|r| r.button.downgrade()).collect();
-        let hover: Rc<dyn Fn(Option<usize>)> = Rc::new(move |index| {
+        self.body.append(&card);
+
+        // One hover handler for rows and cells: dim everything else.
+        let grid = self.fx.grid.clone();
+        let hover: Rc<dyn Fn(Option<usize>)> = Rc::new(move |id| {
             for (i, button) in buttons.iter().enumerate() {
-                let Some(button) = button.upgrade() else {
+                let Some(button) = button.as_ref().and_then(|b| b.upgrade()) else {
                     continue;
                 };
-                if index.is_some_and(|selected| selected != i) {
+                if id.is_some_and(|selected| selected != i) {
                     button.add_css_class("pc-dimmed");
                 } else {
                     button.remove_css_class("pc-dimmed");
                 }
-                if index == Some(i) {
+                if id == Some(i) {
                     button.add_css_class("pc-highlighted");
                 } else {
                     button.remove_css_class("pc-highlighted");
                 }
             }
+            grid.set_highlighted(id);
         });
-        let chart_sizes = chart_sizes(data);
-        let segments = (0..10)
-            .map(|i| Segment {
-                fraction: fraction(chart_sizes[i], data.total),
-                color: match i {
-                    0 => "pc_chart_caches",
-                    1 => "pc_chart_dev",
-                    2 => "pc_chart_system",
-                    3 => "pc_chart_large",
-                    4 => "pc_chart_apps",
-                    5 => "pc_chart_leftovers",
-                    6 => "pc_chart_models",
-                    7 => "pc_chart_games",
-                    8 => "pc_chart_else",
-                    _ => "pc_chart_free",
-                },
-                label: tr_args(
-                    "{category} · {size}",
-                    &[
-                        ("{category}", &tr(TITLES[i])),
-                        ("{size}", &size(data.sizes[i])),
-                    ],
-                ),
-            })
-            .collect();
-        let bar_weak = Rc::new(std::cell::RefCell::new(
-            glib::WeakRef::<gtk4::DrawingArea>::new(),
-        ));
-        let state = highlighted.clone();
-        let callback = hover.clone();
-        let weak = bar_weak.clone();
-        let bar = widgets::segmented_bar(
-            segments,
-            Rc::new(move |i| {
-                state.set(i);
-                callback(i);
-                if let Some(bar) = weak.borrow().upgrade() {
-                    bar.queue_draw();
-                }
-            }),
-            highlighted.clone(),
-        );
-        bar_weak.borrow_mut().set(Some(&bar));
-        // A theme switch must redraw the Cairo colors as well as the CSS tiles.
-        let weak = bar.downgrade();
-        let signal = libadwaita::StyleManager::default().connect_dark_notify(move |_| {
-            if let Some(bar) = weak.upgrade() {
-                bar.queue_draw();
-            }
-        });
-        let signal = std::cell::RefCell::new(Some(signal));
-        bar.connect_destroy(move |_| {
-            if let Some(signal) = signal.borrow_mut().take() {
-                libadwaita::StyleManager::default().disconnect(signal);
-            }
-        });
-        self.body.append(&bar);
-        for (i, row) in rows.iter().enumerate() {
+        self.fx.grid.set_hover(hover.clone());
+        let mut child = card.first_child();
+        for &i in &order {
+            let Some(button) = child else { break };
+            child = button.next_sibling();
             let motion = gtk4::EventControllerMotion::new();
-            let state = highlighted.clone();
             let callback = hover.clone();
-            let weak = bar.downgrade();
-            motion.connect_enter(move |_, _, _| {
-                state.set(Some(i));
-                callback(Some(i));
-                if let Some(bar) = weak.upgrade() {
-                    bar.queue_draw();
-                }
-            });
-            let state = highlighted.clone();
+            motion.connect_enter(move |_, _, _| callback(Some(i)));
             let callback = hover.clone();
-            let weak = bar.downgrade();
-            motion.connect_leave(move |_| {
-                state.set(None);
-                callback(None);
-                if let Some(bar) = weak.upgrade() {
-                    bar.queue_draw();
-                }
-            });
-            row.button.add_controller(motion);
+            motion.connect_leave(move |_| callback(None));
+            button.add_controller(motion);
         }
-        for range in [0..8, 8..10] {
-            let card = gtk4::Box::new(gtk4::Orientation::Vertical, 0);
-            card.add_css_class("pc-card");
-            for i in range {
-                // AI models and games appear only when the scan found some.
-                if (6..8).contains(&i) && data.sizes[i] == 0 {
-                    continue;
-                }
-                card.append(&rows[i].button);
-            }
-            self.body.append(&card);
-        }
+
         let foot = gtk4::Label::new(Some(&tr_args("{size} of the used space is already in the Trash. Empty it in Files to free the space.", &[("{size}", &size(data.trash))])));
         foot.set_xalign(0.0);
         foot.set_wrap(true);
         foot.add_css_class("pc-tertiary");
         self.body.append(&foot);
+    }
+}
+
+const MINI_CELLS: usize = 14;
+
+fn small_tile(color: &str, icon: &str) -> gtk4::Box {
+    let tile = gtk4::Box::new(gtk4::Orientation::Horizontal, 0);
+    tile.add_css_class("pc-icon-tile");
+    tile.add_css_class("pc-small");
+    tile.add_css_class(&format!("pc-{color}"));
+    tile.set_size_request(26, 26);
+    tile.set_hexpand(false);
+    tile.set_halign(gtk4::Align::Start);
+    tile.set_valign(gtk4::Align::Center);
+    let image = gtk4::Image::from_icon_name(icon);
+    image.set_pixel_size(14);
+    image.set_hexpand(true);
+    image.set_halign(gtk4::Align::Center);
+    image.set_valign(gtk4::Align::Center);
+    tile.append(&image);
+    tile
+}
+
+/// Fourteen flat squares: how much of the largest category this one holds.
+fn mini_bar(token: &'static str, filled: usize) -> gtk4::DrawingArea {
+    const CELL: f64 = 7.0;
+    const CELL_H: f64 = 5.0;
+    const GAP: f64 = 1.0;
+    let area = gtk4::DrawingArea::new();
+    area.set_content_width((MINI_CELLS as f64 * (CELL + GAP) - GAP) as i32);
+    area.set_content_height(CELL_H as i32);
+    area.set_valign(gtk4::Align::Center);
+    area.set_hexpand(false);
+    area.set_draw_func(move |area, cr, width, _| {
+        let cell = ((width as f64 + GAP) / MINI_CELLS as f64 - GAP).max(CELL);
+        let color = super::overview_grid::lookup(area, token);
+        let empty = super::overview_grid::lookup(area, "pc_chart_free");
+        for i in 0..MINI_CELLS {
+            let (c, alpha) = if i < filled { (&color, 1.0) } else { (&empty, 0.45) };
+            cr.set_source_rgba(
+                c.red() as f64,
+                c.green() as f64,
+                c.blue() as f64,
+                alpha,
+            );
+            cr.rectangle(i as f64 * (cell + GAP), 0.0, cell, CELL_H);
+            let _ = cr.fill();
+        }
+    });
+    let weak = area.downgrade();
+    let signal = libadwaita::StyleManager::default().connect_dark_notify(move |_| {
+        if let Some(area) = weak.upgrade() {
+            area.queue_draw();
+        }
+    });
+    let signal = RefCell::new(Some(signal));
+    area.connect_destroy(move |_| {
+        if let Some(signal) = signal.borrow_mut().take() {
+            libadwaita::StyleManager::default().disconnect(signal);
+        }
+    });
+    area
+}
+
+/// Count a label from `from` to `to` after `delay` seconds, over `span` seconds.
+fn tween(
+    label: &gtk4::Label,
+    from: u64,
+    to: u64,
+    (delay, span): (f64, f64),
+    format: impl Fn(u64) -> String + 'static,
+) {
+    label.set_text(&format(from));
+    if from == to {
+        return;
+    }
+    let weak = label.downgrade();
+    let start = std::time::Instant::now();
+    glib::timeout_add_local(std::time::Duration::from_millis(33), move || {
+        let Some(label) = weak.upgrade() else {
+            return glib::ControlFlow::Break;
+        };
+        let t = ((start.elapsed().as_secs_f64() - delay) / span).clamp(0.0, 1.0);
+        let eased = 1.0 - (1.0 - t).powi(3);
+        let value = from as f64 + (to as f64 - from as f64) * eased;
+        label.set_text(&format(if t >= 1.0 { to } else { value as u64 }));
+        if t >= 1.0 {
+            glib::ControlFlow::Break
+        } else {
+            glib::ControlFlow::Continue
+        }
+    });
+}
+
+/// The row's detail column: counts, or how much of it is safe to clean.
+fn row_detail(page: &OverviewPage, data: &Readings, i: usize) -> String {
+    if i < 3 {
+        return size(data.safe[i]);
+    }
+    row_tooltip(page, data, i)
+        .lines()
+        .next()
+        .unwrap_or_default()
+        .to_string()
+}
+
+/// Full explanation of the row, shown on hover.
+fn row_tooltip(page: &OverviewPage, data: &Readings, i: usize) -> String {
+    let detail = match i {
+        0..=2 => tr_args("{size} safe to clean", &[("{size}", &size(data.safe[i]))]),
+        3 => tr_args(
+            "{count} files over {size}",
+            &[
+                ("{count}", &crate::i18n::format_count(data.large_count)),
+                ("{size}", &size(page.review.minimum())),
+            ],
+        ),
+        4 => tr_args(
+            "{count} apps",
+            &[("{count}", &crate::i18n::format_count(data.app_count))],
+        ),
+        5 => tr_args(
+            "{count} items",
+            &[("{count}", &crate::i18n::format_count(data.leftover_count))],
+        ),
+        6 => tr_args(
+            "{count} models",
+            &[("{count}", &crate::i18n::format_count(data.model_count))],
+        ),
+        7 => tr_args(
+            "{count} games",
+            &[("{count}", &crate::i18n::format_count(data.game_count))],
+        ),
+        _ => tr("Linux, your documents and photos, and other files"),
+    };
+    match i {
+        0 | 1 => format!(
+            "{detail}\n{}",
+            tr("Regenerable caches measured independently of cleanup selections.")
+        ),
+        2 => format!("{detail}\n{}", tr("Package caches, journal files and unused Flatpak runtimes. Safe amount excludes journal files; review them in System.")),
+        _ => detail,
     }
 }
 
@@ -1076,6 +1770,50 @@ fn chart_sizes(data: &Readings) -> [u64; 10] {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn disk() -> Readings {
+        Readings {
+            total: 1_000,
+            used: 800,
+            free: 200,
+            sizes: [10, 20, 30, 40, 50, 60, 70, 80, 440, 200],
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn analysing_keeps_categories_where_they_landed() {
+        let ids = |waiting, arrival: &[usize]| -> Vec<usize> {
+            build_segments(&disk(), waiting, arrival)
+                .iter()
+                .map(|s| s.id)
+                .collect()
+        };
+        // Category 5 landed first, then 1: the heavier 7 and 6 wait after them.
+        let early = ids(0b1100_0100, &[5, 1]);
+        assert_eq!(&early[..2], &[5, 1]);
+        // Category 0 arriving later goes after, nothing moves.
+        let later = ids(0b1100_0000, &[5, 1, 0, 2, 3, 4]);
+        assert_eq!(&later[..6], &[5, 1, 0, 2, 3, 4]);
+        // Done: sorted by weight, the largest first.
+        assert_eq!(ids(0, &[])[0], 8);
+    }
+
+    #[test]
+    fn category_map_is_all_one_colour_with_the_selection_in_full() {
+        let ids = |segments: &[GridSegment]| segments.iter().map(|s| s.id).collect::<Vec<_>>();
+        let none = strip_segments(&disk(), 0, 0, 1_000);
+        assert_eq!(ids(&none), [STRIP_USED]);
+        assert!((none[0].fraction - 1.0).abs() < 1e-9 && none[0].alpha < 1.0);
+        let some = strip_segments(&disk(), 0, 250, 1_000);
+        assert_eq!(ids(&some), [0, STRIP_USED]);
+        assert!((some[0].fraction - 0.25).abs() < 1e-9 && some[0].alpha == 1.0);
+        // Everything selected leaves nothing faded.
+        let all = strip_segments(&disk(), 0, u64::MAX, 1_000);
+        assert!((all[0].fraction - 1.0).abs() < 1e-9);
+        assert!(all[1].fraction.abs() < 1e-9);
+    }
+
     #[test]
     fn local_disk_deltas_preserve_categories_and_round_trip_the_summary() {
         let mut data = Readings {

@@ -4143,3 +4143,12 @@ msgstr "Limpieza bloqueada por el límite de seguridad: se encontraron {count} a
 
 msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
 msgstr "Limpieza bloqueada por el límite de seguridad: seleccionaste {size} y el límite es {limit} por operación. Sube el límite en Configuración → Seguridad."
+
+msgid "Safe"
+msgstr "Seguro"
+
+msgid "Careful"
+msgstr "Cuidado"
+
+msgid "Details"
+msgstr "Detalle"

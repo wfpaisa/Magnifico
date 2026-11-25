@@ -3331,3 +3331,12 @@ msgstr "Bereinigung durch Sicherheitsgrenze blockiert: {count} Dateien gefunden,
 
 msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
 msgstr "Bereinigung durch Sicherheitsgrenze blockiert: {size} ausgewählt, Grenze ist {limit} pro Vorgang. Erhöhe die Grenze unter Einstellungen → Sicherheit."
+
+msgid "Safe"
+msgstr "Sicher"
+
+msgid "Careful"
+msgstr "Vorsicht"
+
+msgid "Details"
+msgstr "Details"

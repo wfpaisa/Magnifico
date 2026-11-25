@@ -189,7 +189,7 @@ impl CleanListPage {
         let p = &self.0;
         p.loading.set(p.store.loading(p.kind));
         p.loader.set_loading(
-            p.store.items(p.kind).is_none() && !p.store.has_summary(),
+            p.store.items(p.kind).is_none(),
             p.kind.title(),
         );
         if let Some(items) = p.store.items(p.kind) {
@@ -401,6 +401,15 @@ impl CleanListPage {
         p.chips.set_sensitive(!p.loading.get() && !p.cleaning.get());
         let items = p.items.borrow();
         let summary = selection_summary(&items, p.filter.get());
+        super::selection_bus::report(
+            match p.kind {
+                CleanPageKind::AppCaches => 0,
+                CleanPageKind::DevTools => 1,
+                CleanPageKind::System => 2,
+            },
+            summary.selected_bytes,
+            summary.bytes,
+        );
         p.clean_label.set_text(&tr_args(
             "Clean Selected ({size})",
             &[("{size}", &size(summary.selected_bytes))],

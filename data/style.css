@@ -1040,16 +1040,18 @@ button.mosaic-tile.group-olive.on { background-image: linear-gradient(160deg, mi
 @define-color pc_dark_chart_caches #6CC3F0;
 @define-color pc_chart_dev #0072B2;
 @define-color pc_dark_chart_dev #3A94D0;
-@define-color pc_chart_system #85827C;
-@define-color pc_dark_chart_system #807D78;
+@define-color pc_chart_system #9A6B3F;
+@define-color pc_dark_chart_system #B98555;
 @define-color pc_chart_large #E69F00;
 @define-color pc_dark_chart_large #F0B020;
 @define-color pc_chart_apps #D55E00;
 @define-color pc_dark_chart_apps #E8772A;
 @define-color pc_chart_leftovers #CC79A7;
 @define-color pc_dark_chart_leftovers #DA93BA;
-@define-color pc_chart_else #8C8983;
-@define-color pc_dark_chart_else #A8A49D;
+@define-color pc_chart_else #8FA31A;
+@define-color pc_dark_chart_else #B4CC3E;
+@define-color pc_dimmed_gray #8C8983;
+@define-color pc_dark_dimmed_gray #A8A49D;
 @define-color pc_chart_free #DAD7D2;
 @define-color pc_dark_chart_free #4E4B47;
 
@@ -1088,7 +1090,7 @@ button.pc-trash-footer { border-radius: 12px; box-shadow: none; border: none; pa
 .magnifico-light .pc-card { background-color: @pc_surface_card; border: 1px solid @pc_border_subtle; }
 .magnifico-light button.pc-item-row { color: @pc_text_primary; border-bottom-color: @pc_border_subtle; }
 .magnifico-light button.pc-item-row:hover, .magnifico-light button.pc-item-row.pc-highlighted { background-color: @pc_card_hover; }
-.magnifico-light button.pc-item-row.pc-dimmed .pc-icon-tile { background-color: @pc_chart_else; }
+.magnifico-light button.pc-item-row.pc-dimmed .pc-icon-tile { background-color: @pc_dimmed_gray; }
 .magnifico-light .pc-badge.pc-safe, .magnifico-light button.pc-chip.pc-safe:checked { color: @pc_safe_text; background-color: @pc_safe_fill; }
 .magnifico-light .pc-badge.pc-check { color: @pc_check_text; background-color: @pc_check_fill; }
 .magnifico-light button.pc-secondary-button, .magnifico-light button.pc-chip, .magnifico-light button.pc-trash-footer { color: @pc_text_primary; background-color: @pc_fill_secondary; background-image: none; border-color: @pc_border_strong; }
@@ -1116,7 +1118,7 @@ button.pc-trash-footer { border-radius: 12px; box-shadow: none; border: none; pa
 .magnifico-dark .pc-card { background-color: @pc_dark_surface_card; border: 1px solid @pc_dark_border_subtle; }
 .magnifico-dark button.pc-item-row { color: @pc_dark_text_primary; border-bottom-color: @pc_dark_border_subtle; }
 .magnifico-dark button.pc-item-row:hover, .magnifico-dark button.pc-item-row.pc-highlighted { background-color: @pc_dark_card_hover; }
-.magnifico-dark button.pc-item-row.pc-dimmed .pc-icon-tile { background-color: @pc_dark_chart_else; }
+.magnifico-dark button.pc-item-row.pc-dimmed .pc-icon-tile { background-color: @pc_dark_dimmed_gray; }
 .magnifico-dark .pc-badge.pc-safe, .magnifico-dark button.pc-chip.pc-safe:checked { color: @pc_dark_safe_text; background-color: @pc_dark_safe_fill; }
 .magnifico-dark .pc-badge.pc-check { color: @pc_dark_check_text; background-color: @pc_dark_check_fill; }
 .magnifico-dark button.pc-secondary-button, .magnifico-dark button.pc-chip, .magnifico-dark button.pc-trash-footer { color: @pc_dark_text_primary; background-color: @pc_dark_fill_secondary; background-image: none; border-color: @pc_dark_border_strong; }
@@ -1269,3 +1271,22 @@ button.pc-secondary-button { padding: 6px 16px 6px 12px; }
 .magnifico-light menubutton.pc-trash-footer > button:checked, .magnifico-dark menubutton.pc-trash-footer > button:checked { background-color: alpha(#e5484d, 0.20); }
 .magnifico-dark menubutton.pc-trash-footer image, .magnifico-dark menubutton.pc-trash-footer label { color: #ff6b6b; }
 .magnifico-light menubutton.pc-trash-footer image, .magnifico-light menubutton.pc-trash-footer label { color: #d92d2d; }
+
+/* Overview: compact single-line rows, careful tag, loading skeletons and the Trash hit flash. */
+@define-color pc_careful_text #A12A2E;
+@define-color pc_dark_careful_text #FF8A8E;
+@define-color pc_careful_fill #FBE6E6;
+@define-color pc_dark_careful_fill #3A1A1C;
+.magnifico-light .pc-badge.pc-careful { color: @pc_careful_text; background-color: @pc_careful_fill; }
+.magnifico-dark .pc-badge.pc-careful { color: @pc_dark_careful_text; background-color: @pc_dark_careful_fill; }
+button.pc-item-row.pc-overview-row { padding: 10px 16px; min-height: 34px; }
+.pc-overview-head { padding: 0 17px; margin-bottom: -14px; font-size: 12px; }
+.pc-overview-row .pc-row-title, .pc-overview-row .pc-row-size { font-size: 14px; }
+.pc-overview-row .pc-row-detail { font-weight: 400; }
+.pc-overview-row .pc-row-share { font-size: 14px; font-weight: 400; }
+.pc-icon-tile.pc-small { min-width: 26px; min-height: 26px; border-radius: 7px; }
+.pc-icon-tile.pc-small image { min-width: 14px; min-height: 14px; }
+@keyframes pc-skeleton-pulse { from { opacity: 0.25; } to { opacity: 0.6; } }
+.pc-skeleton { border-radius: 3px; background-color: alpha(currentColor, 0.35); animation: pc-skeleton-pulse 0.9s ease-in-out infinite alternate; }
+/* A cell landed: the Trash button lights up softly, no outline. */
+.magnifico-light menubutton.pc-trash-hit > button, .magnifico-dark menubutton.pc-trash-hit > button { background-color: alpha(#e5484d, 0.30); box-shadow: none; }

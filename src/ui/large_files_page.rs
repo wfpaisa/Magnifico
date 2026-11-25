@@ -276,7 +276,6 @@ impl LargeFilesPage {
         }
         self.0.dirty.set(false);
         let loading = self.0.snapshot.borrow().is_none()
-            && !self.0.store.has_summary()
             && self.0.store.error(Kind::LargeFiles).is_none();
         self.0.loader.set_loading(loading, "Large Files");
         if loading {
@@ -453,6 +452,15 @@ impl LargeFilesPage {
             .iter()
             .filter(|f| p.selected.borrow().contains(&f.path))
             .count();
+        super::selection_bus::report(
+            3,
+            visible
+                .iter()
+                .filter(|f| p.selected.borrow().contains(&f.path))
+                .map(|f| f.size)
+                .sum(),
+            visible.iter().map(|f| f.size).sum(),
+        );
         p.delete.set_sensitive(!busy && count > 0);
         p.select.set_sensitive(!busy && !visible.is_empty());
         p.syncing.set(true);

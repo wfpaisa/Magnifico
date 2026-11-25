@@ -3205,3 +3205,12 @@ msgstr ""
 
 msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
 msgstr ""
+
+msgid "Safe"
+msgstr ""
+
+msgid "Careful"
+msgstr ""
+
+msgid "Details"
+msgstr ""

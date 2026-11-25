@@ -2,7 +2,6 @@
 // https://github.com/jithin-sabu/purge-app — see THIRD_PARTY_LICENSES.md.
 use crate::i18n::{format_count, tr, tr_args};
 use gtk4::prelude::*;
-use std::{cell::Cell, rc::Rc};
 
 pub fn page_header(title: &str, subtitle: &gtk4::Label, actions: &gtk4::Box) -> gtk4::Box {
     let header = gtk4::Box::new(gtk4::Orientation::Horizontal, 16);
@@ -142,90 +141,4 @@ pub fn item_card(
         size,
         percent,
     }
-}
-
-pub struct Segment {
-    pub fraction: f64,
-    pub color: &'static str,
-    pub label: String,
-}
-
-// Drawing exact fractions avoids GtkBox minimum widths distorting small segments.
-pub fn segmented_bar(
-    segments: Vec<Segment>,
-    on_hover: Rc<dyn Fn(Option<usize>)>,
-    highlighted: Rc<Cell<Option<usize>>>,
-) -> gtk4::DrawingArea {
-    let bar = gtk4::DrawingArea::new();
-    bar.set_content_height(10);
-    bar.set_hexpand(true);
-    bar.add_css_class("pc-segmented-bar");
-    let segments = Rc::new(segments);
-    let drawn = segments.clone();
-    bar.set_draw_func(move |bar, cr, width, height| {
-        let radius = height as f64 / 2.0;
-        cr.new_sub_path();
-        cr.arc(
-            radius,
-            radius,
-            radius,
-            std::f64::consts::FRAC_PI_2,
-            3.0 * std::f64::consts::FRAC_PI_2,
-        );
-        cr.arc(
-            width as f64 - radius,
-            radius,
-            radius,
-            3.0 * std::f64::consts::FRAC_PI_2,
-            5.0 * std::f64::consts::FRAC_PI_2,
-        );
-        cr.close_path();
-        cr.clip();
-        let mut x = 0.0;
-        for (index, segment) in drawn.iter().enumerate() {
-            let dark = bar
-                .root()
-                .is_some_and(|r| r.has_css_class("magnifico-dark"));
-            let token = if dark {
-                segment.color.replacen("pc_", "pc_dark_", 1)
-            } else {
-                segment.color.to_string()
-            };
-            let color = bar
-                .style_context()
-                .lookup_color(&token)
-                .unwrap_or_else(|| gtk4::gdk::RGBA::new(0.5, 0.5, 0.5, 1.0));
-            cr.set_source_rgba(
-                color.red() as f64,
-                color.green() as f64,
-                color.blue() as f64,
-                if highlighted.get().is_some_and(|i| i != index) {
-                    0.28
-                } else {
-                    1.0
-                },
-            );
-            let w = segment.fraction * width as f64;
-            cr.rectangle(x, 0.0, w, height as f64);
-            let _ = cr.fill();
-            x += w;
-        }
-    });
-    let motion = gtk4::EventControllerMotion::new();
-    let weak = bar.downgrade();
-    let hovered = on_hover.clone();
-    motion.connect_motion(move |_, x, _| {
-        let Some(bar) = weak.upgrade() else { return };
-        let position = x / bar.width().max(1) as f64;
-        let mut end = 0.0;
-        let index = segments.iter().position(|s| {
-            end += s.fraction;
-            position < end
-        });
-        bar.set_tooltip_text(index.map(|i| segments[i].label.as_str()));
-        hovered(index);
-    });
-    motion.connect_leave(move |_| on_hover(None));
-    bar.add_controller(motion);
-    bar
 }

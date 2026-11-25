@@ -163,7 +163,15 @@ impl MagnificoApplication {
     pub fn new() -> Self {
         glib::Object::builder()
             .property("application-id", crate::APP_ID)
-            .property("flags", gio::ApplicationFlags::FLAGS_NONE)
+            .property(
+                "flags",
+                // The overview simulation opens next to a running installed copy.
+                if std::env::var_os("MAGNIFICO_SIM").is_some() {
+                    gio::ApplicationFlags::NON_UNIQUE
+                } else {
+                    gio::ApplicationFlags::FLAGS_NONE
+                },
+            )
             .build()
     }
 

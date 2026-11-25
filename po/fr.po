@@ -3337,3 +3337,12 @@ msgstr "Nettoyage bloqué par la limite de sécurité : {count} fichiers trouvé
 
 msgid "Cleanup blocked by safety limit: {size} selected, limit is {limit} per operation. Raise the limit in Settings → Safety."
 msgstr "Nettoyage bloqué par la limite de sécurité : {size} sélectionnés, la limite est {limit} par opération. Augmentez la limite dans Paramètres → Sécurité."
+
+msgid "Safe"
+msgstr "Sûr"
+
+msgid "Careful"
+msgstr "Prudence"
+
+msgid "Details"
+msgstr "Détails"

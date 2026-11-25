@@ -195,8 +195,7 @@ impl ReviewItemsPage {
             }
         }
         if self.0.widget.is_mapped() {
-            let loading = !self.0.store.has_summary()
-                && self.0.snapshot.borrow().is_none()
+            let loading = self.0.snapshot.borrow().is_none()
                 && self.0.store.error(self.0.spec.kind).is_none();
             self.0.loader.set_loading(loading, self.0.spec.title);
             if !loading && self.0.dirty.replace(false) {
@@ -352,6 +351,18 @@ impl ReviewItemsPage {
             .iter()
             .filter(|i| selected.contains(&i.location))
             .count();
+        super::selection_bus::report(
+            match p.spec.kind {
+                super::review_scan_store::Kind::Models => 6,
+                _ => 7,
+            },
+            visible
+                .iter()
+                .filter(|i| selected.contains(&i.location))
+                .map(|i| i.bytes)
+                .sum(),
+            visible.iter().map(|i| i.bytes).sum(),
+        );
         drop(selected);
         p.delete.set_sensitive(!busy && count > 0);
         p.select.set_sensitive(!busy && !visible.is_empty());
