@@ -227,19 +227,47 @@ pub fn scan(kind: CleanPageKind, storage: &Storage, cancel: Arc<AtomicBool>) -> 
         // the scanner's safety exclusions and disabling whole-directory shortcuts
         // if an earlier row owns part of the same tree.
         use std::os::unix::fs::MetadataExt;
+        let mut left_out: Vec<PathBuf> = Vec::new();
         if key == "jetbrains" {
-            result
-                .files
-                .retain(|f| !f.path.components().any(|c| c.as_os_str() == "LocalHistory"));
+            result.files.retain(|f| {
+                let keep = !f.path.components().any(|c| c.as_os_str() == "LocalHistory");
+                if !keep {
+                    left_out.push(f.path.clone());
+                }
+                keep
+            });
         }
+        // Hard links inside one row (a build folder links its outputs) count
+        // once but do not make the folder incomplete; a file an earlier row
+        // already owns does.
+        let mut in_row = HashSet::new();
         result.files.retain(|f| {
-            std::fs::symlink_metadata(&f.path).is_ok_and(|m| seen.insert((m.dev(), m.ino())))
+            let Ok(meta) = std::fs::symlink_metadata(&f.path) else {
+                left_out.push(f.path.clone());
+                return false;
+            };
+            let id = (meta.dev(), meta.ino());
+            if seen.contains(&id) {
+                left_out.push(f.path.clone());
+                return false;
+            }
+            in_row.insert(id)
         });
+        seen.extend(in_row);
         result.total_size = result.files.iter().map(|f| f.size).sum();
         result.file_count = result.files.len();
-        result.whole_dirs.clear();
-        result.directories.clear();
-        result.dir_count = 0;
+        // A folder still taken completely goes to the trash as one unit.
+        // One that lost a file to the filters above, or to an earlier row,
+        // goes file by file so nothing outside this row is removed.
+        result
+            .whole_dirs
+            .retain(|dir| !left_out.iter().any(|path| path.starts_with(dir)));
+        let whole = std::mem::take(&mut result.whole_dirs);
+        result
+            .directories
+            .retain(|d| whole.iter().any(|dir| d.path.starts_with(dir)));
+        result.dir_count = result.directories.len();
+        result.whole_dirs = whole;
         if result.total_size > 0 {
             rows.push(CleanItem::files(key, title, result));
         }
@@ -257,10 +285,10 @@ pub fn scan(kind: CleanPageKind, storage: &Storage, cancel: Arc<AtomicBool>) -> 
                 None,
                 scanner.scan_paths(&old_claude_versions(&home)),
             );
-            let busy = super::open_files::busy_paths();
+            let busy = super::open_files::working_paths();
             let projects = super::projects::find_inactive_projects(
                 &settings.project_folders,
-                Duration::from_secs(u64::from(settings.inactive_project_days.max(1)) * 86400),
+                Duration::from_secs(u64::from(settings.pin_recent_days) * 86400),
                 SystemTime::now(),
                 &busy,
                 &cancel,

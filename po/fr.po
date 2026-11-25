@@ -275,6 +275,10 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
+#: src/ui/main_window.rs
+msgid "Allow"
+msgstr "Autoriser"
+
 msgid "Close"
 msgstr "Fermer"
 
@@ -1576,6 +1580,10 @@ msgstr "Comment le récupérer"
 #: src/ui/cleanup_view.rs
 msgid "Your files and apps"
 msgstr "Vos fichiers et applications"
+
+#: src/ui/project_settings.rs
+msgid "Off"
+msgstr "Désactivé"
 
 #: src/ui/project_settings.rs
 msgid "1 day"

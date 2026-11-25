@@ -64,7 +64,19 @@ pub fn confirm(
         let settings = storage.get_settings();
         let trash = settings.removal_method == crate::models::RemovalMethod::Trash
             && items.iter().all(|(_, i)| i.command.is_none())
-            && items.iter().map(|(_, i)| i.scan.file_count).sum::<usize>()
+            && items
+                .iter()
+                .map(|(_, i)| {
+                    // A whole folder is one entry in the trash.
+                    let scan = &i.scan;
+                    scan.whole_dirs.len()
+                        + scan
+                            .files
+                            .iter()
+                            .filter(|f| !scan.whole_dirs.iter().any(|dir| f.path.starts_with(dir)))
+                            .count()
+                })
+                .sum::<usize>()
                 <= crate::services::TRASH_MAX_FILES;
         let cards = items
             .iter()
@@ -146,6 +158,19 @@ fn execute(
     options: CleanOptions,
     finished: impl FnOnce() + 'static,
 ) {
+    run(window, store, items, options, Box::new(finished));
+}
+
+/// Not generic: "Allow" runs it again, and a generic callback would make
+/// the compiler instantiate it forever.
+fn run(
+    window: super::MainWindow,
+    store: CleanScanStore,
+    items: Selection,
+    options: CleanOptions,
+    finished: Box<dyn FnOnce()>,
+) {
+    let retry_items = items.clone();
     let progress = Arc::new(CleanProgress::default());
     let progress_window = CleanProgressWindow::show(
         Some(window.upcast_ref()),
@@ -227,7 +252,25 @@ fn execute(
             window.record_cleanup_report(&report);
             window.show_cleanup_report(&report, warning);
             if let Some(reason) = &blocked {
-                window.show_blocked_dialog(reason);
+                let retry_window = window.clone();
+                let retry_store = store.clone();
+                // Nothing was deleted when the limits stopped it, so it is
+                // safe to run the same selection again without them.
+                let allow: Box<dyn Fn()> = Box::new(move || {
+                    let unlimited = CleanOptions {
+                        max_files_per_operation: usize::MAX,
+                        max_size_per_operation: u64::MAX,
+                        ..options
+                    };
+                    run(
+                        retry_window.clone(),
+                        retry_store.clone(),
+                        retry_items.clone(),
+                        unlimited,
+                        Box::new(|| {}),
+                    );
+                });
+                window.show_blocked_dialog(reason, Some(allow));
             }
         }
         progress_window.close();

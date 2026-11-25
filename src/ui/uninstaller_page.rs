@@ -285,9 +285,7 @@ impl UninstallerPage {
         }
         let generation = p.generation.get().wrapping_add(1);
         p.generation.set(generation);
-        if p.snapshot.borrow().is_none()
-            && p.store.error(Kind::Apps).is_none()
-        {
+        if p.snapshot.borrow().is_none() && p.store.error(Kind::Apps).is_none() {
             p.loader.set_loading(true, "Applications");
             self.update();
             return;

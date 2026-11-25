@@ -181,7 +181,7 @@ pub fn build_cleanup_plan(scanner: &Scanner, inputs: &PlanInputs) -> (CleanupPla
 }
 
 fn project_groups(scanner: &Scanner, folders: &[PathBuf], pin_days: u32) -> Vec<PlanGroup> {
-    let busy = super::open_files::busy_paths();
+    let busy = super::open_files::working_paths();
     let projects = find_projects(
         folders,
         Duration::from_secs(u64::from(pin_days) * 24 * 60 * 60),

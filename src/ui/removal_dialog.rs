@@ -372,6 +372,11 @@ fn build(
             callback(None);
         }
     });
+    // No dark veil over the window while the sheet is open.
+    if let Some(root) = parent.root().map(|root| root.upcast::<gtk4::Widget>()) {
+        root.add_css_class("pc-no-dim");
+        dialog.connect_closed(move |_| root.remove_css_class("pc-no-dim"));
+    }
     dialog.present(Some(parent));
     cancel.grab_focus();
 }

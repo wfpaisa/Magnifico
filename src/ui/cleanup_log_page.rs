@@ -558,7 +558,7 @@ impl CleanupLogPage {
                 "{}",
                 tr_args(
                     "  [TRUNCATED] {omitted} additional entries omitted from the in-app log",
-                    &[("{omitted}", &omitted.to_string())],
+                    &[("{omitted}", &crate::i18n::format_count(omitted))],
                 )
             );
         }

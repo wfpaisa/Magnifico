@@ -68,15 +68,33 @@ impl FlightLayer {
                 let alpha = 1.0 - ((p - 0.85) / 0.15).max(0.0);
                 // Short streak behind the cell, then the cell itself.
                 let back = (p - 0.12).max(0.0).powi(2);
-                cr.set_source_rgba(f64::from(c.red()), f64::from(c.green()), f64::from(c.blue()), 0.3 * alpha);
+                cr.set_source_rgba(
+                    f64::from(c.red()),
+                    f64::from(c.green()),
+                    f64::from(c.blue()),
+                    0.3 * alpha,
+                );
                 cr.set_line_width(size * 0.8);
-                cr.move_to(f.from.0 + (f.to.0 - f.from.0) * back, f.from.1 + (f.to.1 - f.from.1) * back);
+                cr.move_to(
+                    f.from.0 + (f.to.0 - f.from.0) * back,
+                    f.from.1 + (f.to.1 - f.from.1) * back,
+                );
                 cr.line_to(x, y);
                 let _ = cr.stroke();
                 cr.set_source_rgba(1.0, 1.0, 1.0, 0.35 * alpha);
-                cr.rectangle(x - size / 2.0 - 1.0, y - size / 2.0 - 1.0, size + 2.0, size + 2.0);
+                cr.rectangle(
+                    x - size / 2.0 - 1.0,
+                    y - size / 2.0 - 1.0,
+                    size + 2.0,
+                    size + 2.0,
+                );
                 let _ = cr.fill();
-                cr.set_source_rgba(f64::from(c.red()), f64::from(c.green()), f64::from(c.blue()), alpha);
+                cr.set_source_rgba(
+                    f64::from(c.red()),
+                    f64::from(c.green()),
+                    f64::from(c.blue()),
+                    alpha,
+                );
                 cr.rectangle(x - size / 2.0, y - size / 2.0, size, size);
                 let _ = cr.fill();
             }
@@ -90,10 +108,8 @@ impl FlightLayer {
 
     /// Centre of `widget` in the layer's coordinates.
     pub fn target_point(&self, widget: &gtk4::Widget) -> (f64, f64) {
-        let centre = gtk4::graphene::Point::new(
-            widget.width() as f32 / 2.0,
-            widget.height() as f32 / 2.0,
-        );
+        let centre =
+            gtk4::graphene::Point::new(widget.width() as f32 / 2.0, widget.height() as f32 / 2.0);
         widget
             .compute_point(&self.area, &centre)
             .map_or((0.0, 0.0), |p| (f64::from(p.x()), f64::from(p.y())))
@@ -145,9 +161,12 @@ impl FlightLayer {
             for target in hits {
                 if let Some(widget) = target.upgrade() {
                     widget.add_css_class("pc-trash-hit");
-                    glib::timeout_add_local_once(std::time::Duration::from_millis(140), move || {
-                        widget.remove_css_class("pc-trash-hit");
-                    });
+                    glib::timeout_add_local_once(
+                        std::time::Duration::from_millis(140),
+                        move || {
+                            widget.remove_css_class("pc-trash-hit");
+                        },
+                    );
                 }
             }
             area.queue_draw();

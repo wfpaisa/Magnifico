@@ -25,6 +25,10 @@ struct Page {
     widget: gtk4::Box,
     loader: super::scan_loading::ScanLoading,
     subtitle: gtk4::Label,
+    /// Spinner and "Scanning…" above the list while a scan runs.
+    busy: gtk4::Box,
+    busy_label: gtk4::Label,
+    busy_spinner: super::cleanup_fx::Spinner,
     scan: gtk4::Button,
     clean: gtk4::Button,
     clean_label: gtk4::Label,
@@ -88,6 +92,14 @@ impl CleanListPage {
         sort.add_css_class("pc-sort");
         controls.append(&sort);
         widget.append(&controls);
+        let busy = gtk4::Box::new(gtk4::Orientation::Horizontal, 10);
+        busy.set_visible(false);
+        let busy_spinner = super::cleanup_fx::Spinner::new(20);
+        busy.append(busy_spinner.widget());
+        let busy_label = gtk4::Label::new(Some(&tr("Scanning…")));
+        busy_label.add_css_class("pc-secondary");
+        busy.append(&busy_label);
+        widget.append(&busy);
         let status = gtk4::Label::new(None);
         status.set_wrap(true);
         status.set_xalign(0.0);
@@ -104,6 +116,9 @@ impl CleanListPage {
             widget,
             loader,
             subtitle,
+            busy,
+            busy_label,
+            busy_spinner,
             scan,
             clean,
             clean_label,
@@ -185,13 +200,24 @@ impl CleanListPage {
             self.0.store.request(self.0.kind, true);
         }
     }
+    /// Spinner above the list while it scans or a cleanup runs.
+    fn sync_busy(&self) {
+        let p = &self.0;
+        let busy = p.loading.get() || p.cleaning.get();
+        p.busy_label.set_text(&tr(if p.cleaning.get() {
+            "Cleaning…"
+        } else {
+            "Scanning…"
+        }));
+        p.busy.set_visible(busy);
+        p.busy_spinner.set_spinning(busy);
+    }
     fn sync_store(&self) {
         let p = &self.0;
         p.loading.set(p.store.loading(p.kind));
-        p.loader.set_loading(
-            p.store.items(p.kind).is_none(),
-            p.kind.title(),
-        );
+        self.sync_busy();
+        p.loader
+            .set_loading(p.store.items(p.kind).is_none(), p.kind.title());
         if let Some(items) = p.store.items(p.kind) {
             let changed = p
                 .snapshot
@@ -473,6 +499,7 @@ impl CleanListPage {
             .map(|(i, _)| (self.0.kind, i.clone()))
             .collect();
         self.0.cleaning.set(true);
+        self.sync_busy();
         self.0.scan.set_sensitive(false);
         self.update_selection();
         let page = self.clone();
@@ -483,6 +510,7 @@ impl CleanListPage {
             items,
             move || {
                 page.0.cleaning.set(false);
+                page.sync_busy();
                 page.0.scan.set_sensitive(true);
                 page.update_selection();
             },

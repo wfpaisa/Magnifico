@@ -28,6 +28,16 @@ impl CleanProgressWindow {
         total_files: usize,
         progress: Arc<CleanProgress>,
     ) -> Self {
+        // In the main window there is no progress screen: the page stays
+        // where it is and the map animates the result.
+        if let Some(main) = parent.and_then(|p| p.downcast_ref::<super::MainWindow>()) {
+            main.begin_cleaning();
+            return Self {
+                window: None,
+                parent: Some(main.downgrade()),
+                timer: None,
+            };
+        }
         let content = gtk4::Box::new(gtk4::Orientation::Vertical, 10);
         content.set_valign(gtk4::Align::Center);
         content.set_margin_top(36);
@@ -56,23 +66,17 @@ impl CleanProgressWindow {
         content.append(&of_total);
         content.append(&bar);
         content.append(&status);
-        let main = parent.and_then(|p| p.downcast_ref::<super::MainWindow>());
-        let window = if let Some(main) = main {
-            main.show_cleaning(&content);
-            None
-        } else {
-            let window = adw::Window::builder()
-                .modal(true)
-                .deletable(false)
-                .default_width(900)
-                .default_height(650)
-                .build();
-            window.set_transient_for(parent);
-            dialogs::prepare_window(&window);
-            window.set_content(Some(&content));
-            window.present();
-            Some(window)
-        };
+        let window = adw::Window::builder()
+            .modal(true)
+            .deletable(false)
+            .default_width(900)
+            .default_height(650)
+            .build();
+        window.set_transient_for(parent);
+        dialogs::prepare_window(&window);
+        window.set_content(Some(&content));
+        window.present();
+        let window = Some(window);
 
         let timer = glib::timeout_add_local(Duration::from_millis(100), move || {
             let bytes = progress.bytes_done.load(Ordering::Relaxed);
@@ -91,7 +95,7 @@ impl CleanProgressWindow {
 
         Self {
             window,
-            parent: main.map(|p| p.downgrade()),
+            parent: None,
             timer: Some(timer),
         }
     }

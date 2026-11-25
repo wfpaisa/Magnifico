@@ -273,6 +273,10 @@ msgstr "Sì"
 msgid "No"
 msgstr "No"
 
+#: src/ui/main_window.rs
+msgid "Allow"
+msgstr "Consenti"
+
 msgid "Close"
 msgstr "Chiudi"
 
@@ -1566,6 +1570,10 @@ msgstr "Come si ripristina"
 #: src/ui/cleanup_view.rs
 msgid "Your files and apps"
 msgstr "I tuoi file e le tue applicazioni"
+
+#: src/ui/project_settings.rs
+msgid "Off"
+msgstr "Disattivato"
 
 #: src/ui/project_settings.rs
 msgid "1 day"

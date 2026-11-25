@@ -62,7 +62,7 @@ impl Rng {
 
 // ───────────────────────────── Spinner ─────────────────────────────
 
-/// A comet that circles through the three impact colours.
+/// A small grid of pixels breathing in the three impact colours.
 #[derive(Clone)]
 pub struct Spinner {
     area: gtk4::DrawingArea,
@@ -159,32 +159,32 @@ fn start_spin(
 }
 
 fn draw_spinner(cr: &gtk4::cairo::Context, width: f64, height: f64, seconds: f64) {
-    let (cx, cy) = (width / 2.0, height / 2.0);
-    let radius = width.min(height) / 2.0 - 3.0;
-    cr.set_line_width(3.0);
-    cr.set_line_cap(gtk4::cairo::LineCap::Round);
-    cr.set_source_rgba(0.5, 0.5, 0.5, 0.18);
-    cr.arc(cx, cy, radius, 0.0, 2.0 * PI);
-    let _ = cr.stroke();
-
-    let head = seconds * 2.0 * PI / 1.1;
-    // The tail breathes so the motion never looks mechanical.
-    let length = PI * (0.55 + 0.35 * (seconds * 2.0 * PI / 1.7).sin().abs());
-    let colour_shift = (seconds / 3.0).fract();
-    const STEPS: usize = 24;
-    for step in 0..STEPS {
-        let t = step as f64 / STEPS as f64;
-        let from = head - length * (1.0 - t);
-        let to = head - length * (1.0 - (step + 1) as f64 / STEPS as f64);
-        let hue = (colour_shift + t * 0.66).fract() * 3.0;
-        let rgb = match hue as usize {
-            0 => mix(FREE, REBUILD, hue.fract()),
-            1 => mix(REBUILD, REDOWNLOAD, hue.fract()),
-            _ => mix(REDOWNLOAD, FREE, hue.fract()),
-        };
-        cr.set_source_rgba(rgb.0, rgb.1, rgb.2, t * t);
-        cr.arc(cx, cy, radius, from, to + 0.02);
-        let _ = cr.stroke();
+    // A 3x3 grid of pixels breathing in a diagonal wave, one impact colour
+    // per diagonal.
+    const GRID: usize = 3;
+    let side = width.min(height);
+    let cell = (side / GRID as f64).floor().max(1.0);
+    let pad = (cell * 0.16).max(0.5);
+    let (left, top) = (
+        (width - cell * GRID as f64) / 2.0,
+        (height - cell * GRID as f64) / 2.0,
+    );
+    for row in 0..GRID {
+        for col in 0..GRID {
+            let (x, y) = (
+                left + col as f64 * cell + pad,
+                top + row as f64 * cell + pad,
+            );
+            let size = cell - 2.0 * pad;
+            cr.set_source_rgba(0.5, 0.5, 0.5, 0.2);
+            cr.rectangle(x, y, size, size);
+            let _ = cr.fill();
+            let wave = (seconds * 3.0 - (row + col) as f64 * 0.9).sin().max(0.0);
+            let rgb = [FREE, REBUILD, REDOWNLOAD][(row + col) % 3];
+            cr.set_source_rgba(rgb.0, rgb.1, rgb.2, 0.15 + 0.85 * wave);
+            cr.rectangle(x, y, size, size);
+            let _ = cr.fill();
+        }
     }
 }
 

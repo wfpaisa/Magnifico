@@ -13,8 +13,9 @@ use std::path::Path;
 use std::rc::Rc;
 use std::sync::Arc;
 
-/// Choices for "Pin projects changed in the last", in days.
-const AGES: [(u32, &str); 5] = [
+/// Choices for "Pin projects changed in the last", in days. 0 turns it off.
+const AGES: [(u32, &str); 6] = [
+    (0, "Off"),
     (1, "1 day"),
     (3, "3 days"),
     (7, "1 week"),

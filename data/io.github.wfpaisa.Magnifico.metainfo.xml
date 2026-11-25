@@ -59,6 +59,13 @@
   </screenshots>
 
   <releases>
+    <release version="1.0.3" date="2026-11-24">
+      <description>
+        <ul>
+          <li>Refactor UI components and introduce selection bus for tracking selected bytes</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.2" date="2026-11-20">
       <description>
         <ul>

@@ -62,6 +62,9 @@ window, popover, tooltip {
 @define-color cleaner_light_content_surface #ffffff;
 @define-color cleaner_dark_sidebar_surface #2e2e32;
 @define-color cleaner_dark_content_surface #343437;
+/* Dark shell: the content is the darkest surface and the sidebar sits lighter. */
+@define-color pc_dark_shell_content #171615;
+@define-color pc_dark_shell_sidebar #262524;
 
 window.magnifico-dark,
 window.magnifico-light,
@@ -119,14 +122,14 @@ headerbar.custom-rule-header {
 
 .magnifico-dark .magnifico-sidebar,
 .magnifico-dark headerbar.magnifico-sidebar-header {
-    background-color: @cleaner_dark_sidebar_surface;
+    background-color: @pc_dark_shell_sidebar;
 }
 
 .magnifico-dark .magnifico-content,
 .magnifico-dark .magnifico-view,
 .magnifico-dark .view.magnifico-view,
 .magnifico-dark headerbar.magnifico-content-header {
-    background-color: @cleaner_dark_content_surface;
+    background-color: @pc_dark_shell_content;
 }
 
 /* Popup surfaces follow the main content pane. Without this, libadwaita paints
@@ -1082,7 +1085,9 @@ button.pc-item-row.pc-dimmed { opacity: 0.3; }
 button.pc-sidebar-bottom { border-radius: 8px; box-shadow: none; background: transparent; border: none; padding: 10px 8px; }
 button.pc-trash-footer { border-radius: 12px; box-shadow: none; border: none; padding: 12px 8px; margin-top: 8px; }
 .pc-skeleton { border-radius: 12px; opacity: 0.45; }
-.magnifico-light .magnifico-window-layout, .magnifico-light .magnifico-content.magnifico-view, .magnifico-light .magnifico-view, .magnifico-light headerbar.magnifico-content-header { background-color: @pc_surface_base; color: @pc_text_primary; }
+.magnifico-light .magnifico-window-layout { background-color: @pc_surface_base; color: @pc_text_primary; }
+/* The title strip is the same white as the pages below it. */
+.magnifico-light .magnifico-content.magnifico-view, .magnifico-light .magnifico-view, .magnifico-light headerbar.magnifico-content-header { background-color: @cleaner_light_content_surface; color: @pc_text_primary; }
 .magnifico-light .pc-overview, .magnifico-light .pc-sidebar { color: @pc_text_primary; }
 .magnifico-light .pc-sidebar { background-color: @pc_surface_base; border-color: @pc_border_subtle; }
 .magnifico-light .pc-secondary { color: @pc_text_secondary; }
@@ -1112,7 +1117,7 @@ button.pc-trash-footer { border-radius: 12px; box-shadow: none; border: none; pa
 .magnifico-light .pc-icon-tile.pc-free { background-color: @pc_chart_free; }
 .magnifico-dark .magnifico-window-layout, .magnifico-dark .magnifico-content.magnifico-view, .magnifico-dark .magnifico-view, .magnifico-dark headerbar.magnifico-content-header { background-color: @pc_dark_surface_base; color: @pc_dark_text_primary; }
 .magnifico-dark .pc-overview, .magnifico-dark .pc-sidebar { color: @pc_dark_text_primary; }
-.magnifico-dark .pc-sidebar { background-color: @pc_dark_surface_base; border-color: @pc_dark_border_subtle; }
+.magnifico-dark .pc-sidebar { background-color: @pc_dark_shell_sidebar; border-color: @pc_dark_border_subtle; }
 .magnifico-dark .pc-secondary { color: @pc_dark_text_secondary; }
 .magnifico-dark .pc-tertiary, .magnifico-dark .pc-sidebar-section { color: @pc_dark_text_tertiary; }
 .magnifico-dark .pc-card { background-color: @pc_dark_surface_card; border: 1px solid @pc_dark_border_subtle; }
@@ -1290,3 +1295,26 @@ button.pc-item-row.pc-overview-row { padding: 10px 16px; min-height: 34px; }
 .pc-skeleton { border-radius: 3px; background-color: alpha(currentColor, 0.35); animation: pc-skeleton-pulse 0.9s ease-in-out infinite alternate; }
 /* A cell landed: the Trash button lights up softly, no outline. */
 .magnifico-light menubutton.pc-trash-hit > button, .magnifico-dark menubutton.pc-trash-hit > button { background-color: alpha(#e5484d, 0.30); box-shadow: none; }
+
+/* Trash footer with nothing in it: neutral, not red. */
+.magnifico-light menubutton.pc-trash-footer.pc-trash-empty > button, .magnifico-dark menubutton.pc-trash-footer.pc-trash-empty > button { border-color: transparent; background-color: transparent; }
+.magnifico-light menubutton.pc-trash-footer.pc-trash-empty > button:hover, .magnifico-dark menubutton.pc-trash-footer.pc-trash-empty > button:hover { background-color: alpha(currentColor, 0.08); }
+.magnifico-dark menubutton.pc-trash-footer.pc-trash-empty image, .magnifico-dark menubutton.pc-trash-footer.pc-trash-empty label { color: @pc_dark_text_secondary; }
+.magnifico-light menubutton.pc-trash-footer.pc-trash-empty image, .magnifico-light menubutton.pc-trash-footer.pc-trash-empty label { color: @pc_text_secondary; }
+
+/* Confirm-cleanup sheet: no dark veil over the window behind it. */
+.pc-no-dim floating-sheet > dimming,
+.pc-no-dim bottom-sheet > dimming { background: none; }
+
+/* adw::Dialog: the classed node is the full-window overlay, so painting it
+   hid the page behind. Keep the overlay clear and colour only the sheet. */
+dialog-host > dialog.magnifico-dialog.magnifico-light,
+dialog-host > dialog.magnifico-dialog.magnifico-dark { background: none; }
+dialog-host > dialog.magnifico-dialog.magnifico-light sheet {
+    background-color: @cleaner_light_content_surface;
+    color: @cleaner_view_fg;
+}
+dialog-host > dialog.magnifico-dialog.magnifico-dark sheet {
+    background-color: @cleaner_dark_content_surface;
+    color: @cleaner_view_fg;
+}

@@ -23,6 +23,9 @@ const FLASH: f64 = 0.35;
 const SCATTER: f64 = 0.7;
 const BLINK: f64 = 0.6;
 const FLIGHT: f64 = 0.5;
+/// Permanent removals: each cell shrinks away over this long, at a random moment.
+const DISSOLVE: f64 = 0.8;
+const DISSOLVE_SPREAD: f64 = 1.2;
 
 /// Small xorshift generator: cells only need to look scattered.
 struct Rng(u64);
@@ -87,7 +90,10 @@ pub fn layout(fractions: &[f64], cells: usize) -> Vec<usize> {
 enum Phase {
     Settled,
     /// Becomes `to` at `at`, with a white flash.
-    Change { at: f64, to: usize },
+    Change {
+        at: f64,
+        to: usize,
+    },
     /// Blinks until `launch`, is a hole until `land`, then turns `free`
     /// (and afterwards `after`, when the new layout wants something else).
     Sweep {
@@ -96,6 +102,8 @@ enum Phase {
         land: f64,
         free: usize,
         after: Option<(f64, usize)>,
+        /// Shrinks in place instead of flying to the Trash.
+        dissolve: bool,
     },
 }
 
@@ -203,19 +211,22 @@ impl RatioBox {
     }
 }
 
+type HoverHandler = Rc<RefCell<Rc<dyn Fn(Option<usize>)>>>;
+
 #[derive(Clone)]
 pub struct Grid {
     /// Gives the area its height from the width it gets, in the same pass.
     frame: RatioBox,
     area: gtk4::DrawingArea,
     state: Rc<RefCell<State>>,
-    hover: Rc<RefCell<Rc<dyn Fn(Option<usize>)>>>,
+    hover: HoverHandler,
 }
 
 /// Where swept cells go.
 pub struct Sweep<'a> {
     pub flights: &'a super::flight_layer::FlightLayer,
-    pub target: &'a gtk4::Widget,
+    /// The Trash button; `None` dissolves the cells where they are.
+    pub target: Option<&'a gtk4::Widget>,
 }
 
 impl Grid {
@@ -246,8 +257,7 @@ impl Grid {
             instant_when_hidden: false,
             tick: None,
         }));
-        let hover: Rc<RefCell<Rc<dyn Fn(Option<usize>)>>> =
-            Rc::new(RefCell::new(Rc::new(|_| {})));
+        let hover: HoverHandler = Rc::new(RefCell::new(Rc::new(|_| {})));
         let drawn = state.clone();
         area.set_draw_func(move |area, cr, width, height| {
             draw(area, cr, width, height, &drawn.borrow());
@@ -317,7 +327,13 @@ impl Grid {
     /// owner animate in random order. With `sweep`, cells that left a
     /// shrinking category fly to the target first and reflow after landing.
     /// With `wave`, the cells that change do so in a sweep from left to right.
-    pub fn update(&self, segments: Vec<GridSegment>, free_id: usize, sweep: Option<Sweep>, wave: bool) {
+    pub fn update(
+        &self,
+        segments: Vec<GridSegment>,
+        free_id: usize,
+        sweep: Option<Sweep>,
+        wave: bool,
+    ) {
         let fractions: Vec<f64> = segments.iter().map(|s| s.fraction).collect();
         let rows = self.state.borrow().rows;
         let cells = COLS * rows;
@@ -336,7 +352,11 @@ impl Grid {
             .map(|s| s.id)
             .max()
             .map_or(0, |m| m + 1);
-        state.info = vec![None; slots];
+        // A category that just emptied keeps its colour for the cells still
+        // leaving it, instead of falling back to a default one.
+        let mut info = std::mem::take(&mut state.info);
+        info.resize(slots.max(info.len()), None);
+        state.info = info;
         for s in segments.iter().filter(|s| s.id != PENDING) {
             state.info[s.id] = Some((s.color, s.label.clone(), s.alpha));
         }
@@ -348,8 +368,8 @@ impl Grid {
         let mut layer_target = None;
         if let (Some(sweep), true, false) = (&sweep, animated, first) {
             let layer = sweep.flights;
-            let point = layer.target_point(sweep.target);
-            layer_target = Some(point);
+            let point = sweep.target.map_or((0.0, 0.0), |t| layer.target_point(t));
+            layer_target = sweep.target.map(|_| point);
             let mut old = vec![0usize; slots.max(free_id + 1)];
             let mut new = old.clone();
             for c in &state.cells {
@@ -363,28 +383,45 @@ impl Grid {
             for id in (0..old.len()).filter(|&id| id != free_id && new[id] < old[id]) {
                 let mut mine: Vec<(usize, f64)> = (0..cells)
                     .filter(|&i| state.cells[i].owner == Some(id))
-                    .map(|i| (i, distance(&self.area, layer, i, rows, point)))
+                    .map(|i| {
+                        let d = if sweep.target.is_some() {
+                            distance(&self.area, layer, i, rows, point)
+                        } else {
+                            0.0
+                        };
+                        (i, d)
+                    })
                     .collect();
                 mine.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
                 flying.extend(mine.into_iter().take(old[id] - new[id]));
             }
             flying.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
         }
+        let dissolve = sweep.as_ref().is_some_and(|s| s.target.is_none());
         let step = (1.0 / flying.len().max(1) as f64).min(0.03);
         let mut swept_until = t0;
         let mut swept = vec![None; cells];
         for (rank, &(i, _)) in flying.iter().enumerate() {
-            let launch = t0 + BLINK + rank as f64 * step;
-            swept_until = swept_until.max(launch + FLIGHT);
+            let (launch, span) = if dissolve {
+                (t0 + 0.1 + rng.double_range(0.0, DISSOLVE_SPREAD), DISSOLVE)
+            } else {
+                (t0 + BLINK + rank as f64 * step, FLIGHT)
+            };
+            swept_until = swept_until.max(launch + span);
             swept[i] = Some(launch);
         }
         // Everything else flips to its final owner at a random moment, after
         // the sweep when there is one.
-        let base = if swept_until > t0 { swept_until + 0.25 } else { t0 };
+        let base = if swept_until > t0 {
+            swept_until + 0.25
+        } else {
+            t0
+        };
+        #[allow(clippy::needless_range_loop)]
         for i in 0..cells {
             let to = target.get(i).copied().flatten();
             if let Some(launch) = swept[i] {
-                let land = launch + FLIGHT;
+                let land = launch + if dissolve { DISSOLVE } else { FLIGHT };
                 let after = to
                     .filter(|&to| to != free_id)
                     .map(|to| (base + rng.double_range(0.0, SCATTER), to));
@@ -398,22 +435,40 @@ impl Grid {
                     land,
                     free: free_id,
                     after,
+                    dissolve,
                 };
-                if let (Some(sweep), Some(point)) = (&sweep, layer_target) {
+                if let (Some(sweep), Some(point), Some(target)) =
+                    (&sweep, layer_target, sweep.as_ref().and_then(|s| s.target))
+                {
                     if let Some(origin) = cell_center(&self.area, sweep.flights, i, rows) {
                         sweep
                             .flights
-                            .launch(origin, point, from, launch, FLIGHT, sweep.target);
+                            .launch(origin, point, from, launch, FLIGHT, target);
                     }
                 }
                 continue;
             }
-            if let Phase::Sweep { flash_from, launch, land, free, .. } = state.cells[i].phase {
+            if let Phase::Sweep {
+                flash_from,
+                launch,
+                land,
+                free,
+                dissolve,
+                ..
+            } = state.cells[i].phase
+            {
                 // A sweep still in flight: only its follow-up can change.
                 let after = to
                     .filter(|&to| to != free)
                     .map(|to| (base + rng.double_range(0.0, SCATTER), to));
-                state.cells[i].phase = Phase::Sweep { flash_from, launch, land, free, after };
+                state.cells[i].phase = Phase::Sweep {
+                    flash_from,
+                    launch,
+                    land,
+                    free,
+                    after,
+                    dissolve,
+                };
                 continue;
             }
             if let Phase::Change { to: planned, .. } = state.cells[i].phase {
@@ -469,20 +524,20 @@ impl Grid {
                             c.flashed_at = at;
                             c.phase = Phase::Settled;
                         }
-                        Phase::Sweep { land, free, after, .. } if t >= land => {
+                        Phase::Sweep {
+                            land, free, after, ..
+                        } if t >= land => {
                             c.owner = Some(free);
                             c.flashed_at = land;
-                            c.phase = after.map_or(Phase::Settled, |(at, to)| Phase::Change { at, to });
+                            c.phase =
+                                after.map_or(Phase::Settled, |(at, to)| Phase::Change { at, to });
                         }
                         _ => {}
                     }
                 }
-                state
-                    .cells
-                    .iter()
-                    .any(|c| {
-                        c.phase != Phase::Settled || c.owner.is_none() || t - c.flashed_at < FLASH
-                    })
+                state.cells.iter().any(|c| {
+                    c.phase != Phase::Settled || c.owner.is_none() || t - c.flashed_at < FLASH
+                })
             };
             area.queue_draw();
             if busy {
@@ -522,7 +577,10 @@ fn cell_center(
     let (col, row) = (index / rows, index % rows);
     let x = ox + col as f64 * (size + GAP) + size / 2.0;
     let y = oy + row as f64 * (size + GAP) + size / 2.0;
-    let point = area.compute_point(layer.widget(), &gtk4::graphene::Point::new(x as f32, y as f32))?;
+    let point = area.compute_point(
+        layer.widget(),
+        &gtk4::graphene::Point::new(x as f32, y as f32),
+    )?;
     Some((f64::from(point.x()), f64::from(point.y()), size))
 }
 
@@ -553,14 +611,21 @@ pub(super) fn lookup(area: &gtk4::DrawingArea, token: &str) -> gtk4::gdk::RGBA {
 }
 
 fn hash(a: usize, b: u64) -> f64 {
-    let mut x = (a as u64).wrapping_mul(0x9E37_79B9_7F4A_7C15) ^ b.wrapping_mul(0xBF58_476D_1CE4_E5B9);
+    let mut x =
+        (a as u64).wrapping_mul(0x9E37_79B9_7F4A_7C15) ^ b.wrapping_mul(0xBF58_476D_1CE4_E5B9);
     x ^= x >> 29;
     x = x.wrapping_mul(0x94D0_49BB_1331_11EB);
     x ^= x >> 32;
     (x % 1000) as f64 / 1000.0
 }
 
-fn draw(area: &gtk4::DrawingArea, cr: &gtk4::cairo::Context, width: i32, height: i32, state: &State) {
+fn draw(
+    area: &gtk4::DrawingArea,
+    cr: &gtk4::cairo::Context,
+    width: i32,
+    height: i32,
+    state: &State,
+) {
     let t = now();
     let rows = state.rows;
     let (size, ox, oy) = cell_geometry(width, height, rows);
@@ -573,8 +638,20 @@ fn draw(area: &gtk4::DrawingArea, cr: &gtk4::cairo::Context, width: i32, height:
     cr.new_sub_path();
     cr.arc(ox + w - r, oy + r, r, -std::f64::consts::FRAC_PI_2, 0.0);
     cr.arc(ox + w - r, oy + h - r, r, 0.0, std::f64::consts::FRAC_PI_2);
-    cr.arc(ox + r, oy + h - r, r, std::f64::consts::FRAC_PI_2, std::f64::consts::PI);
-    cr.arc(ox + r, oy + r, r, std::f64::consts::PI, 3.0 * std::f64::consts::FRAC_PI_2);
+    cr.arc(
+        ox + r,
+        oy + h - r,
+        r,
+        std::f64::consts::FRAC_PI_2,
+        std::f64::consts::PI,
+    );
+    cr.arc(
+        ox + r,
+        oy + r,
+        r,
+        std::f64::consts::PI,
+        3.0 * std::f64::consts::FRAC_PI_2,
+    );
     cr.close_path();
     cr.clip();
     let colors: Vec<_> = state
@@ -589,7 +666,43 @@ fn draw(area: &gtk4::DrawingArea, cr: &gtk4::cairo::Context, width: i32, height:
         let y = oy + (i % rows) as f64 * (size + GAP);
         let mut white = (1.0 - (t - cell.flashed_at) / FLASH).clamp(0.0, 1.0);
         let shown = match cell.phase {
-            Phase::Sweep { flash_from, launch, .. } => {
+            Phase::Sweep {
+                launch,
+                land,
+                dissolve: true,
+                ..
+            } => {
+                if t >= land {
+                    continue;
+                }
+                if t >= launch {
+                    // Shrinks and fades where it stands.
+                    let s = ((t - launch) / (land - launch)).clamp(0.0, 1.0);
+                    let k = 1.0 - s * s;
+                    let (color, alpha) = match cell
+                        .owner
+                        .and_then(|o| colors.get(o))
+                        .and_then(Option::as_ref)
+                    {
+                        Some((color, alpha)) => (color, *alpha),
+                        None => (&pending, 0.4),
+                    };
+                    let side = size * k;
+                    cr.set_source_rgba(
+                        f64::from(color.red()),
+                        f64::from(color.green()),
+                        f64::from(color.blue()),
+                        alpha * k,
+                    );
+                    cr.rectangle(x + (size - side) / 2.0, y + (size - side) / 2.0, side, side);
+                    let _ = cr.fill();
+                    continue;
+                }
+                cell.owner
+            }
+            Phase::Sweep {
+                flash_from, launch, ..
+            } => {
                 if t >= launch {
                     continue; // a hole until the cell lands
                 }
@@ -627,7 +740,9 @@ mod tests {
     #[test]
     fn allocation_always_fills_the_grid() {
         for fractions in [
-            vec![0.285, 0.222, 0.139, 0.127, 0.069, 0.035, 0.02, 0.013, 0.009, 0.081],
+            vec![
+                0.285, 0.222, 0.139, 0.127, 0.069, 0.035, 0.02, 0.013, 0.009, 0.081,
+            ],
             vec![1.0],
             vec![0.0001, 0.9999],
             vec![0.5, 0.5, 0.0],

@@ -20,6 +20,23 @@ pub fn button(label: &gtk4::Label) -> gtk4::MenuButton {
     label.set_max_width_chars(1);
     label.set_hexpand(true);
     label.set_xalign(0.0);
+    // An empty Trash is not worth a red alert: tell the style when it is.
+    let weak = button.downgrade();
+    label.connect_label_notify(move |label| {
+        let text = label.text();
+        let tokens: Vec<&str> = text.split_whitespace().collect();
+        let empty = tokens.windows(2).any(|pair| pair == ["0", "B"]);
+        // Texts with no size ("Measuring Trash…") keep what was shown.
+        if empty || text.chars().any(|c| c.is_ascii_digit()) {
+            if let Some(button) = weak.upgrade() {
+                if empty {
+                    button.add_css_class("pc-trash-empty");
+                } else {
+                    button.remove_css_class("pc-trash-empty");
+                }
+            }
+        }
+    });
     face.append(label);
     button.set_child(Some(&face));
     let popover = gtk4::Popover::new();

@@ -1048,7 +1048,7 @@ impl DashboardPage {
                     .and_then(|root| root.downcast::<gtk4::Window>().ok())
                     .and_then(|window| window.downcast::<crate::ui::MainWindow>().ok())
                 {
-                    window.show_blocked_dialog(&reason);
+                    window.show_blocked_dialog(&reason, None);
                 }
             } else {
                 tracing::warn!("Scheduled cleanup blocked: {}", reason);
@@ -1219,7 +1219,7 @@ impl DashboardPage {
                             &[
                                 ("{count}", &crate::i18n::format_count(result.files_deleted_count())),
                                 ("{size}", &result.formatted_bytes_freed()),
-                                ("{failed}", &total_failures.to_string()),
+                                ("{failed}", &crate::i18n::format_count(total_failures)),
                                 ("{journal}", &journal_note),
                             ],
                         ),

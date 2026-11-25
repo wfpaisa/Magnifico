@@ -301,7 +301,7 @@ impl AppSettings {
         self.scheduled_cleanup_minute = self.scheduled_cleanup_minute.min(59);
         self.log_retention_days = self.log_retention_days.clamp(1, 3650);
         self.inactive_project_days = self.inactive_project_days.clamp(30, 730);
-        self.pin_recent_days = self.pin_recent_days.clamp(1, 365);
+        self.pin_recent_days = self.pin_recent_days.min(365);
     }
 }
 

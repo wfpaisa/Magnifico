@@ -133,8 +133,14 @@ impl Cleaner {
             return Err(crate::i18n::tr_args(
                 "Cleanup blocked by safety limit: {count} files found, limit is {limit}.",
                 &[
-                    ("{count}", &scan_result.file_count.to_string()),
-                    ("{limit}", &self.options.max_files_per_operation.to_string()),
+                    (
+                        "{count}",
+                        &crate::i18n::format_count(scan_result.file_count),
+                    ),
+                    (
+                        "{limit}",
+                        &crate::i18n::format_count(self.options.max_files_per_operation),
+                    ),
                 ],
             ));
         }

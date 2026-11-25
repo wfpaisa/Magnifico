@@ -92,6 +92,9 @@ struct Fx {
     trash: RefCell<glib::WeakRef<gtk4::Widget>>,
     /// A removal is being applied: its cells fly to the Trash.
     sweep_next: Cell<bool>,
+    /// The coming removal deleted for good: cells dissolve instead of
+    /// flying to the Trash.
+    dissolve_next: Cell<bool>,
     /// Hold renders until the removal has reached every store.
     hold: Cell<bool>,
     /// Categories (bit per index, bit 8 = everything else) still being
@@ -180,8 +183,16 @@ fn build_segments(data: &Readings, waiting: u16, arrival: &[usize]) -> Vec<GridS
     }
     if waiting != 0 && !arrival.is_empty() {
         // Still analysing: keep each category where it landed.
-        let mut placed: Vec<usize> = arrival.iter().copied().filter(|&i| !is_waiting(i)).collect();
-        let missing: Vec<usize> = by_weight.iter().copied().filter(|i| !placed.contains(i)).collect();
+        let mut placed: Vec<usize> = arrival
+            .iter()
+            .copied()
+            .filter(|&i| !is_waiting(i))
+            .collect();
+        let missing: Vec<usize> = by_weight
+            .iter()
+            .copied()
+            .filter(|i| !placed.contains(i))
+            .collect();
         placed.extend(missing);
         by_weight = placed;
     } else {
@@ -219,16 +230,24 @@ fn build_segments(data: &Readings, waiting: u16, arrival: &[usize]) -> Vec<GridS
         alpha: 1.0,
         label: describe(FREE, data.free),
     });
-segments
+    segments
 }
 
 /// Map of a category page: every cell is that category, the whole map being
 /// everything the page lists. What is selected shows in full colour, the rest
 /// faded like an unticked item.
 fn strip_segments(data: &Readings, category: usize, selected: u64, total: u64) -> Vec<GridSegment> {
-    let total = if total > 0 { total } else { data.sizes[category] };
+    let total = if total > 0 {
+        total
+    } else {
+        data.sizes[category]
+    };
     let selected = selected.min(total);
-    let picked = if total > 0 { selected as f64 / total as f64 } else { 0.0 };
+    let picked = if total > 0 {
+        selected as f64 / total as f64
+    } else {
+        0.0
+    };
     let mut segments = Vec::new();
     if selected > 0 {
         segments.push(GridSegment {
@@ -238,7 +257,10 @@ fn strip_segments(data: &Readings, category: usize, selected: u64, total: u64) -
             alpha: 1.0,
             label: tr_args(
                 "{category} · {size}",
-                &[("{category}", &tr(TITLES[category])), ("{size}", &size(selected))],
+                &[
+                    ("{category}", &tr(TITLES[category])),
+                    ("{size}", &size(selected)),
+                ],
             ),
         });
     }
@@ -307,6 +329,7 @@ impl OverviewPage {
                 flights,
                 trash: RefCell::new(glib::WeakRef::new()),
                 sweep_next: Cell::new(false),
+                dissolve_next: Cell::new(false),
                 hold: Cell::new(false),
                 waiting: Cell::new(0),
                 arrival: RefCell::new(Vec::new()),
@@ -668,7 +691,18 @@ impl OverviewPage {
             total: gb(7318),
             used: gb(6730),
             free: gb(588),
-            sizes: [gb(260), gb(149), gb(63), gb(930), gb(505), gb(94), gb(1018), gb(1623), 0, 0],
+            sizes: [
+                gb(260),
+                gb(149),
+                gb(63),
+                gb(930),
+                gb(505),
+                gb(94),
+                gb(1018),
+                gb(1623),
+                0,
+                0,
+            ],
             safe: [gb(234), gb(90), gb(62)],
             trash: gb(48),
             large_count: 166,
@@ -713,13 +747,16 @@ impl OverviewPage {
             );
         }
         let page = self.clone();
-        glib::timeout_add_local_once(std::time::Duration::from_millis(900 + 800 * 8 + 300), move || {
-            if page.fx.sim_run.get() != run {
-                return;
-            }
-            page.fx.sim_mask.set(0);
-            page.render_cached();
-        });
+        glib::timeout_add_local_once(
+            std::time::Duration::from_millis(900 + 800 * 8 + 300),
+            move || {
+                if page.fx.sim_run.get() != run {
+                    return;
+                }
+                page.fx.sim_mask.set(0);
+                page.render_cached();
+            },
+        );
     }
 
     /// Simulation: first the safe items go, then a quarter of the games.
@@ -749,7 +786,10 @@ impl OverviewPage {
         let listed = if listed > 0 {
             listed
         } else {
-            self.latest.borrow().as_ref().map_or(0, |data| data.sizes[category])
+            self.latest
+                .borrow()
+                .as_ref()
+                .map_or(0, |data| data.sizes[category])
         };
         if picked == 0 {
             // First the page "selects" 40%, then it removes it.
@@ -766,9 +806,15 @@ impl OverviewPage {
             data.apply_disk_delta(cut, 0);
         }
         self.fx.sweep_next.set(true);
+        // Simulation: removals alternate between the Trash and permanent.
+        static PERMANENT: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+        self.fx
+            .dissolve_next
+            .set(PERMANENT.fetch_xor(true, std::sync::atomic::Ordering::Relaxed));
         super::selection_bus::report(category, 0, listed.saturating_sub(cut));
         page.render_cached();
         self.fx.sweep_next.set(false);
+        self.fx.dissolve_next.set(false);
     }
 
     pub fn apply_removed(&self, update: &crate::services::removal_update::RemovalUpdate) {
@@ -779,8 +825,13 @@ impl OverviewPage {
             data.apply_disk_delta(update.freed_bytes, update.trashed_bytes);
         }
         self.fx.hold.set(false);
+        self.fx
+            .sweep_next
+            .set(update.freed_bytes + update.trashed_bytes > 0);
+        self.fx.dissolve_next.set(update.trashed_bytes == 0);
         self.render_cached();
         self.fx.sweep_next.set(false);
+        self.fx.dissolve_next.set(false);
     }
 
     /// Put a copy of the disk map under the header of a category page, with
@@ -791,11 +842,7 @@ impl OverviewPage {
             .first_child()
             .and_then(|child| child.downcast::<gtk4::Stack>().ok())
             .and_then(|stack| stack.child_by_name("content"));
-        let Some(page) = content
-            .as_ref()
-            .unwrap_or(page)
-            .downcast_ref::<gtk4::Box>()
-        else {
+        let Some(page) = content.as_ref().unwrap_or(page).downcast_ref::<gtk4::Box>() else {
             return;
         };
         let strip = Grid::with_rows(super::overview_grid::STRIP_ROWS);
@@ -815,7 +862,8 @@ impl OverviewPage {
             );
         }
         // The uninstaller has two maps and shows the one of its active tab.
-        let shown = move || !matches!(category, 4 | 5) || super::selection_bus::apps_view() == category;
+        let shown =
+            move || !matches!(category, 4 | 5) || super::selection_bus::apps_view() == category;
         strip.widget().set_visible(shown());
         let page = self.clone();
         let widget = strip.widget().clone();
@@ -847,7 +895,13 @@ impl OverviewPage {
             return;
         };
         let (selected, total) = super::selection_bus::state(category);
-        for (_, strip) in self.fx.strips.borrow().iter().filter(|(c, _)| *c == category) {
+        for (_, strip) in self
+            .fx
+            .strips
+            .borrow()
+            .iter()
+            .filter(|(c, _)| *c == category)
+        {
             strip.update(
                 strip_segments(&data, category, selected, total),
                 FREE,
@@ -922,7 +976,8 @@ impl OverviewPage {
         let animated = libadwaita::is_animations_enabled(&self.body);
         // Numbers count towards their new value while the cells fly away.
         let (delay, span) = if sweep { (0.6, 1.1) } else { (0.0, 0.5) };
-        let tween_from = |old: Option<u64>, new: u64| if animated { old.unwrap_or(new) } else { new };
+        let tween_from =
+            |old: Option<u64>, new: u64| if animated { old.unwrap_or(new) } else { new };
 
         let summary = gtk4::Box::new(gtk4::Orientation::Horizontal, 8);
         let used = gtk4::Label::new(None);
@@ -983,34 +1038,42 @@ impl OverviewPage {
             }
         };
         let segments = build_segments(data, waiting, &order);
-        let trash = if sweep {
+        let dissolve = sweep && self.fx.dissolve_next.get();
+        let trash = if sweep && !dissolve {
             self.fx.trash.borrow().upgrade()
         } else {
             None
         };
+        let leaving = |mapped: bool| -> Option<Sweep> {
+            if !mapped {
+                None
+            } else if dissolve {
+                Some(Sweep {
+                    flights: &self.fx.flights,
+                    target: None,
+                })
+            } else {
+                trash.as_ref().map(|target| Sweep {
+                    flights: &self.fx.flights,
+                    target: Some(target),
+                })
+            }
+        };
         // Category pages carry their own copy of the map; only the one on
         // screen sends cells to the Trash.
         for (category, strip) in self.fx.strips.borrow().iter() {
-            let target = trash.as_ref().filter(|_| strip.widget().is_mapped());
             let (selected, total) = super::selection_bus::state(*category);
             strip.update(
                 strip_segments(data, *category, selected, total),
                 FREE,
-                target.map(|target| Sweep {
-                    flights: &self.fx.flights,
-                    target,
-                }),
+                leaving(strip.widget().is_mapped()),
                 false,
             );
         }
-        let target = trash.as_ref().filter(|_| self.fx.grid.widget().is_mapped());
         self.fx.grid.update(
             segments,
             FREE,
-            target.map(|target| Sweep {
-                flights: &self.fx.flights,
-                target,
-            }),
+            leaving(self.fx.grid.widget().is_mapped()),
             wave,
         );
         if self.fx.grid.widget().parent().is_none() {
@@ -1196,11 +1259,14 @@ impl OverviewPage {
             button.add_controller(motion);
         }
 
-        let foot = gtk4::Label::new(Some(&tr_args("{size} of the used space is already in the Trash. Empty it in Files to free the space.", &[("{size}", &size(data.trash))])));
-        foot.set_xalign(0.0);
-        foot.set_wrap(true);
-        foot.add_css_class("pc-tertiary");
-        self.body.append(&foot);
+        // Nothing in the Trash, nothing to warn about.
+        if data.trash > 0 {
+            let foot = gtk4::Label::new(Some(&tr_args("{size} of the used space is already in the Trash. Empty it in Files to free the space.", &[("{size}", &size(data.trash))])));
+            foot.set_xalign(0.0);
+            foot.set_wrap(true);
+            foot.add_css_class("pc-tertiary");
+            self.body.append(&foot);
+        }
     }
 }
 
@@ -1239,13 +1305,12 @@ fn mini_bar(token: &'static str, filled: usize) -> gtk4::DrawingArea {
         let color = super::overview_grid::lookup(area, token);
         let empty = super::overview_grid::lookup(area, "pc_chart_free");
         for i in 0..MINI_CELLS {
-            let (c, alpha) = if i < filled { (&color, 1.0) } else { (&empty, 0.45) };
-            cr.set_source_rgba(
-                c.red() as f64,
-                c.green() as f64,
-                c.blue() as f64,
-                alpha,
-            );
+            let (c, alpha) = if i < filled {
+                (&color, 1.0)
+            } else {
+                (&empty, 0.45)
+            };
+            cr.set_source_rgba(c.red() as f64, c.green() as f64, c.blue() as f64, alpha);
             cr.rectangle(i as f64 * (cell + GAP), 0.0, cell, CELL_H);
             let _ = cr.fill();
         }

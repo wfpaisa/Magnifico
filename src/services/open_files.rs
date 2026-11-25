@@ -40,6 +40,26 @@ pub fn open_file_ids() -> HashSet<(u64, u64)> {
 /// Working folders and open files of every process we can inspect, so a
 /// project someone is building or editing is never touched.
 pub fn busy_paths() -> Vec<std::path::PathBuf> {
+    collect_busy_paths(false)
+}
+
+/// Like `busy_paths`, for deciding whether someone is working in a project:
+/// a file manager showing a folder keeps it open without working in it.
+pub fn working_paths() -> Vec<std::path::PathBuf> {
+    collect_busy_paths(true)
+}
+
+const FILE_MANAGERS: [&str; 7] = [
+    "nautilus",
+    "nemo",
+    "caja",
+    "dolphin",
+    "thunar",
+    "pcmanfm",
+    "pcmanfm-qt",
+];
+
+fn collect_busy_paths(skip_file_managers: bool) -> Vec<std::path::PathBuf> {
     let own_pid = std::process::id().to_string();
     let mut paths = Vec::new();
     let Ok(processes) = fs::read_dir("/proc") else {
@@ -54,12 +74,19 @@ pub fn busy_paths() -> Vec<std::path::PathBuf> {
         if let Ok(cwd) = fs::read_link(process.path().join("cwd")) {
             paths.push(cwd);
         }
+        // Only a file manager's open folders are ignored, never its files.
+        let file_manager = skip_file_managers
+            && fs::read_to_string(process.path().join("comm"))
+                .is_ok_and(|comm| FILE_MANAGERS.contains(&comm.trim()));
         let Ok(fds) = fs::read_dir(process.path().join("fd")) else {
             continue;
         };
         for fd in fds.flatten() {
             if let Ok(target) = fs::read_link(fd.path()) {
                 if target.is_absolute() {
+                    if file_manager && target.is_dir() {
+                        continue;
+                    }
                     paths.push(target);
                 }
             }

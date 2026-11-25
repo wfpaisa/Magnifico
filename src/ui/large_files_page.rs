@@ -275,8 +275,8 @@ impl LargeFilesPage {
             return;
         }
         self.0.dirty.set(false);
-        let loading = self.0.snapshot.borrow().is_none()
-            && self.0.store.error(Kind::LargeFiles).is_none();
+        let loading =
+            self.0.snapshot.borrow().is_none() && self.0.store.error(Kind::LargeFiles).is_none();
         self.0.loader.set_loading(loading, "Large Files");
         if loading {
             self.update();

@@ -1233,7 +1233,7 @@ impl StorageAnalyzerPage {
             let message = tr_args(
                 "Moved {moved} {item_word} ({size}) to Trash.\n{failed} items failed.{details}",
                 &[
-                    ("{moved}", &moved.to_string()),
+                    ("{moved}", &crate::i18n::format_count(moved)),
                     (
                         "{item_word}",
                         &if moved == 1 { tr("item") } else { tr("items") },
@@ -1242,7 +1242,7 @@ impl StorageAnalyzerPage {
                         "{size}",
                         &bytesize::ByteSize(result.bytes_moved()).to_string(),
                     ),
-                    ("{failed}", &failed.to_string()),
+                    ("{failed}", &crate::i18n::format_count(failed)),
                     ("{details}", &failure_details),
                 ],
             );

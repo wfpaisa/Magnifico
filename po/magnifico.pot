@@ -263,6 +263,10 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: src/ui/main_window.rs
+msgid "Allow"
+msgstr ""
+
 msgid "Close"
 msgstr ""
 
@@ -3095,6 +3099,10 @@ msgstr ""
 
 #: src/ui/cleanup_view.rs
 msgid "What it is"
+msgstr ""
+
+#: src/ui/project_settings.rs
+msgid "Off"
 msgstr ""
 
 #: src/ui/project_settings.rs

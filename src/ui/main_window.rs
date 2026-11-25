@@ -95,6 +95,10 @@ mod imp {
         pub(super) about_page: RefCell<Option<super::super::about_page::AboutPage>>,
         pub shell: RefCell<Option<gtk4::Stack>>,
         pub cleaning: Cell<bool>,
+        /// Removal numbers for the Overview that arrived while the progress
+        /// screen covered it; applied when the page is back on screen so the
+        /// cells fly from where the user is.
+        pub pending_overview: RefCell<Option<crate::services::removal_update::RemovalUpdate>>,
         pub app_monitor: RefCell<Option<gio::AppInfoMonitor>>,
         pub storage: RefCell<Option<Arc<Storage>>>,
         pub sidebar_box: RefCell<Option<gtk4::Box>>,
@@ -857,12 +861,8 @@ impl MainWindow {
         }
     }
 
-    pub fn show_cleaning(&self, content: &gtk4::Box) {
+    pub fn begin_cleaning(&self) {
         self.imp().cleaning.set(true);
-        if let Some(shell) = self.imp().shell.borrow().as_ref() {
-            shell.add_named(content, Some("cleaning"));
-            shell.set_visible_child_name("cleaning");
-        }
     }
 
     pub fn finish_cleaning(&self) {
@@ -873,7 +873,18 @@ impl MainWindow {
                 shell.remove(&child);
             }
         }
-        self.navigate_to_dashboard();
+        // Stay on the page the user was on; once it is on screen again the
+        // category's own map sends its cells to the Trash.
+        if let Some(update) = self.imp().pending_overview.borrow_mut().take() {
+            let weak = self.downgrade();
+            glib::timeout_add_local_once(std::time::Duration::from_millis(150), move || {
+                if let Some(window) = weak.upgrade() {
+                    if let Some(overview) = window.imp().overview_page.borrow().as_ref() {
+                        overview.apply_removed(&update);
+                    }
+                }
+            });
+        }
     }
 
     pub fn refresh_dashboard(&self) {
@@ -901,7 +912,13 @@ impl MainWindow {
         if let Some(analyzer) = self.imp().storage_analyzer_page.borrow().as_ref() {
             analyzer.apply_removed(&update);
         }
-        if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
+        if self.imp().cleaning.get() {
+            let mut pending = self.imp().pending_overview.borrow_mut();
+            match pending.as_mut() {
+                Some(earlier) => earlier.merge((*update).clone()),
+                None => *pending = Some((*update).clone()),
+            }
+        } else if let Some(overview) = self.imp().overview_page.borrow().as_ref() {
             overview.apply_removed(&update);
         }
         self.refresh_dashboard();
@@ -968,20 +985,30 @@ impl MainWindow {
 
     /// A cleanup the safety limits stopped: say so in a dialog, with a way
     /// to the Settings where the limits live.
-    pub fn show_blocked_dialog(&self, reason: &str) {
+    /// With `allow`, an extra "Allow" button runs it: the cleanup again
+    /// without the limits, for this time only.
+    pub fn show_blocked_dialog(&self, reason: &str, allow: Option<Box<dyn Fn()>>) {
         let tr = crate::i18n::tr;
         let dialog =
             super::dialogs::message_dialog(Some(self.upcast_ref()), &tr("Cleanup Blocked"), reason);
-        dialog.add_response("ok", &tr("OK"));
+        dialog.add_response("close", &tr("Close"));
+        if allow.is_some() {
+            dialog.add_response("allow", &tr("Allow"));
+            dialog.set_response_appearance("allow", adw::ResponseAppearance::Destructive);
+        }
         dialog.add_response("settings", &tr("Open Settings"));
         dialog.set_response_appearance("settings", adw::ResponseAppearance::Suggested);
         dialog.set_default_response(Some("settings"));
-        dialog.set_close_response("ok");
+        dialog.set_close_response("close");
         let weak = self.downgrade();
         dialog.connect_response(None, move |_, response| {
             if response == "settings" {
                 if let Some(window) = weak.upgrade() {
                     window.navigate_to_page("settings");
+                }
+            } else if response == "allow" {
+                if let Some(allow) = &allow {
+                    allow();
                 }
             }
         });

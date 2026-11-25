@@ -271,6 +271,10 @@ msgstr "Ναι"
 msgid "No"
 msgstr "Όχι"
 
+#: src/ui/main_window.rs
+msgid "Allow"
+msgstr "Να επιτραπεί"
+
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -1571,6 +1575,10 @@ msgstr "Πώς επανέρχεται"
 #: src/ui/cleanup_view.rs
 msgid "Your files and apps"
 msgstr "Τα αρχεία και οι εφαρμογές σας"
+
+#: src/ui/project_settings.rs
+msgid "Off"
+msgstr "Ανενεργό"
 
 #: src/ui/project_settings.rs
 msgid "1 day"
